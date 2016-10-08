@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CarsWithDriverListController: UIViewController
+@interface CarsWithDriverListController: UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (assign, nonatomic) NSNumber *categoryID;
 
 @end

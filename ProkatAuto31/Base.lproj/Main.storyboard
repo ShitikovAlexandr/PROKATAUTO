@@ -11,7 +11,7 @@
             <objects>
                 <viewController id="cZh-kX-NOu" customClass="CarWithDriverController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K4n-wc-yLv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RIs-Db-bqI">
@@ -90,11 +90,93 @@
             <objects>
                 <viewController storyboardIdentifier="CarsWithDriverListController" hidesBottomBarWhenPushed="YES" id="2if-NZ-pNf" customClass="CarsWithDriverListController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TDy-em-Wai">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="3AH-ZW-mic">
+                                <frame key="frameInset" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0Lj-ax-bKk">
+                                    <size key="itemSize" width="300" height="170"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" id="pjC-ik-yDb" customClass="CarWithDriverCell">
+                                        <rect key="frame" x="10" y="0.0" width="300" height="170"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="5pC-KR-qHX">
+                                                    <frame key="frameInset" minX="10" minY="10" width="130" height="130"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Car model" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="G5x-FB-Jbx">
+                                                    <frame key="frameInset" minX="150" minY="10" width="140" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rkK-FG-xyE">
+                                                    <frame key="frameInset" minX="150" minY="30" width="140" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Year" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5vH-m0-YtQ">
+                                                    <frame key="frameInset" minX="150" minY="60" width="140" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Color" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="p4f-eT-jtX">
+                                                    <frame key="frameInset" minX="150" minY="77" width="140" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="price" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wu8-LV-kFz">
+                                                    <frame key="frameInset" minX="150" minY="94" width="140" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vi7-kj-SLI">
+                                                    <frame key="frameInset" width="100" height="30" maxX="10" maxY="10"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                    <state key="normal" title="Order"/>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="carImageView" destination="5pC-KR-qHX" id="9Mz-Jl-d5s"/>
+                                            <outlet property="colorLabel" destination="p4f-eT-jtX" id="M9E-i3-Gc3"/>
+                                            <outlet property="descriptionLabel" destination="rkK-FG-xyE" id="wFl-dL-ryZ"/>
+                                            <outlet property="modelLabel" destination="G5x-FB-Jbx" id="cfP-8M-gKD"/>
+                                            <outlet property="orderLabel" destination="vi7-kj-SLI" id="i63-MV-931"/>
+                                            <outlet property="priceLabel" destination="wu8-LV-kFz" id="M1E-8T-D65"/>
+                                            <outlet property="yearLabel" destination="5vH-m0-YtQ" id="xEh-fA-y4F"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="ytx-NI-T1L"/>
+                    <connections>
+                        <outlet property="collectionView" destination="3AH-ZW-mic" id="Cln-ws-eyO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KN3-sW-9y7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -105,7 +187,7 @@
             <objects>
                 <viewController id="ybv-mS-Iaa" customClass="OtherController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l4R-nF-FSZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.40000000596046448" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Jak-9f-VKO">
@@ -130,7 +212,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="OtherCollectionViewCell" id="UfD-wL-Nhb" customClass="CarMainCollectionViewCell">
-                                        <rect key="frame" x="9" y="0.0" width="302" height="124"/>
+                                        <rect key="frame" x="37" y="0.0" width="302" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="124"/>
@@ -184,7 +266,7 @@
             <objects>
                 <viewController id="wO2-ex-ovk" customClass="CarWithoutDriverController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PCH-IX-2kv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C8h-bU-Rup">
@@ -288,7 +370,7 @@
             <objects>
                 <viewController storyboardIdentifier="WithoutDriverDetailController" hidesBottomBarWhenPushed="YES" id="dmA-2K-POo" customClass="WithoutDriverDetailController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WaK-rj-FlG">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="swc-oM-7jE">
@@ -776,7 +858,7 @@
             <objects>
                 <viewController id="Cwk-BL-yig" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="55c-hQ-Hhp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -794,7 +876,7 @@
             <objects>
                 <viewController id="mJj-Hk-ghk" customClass="SliderBarViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BjF-aP-zud">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="oQp-ye-UIL">
@@ -939,6 +1021,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
 </document>
