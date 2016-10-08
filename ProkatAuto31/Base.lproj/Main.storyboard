@@ -11,7 +11,7 @@
             <objects>
                 <viewController id="cZh-kX-NOu" customClass="CarWithDriverController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K4n-wc-yLv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RIs-Db-bqI">
@@ -36,7 +36,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CarMainCollectionViewCell" id="dwI-hU-Pq8" customClass="CarMainCollectionViewCell">
-                                        <rect key="frame" x="36" y="0.0" width="302" height="124"/>
+                                        <rect key="frame" x="9" y="0.0" width="302" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="124"/>
@@ -85,12 +85,27 @@
             </objects>
             <point key="canvasLocation" x="-255" y="-1057"/>
         </scene>
+        <!--Cars With Driver List Controller-->
+        <scene sceneID="HfQ-OH-yi1">
+            <objects>
+                <viewController storyboardIdentifier="CarsWithDriverListController" hidesBottomBarWhenPushed="YES" id="2if-NZ-pNf" customClass="CarsWithDriverListController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TDy-em-Wai">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ytx-NI-T1L"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KN3-sW-9y7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="202" y="-1056"/>
+        </scene>
         <!--P R O K A T A U T O 3 1-->
         <scene sceneID="hoK-IS-uaY">
             <objects>
                 <viewController id="ybv-mS-Iaa" customClass="OtherController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l4R-nF-FSZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.40000000596046448" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Jak-9f-VKO">
@@ -115,7 +130,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="OtherCollectionViewCell" id="UfD-wL-Nhb" customClass="CarMainCollectionViewCell">
-                                        <rect key="frame" x="36" y="0.0" width="302" height="124"/>
+                                        <rect key="frame" x="9" y="0.0" width="302" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="124"/>
@@ -169,7 +184,7 @@
             <objects>
                 <viewController id="wO2-ex-ovk" customClass="CarWithoutDriverController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PCH-IX-2kv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C8h-bU-Rup">
@@ -194,7 +209,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CarMainCollectionViewCell" id="PZT-zm-Kpd" customClass="CarMainCollectionViewCell">
-                                        <rect key="frame" x="37" y="40" width="302" height="124"/>
+                                        <rect key="frame" x="10" y="40" width="302" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="124"/>
@@ -222,7 +237,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Header" id="bEB-oH-9Dx" customClass="HeaderInSectionView">
-                                    <rect key="frame" x="0.0" y="0.0" width="376" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="321" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" id="eaw-aJ-VN6">
@@ -273,7 +288,7 @@
             <objects>
                 <viewController storyboardIdentifier="WithoutDriverDetailController" hidesBottomBarWhenPushed="YES" id="dmA-2K-POo" customClass="WithoutDriverDetailController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WaK-rj-FlG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="swc-oM-7jE">
@@ -289,7 +304,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="CarWithoutDriverDetailsCell" id="3O9-59-0MN" customClass="CarWithoutDriverDetailsCell">
-                                        <rect key="frame" x="36" y="0.0" width="302" height="500"/>
+                                        <rect key="frame" x="9" y="0.0" width="302" height="500"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="500"/>
@@ -761,7 +776,7 @@
             <objects>
                 <viewController id="Cwk-BL-yig" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="55c-hQ-Hhp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -779,7 +794,7 @@
             <objects>
                 <viewController id="mJj-Hk-ghk" customClass="SliderBarViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BjF-aP-zud">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="oQp-ye-UIL">
@@ -791,7 +806,7 @@
                                         <rect key="frame" x="0.0" y="28" width="260" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UBM-to-Rgl" id="stG-Ce-sWp">
-                                            <frame key="frameInset" width="260" height="44"/>
+                                            <frame key="frameInset" width="260" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -924,6 +939,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>
