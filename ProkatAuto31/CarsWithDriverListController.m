@@ -9,6 +9,7 @@
 #import "CarsWithDriverListController.h"
 #import "CarWithDriverCell.h"
 #import "Car.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface CarsWithDriverListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -26,6 +27,19 @@
     self.baseAddress = @"http://83.220.170.187";
     self.dataArray = [NSMutableArray array];
     
+    Car *car1 = [Car alloc];
+    car1.itemFullName = @"Honda";
+    car1.itemColor = @"White";
+    car1.minimumPrice = [NSNumber alloc];
+
+    
+    Car *car2 = [Car alloc];
+    car2.itemFullName = @"Honda";
+    car2.itemColor = @"White";
+    car2.minimumPrice = [NSNumber alloc];
+    
+    [self.dataArray addObject:(car1)];
+    [self.dataArray addObject:(car2)];
 }
 
 -(void) myCustomBack {
@@ -49,40 +63,21 @@
     Car *car = [self.dataArray objectAtIndex:indexPath.row];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, car.imageURL]];
-//    [cell.carImageView setImageWithURL:url];
-//    
-//    cell.carName.text = [NSString stringWithFormat:@"%@ %@", car.itemFullName, car.itemTransmissionName];
-//    cell.transmission.text = car.itemTransmissionName;
-//    cell.engine.text = [NSString stringWithFormat:@"%@ л", car.itemEngine];
-//    cell.power.text =  [NSString stringWithFormat:@"%@ л.с.",car.itemPower];
-//    cell.fuel.text = car.itemFuelName;
-//    
-//    cell.deposit.text = [NSString stringWithFormat:@"%@ руб", car.deposit];
-//    cell.priceFrom.text = [NSString stringWithFormat:@"от %@ руб", car.minimumPrice];
-//    cell.priceRange1.text = [NSString stringWithFormat:@"%@ руб", car.priceRange1];
-//    cell.priceRange2.text = [NSString stringWithFormat:@"%@ руб", car.priceRange2];
-//    cell.priceRange3.text = [NSString stringWithFormat:@"%@ руб", car.priceRange3];
+    [cell.carImageView setImageWithURL:url];
+
+    cell.modelLabel.text = car.itemFullName;
+    cell.colorLabel.text = car.itemColor;
     
-//    return [cell addCollectionViewCellProperty:cell];
-    return NULL;
+    return [cell addCollectionViewCellProperty:cell];
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
-    [self.navigationController pushViewController:vc animated:YES];
+//    StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
+//    [self.navigationController pushViewController:vc animated:YES];
     
     
-}
-
-- (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.expandedCellIndex == indexPath.item) {
-        
-        return CGSizeMake(self.collectionView.frame.size.width - 16, 490);
-        
-    }
-    return CGSizeMake(self.collectionView.frame.size.width - 16, 270);
 }
 
 @end

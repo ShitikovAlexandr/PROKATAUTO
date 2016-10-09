@@ -17,4 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *orderLabel;
 
+- (UICollectionViewCell*) addCollectionViewCellProperty: (UICollectionViewCell*) cell;
+
 @end
