@@ -14,6 +14,7 @@
 @interface CarsWithDriverListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
 @property (strong, nonatomic) NSString *baseAddress;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end
 
 @implementation CarsWithDriverListController
@@ -27,19 +28,22 @@
     self.baseAddress = @"http://83.220.170.187";
     self.dataArray = [NSMutableArray array];
     
-    Car *car1 = [Car alloc];
+    Car *car1 = [[Car alloc] init];
     car1.itemFullName = @"Honda";
     car1.itemColor = @"White";
-    car1.minimumPrice = [NSNumber alloc];
+    car1.minimumPrice = @10;
 
     
-    Car *car2 = [Car alloc];
+    Car *car2 = [[Car alloc] init];
     car2.itemFullName = @"Honda";
     car2.itemColor = @"White";
-    car2.minimumPrice = [NSNumber alloc];
+    car2.minimumPrice = @1000;
     
     [self.dataArray addObject:(car1)];
     [self.dataArray addObject:(car2)];
+    
+    [self.collectionView reloadData];
+    
 }
 
 -(void) myCustomBack {
