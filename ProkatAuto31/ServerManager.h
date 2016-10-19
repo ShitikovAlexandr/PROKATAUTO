@@ -28,7 +28,9 @@
                                      onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
                              withCategoryID: (NSNumber*) categoryID;
 
-
+- (void) getCarWithDriverDetailOnSuccess:(void(^)(NSArray* thisData)) success
+                                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
+                             withCategoryID: (NSNumber*) categoryID;
 
 
 @end

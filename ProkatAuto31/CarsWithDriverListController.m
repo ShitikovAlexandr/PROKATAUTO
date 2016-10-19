@@ -8,8 +8,9 @@
 
 #import "CarsWithDriverListController.h"
 #import "CarWithDriverCell.h"
-#import "Car.h"
 #import "UIImageView+AFNetworking.h"
+#import "ServerManager.h"
+#import "CarWithDriver.h"
 
 @interface CarsWithDriverListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -28,22 +29,7 @@
     self.baseAddress = @"http://83.220.170.187";
     self.dataArray = [NSMutableArray array];
     
-    Car *car1 = [[Car alloc] init];
-    car1.itemFullName = @"Honda";
-    car1.itemColor = @"White";
-    car1.minimumPrice = @10;
-
-    
-    Car *car2 = [[Car alloc] init];
-    car2.itemFullName = @"Honda";
-    car2.itemColor = @"White";
-    car2.minimumPrice = @1000;
-    
-    [self.dataArray addObject:(car1)];
-    [self.dataArray addObject:(car2)];
-    
-    [self.collectionView reloadData];
-    
+    [self getCarInfoFromAPI];
 }
 
 -(void) myCustomBack {
@@ -64,13 +50,15 @@
     
     CarWithDriverCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
-    Car *car = [self.dataArray objectAtIndex:indexPath.row];
+    CarWithDriver *car = [self.dataArray objectAtIndex:indexPath.row];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, car.imageURL]];
     [cell.carImageView setImageWithURL:url];
 
-    cell.modelLabel.text = car.itemFullName;
-    cell.colorLabel.text = car.itemColor;
+    cell.modelLabel.text = car.name;
+    cell.descriptionLabel.attributedText = [[NSAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];;
+    
+    [cell.descriptionLabel sizeToFit];
     
     return [cell addCollectionViewCellProperty:cell];
     
@@ -81,6 +69,19 @@
 //    StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
 //    [self.navigationController pushViewController:vc animated:YES];
     
+    
+}
+
+#pragma mark - API
+
+- (void) getCarInfoFromAPI {
+    
+    [[ServerManager sharedManager] getCarWithDriverDetailOnSuccess:^(NSArray *thisData) {
+        [self.dataArray addObjectsFromArray:thisData];
+        [self.collectionView reloadData];
+    } onFail:^(NSError *error, NSInteger statusCode) {
+        NSLog(@"Error = %@", error);
+    } withCategoryID:self.categoryID];
     
 }
 

@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "Category.h"
 #import "Car.h"
+#import "CarWithDriver.h"
 
 @interface ServerManager ()
 
@@ -189,6 +190,38 @@
                      }];
     
 
+}
+
+- (void) getCarWithDriverDetailOnSuccess:(void(^)(NSArray* thisData)) success
+                                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
+                             withCategoryID: (NSNumber*) categoryID {
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category", nil];
+    
+    [self.sessionManager GET:@"hourly-cars/"
+                  parameters:params
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         //NSLog(@"responseObject cars %@", responseObject);
+                         NSArray *dictsArray = [responseObject objectForKey:@"results"];
+                         NSMutableArray *objectsArray = [NSMutableArray array];
+                         
+                         for (NSDictionary* dic in dictsArray) {
+                             CarWithDriver *car = [[CarWithDriver alloc] initWithServerResponse:dic];
+                             [objectsArray addObject:car];
+                         }
+                         
+                         
+                         if (success) {
+                             success(objectsArray);
+                         }
+                         
+                         
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"Error: %@", error);
+                     }];
+    
+    
 }
 
 
