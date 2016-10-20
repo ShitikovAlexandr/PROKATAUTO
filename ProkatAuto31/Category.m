@@ -16,6 +16,9 @@
     
     if (self) {
         self.name =[responseObject objectForKey:@"name"];
+        if(self.name == NULL) {
+            self.name =[responseObject objectForKey:@"title"];
+        }
 
         self.image = [responseObject objectForKey:@"image"];
         

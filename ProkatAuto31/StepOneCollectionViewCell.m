@@ -11,8 +11,4 @@
 @implementation StepOneCollectionViewCell
 
 
-
-
-
-
 @end

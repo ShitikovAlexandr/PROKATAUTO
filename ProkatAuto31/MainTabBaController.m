@@ -29,7 +29,7 @@
                                              forState:UIControlStateSelected];
     
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"AmericanTypewriter" size:8.f]} forState:(UIControlStateNormal)];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"ArialMT" size:8.f]} forState:(UIControlStateNormal)];
 }
 
 - (void)didReceiveMemoryWarning {

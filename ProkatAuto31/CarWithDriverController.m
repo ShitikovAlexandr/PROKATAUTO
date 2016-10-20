@@ -82,7 +82,14 @@
 - (void) getCarCategorieFromAPI {
     
     [[ServerManager sharedManager] getCarWithDriverCategoryOnSuccess:^(NSArray *thisData) {
-        [self.categoryWithDriverArray addObjectsFromArray:thisData];
+        
+        NSSortDescriptor *sortDescriptor;
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"categoryID"
+                                                     ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        self.categoryWithDriverArray = (NSMutableArray*)[thisData sortedArrayUsingDescriptors:sortDescriptors];
+        
+        //[self.categoryWithDriverArray addObjectsFromArray:thisData];
         [self.collectionView performBatchUpdates:^{
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
         } completion:nil];

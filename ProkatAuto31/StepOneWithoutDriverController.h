@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Car.h"
 
-@interface StepOneWithoutDriverController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource,  UITextFieldDelegate, UIPickerViewDelegate>
+@interface StepOneWithoutDriverController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource,  UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (strong, nonatomic) Car *car;
 

@@ -11,6 +11,9 @@
 @interface CarMainCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *carImageView;
 @property (weak, nonatomic) IBOutlet UILabel *categoryName;
+@property (weak, nonatomic) IBOutlet UILabel *mainDescription;
+
+
 
 #pragma mark - CellProperty
 
