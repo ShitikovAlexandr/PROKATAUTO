@@ -45,16 +45,14 @@
 
     //[self.navigationController.navigationItem.backBarButtonItem setTitle:@"dddd"];
     self.baseAddress = @"http://83.220.170.187";
-  
-
-    
     self.expandedCellIndex = -1;
-
     self.dataArray = [NSMutableArray array];
     
-    [self getCarInfoFromAPI];
-    
-    
+    if (self.categoryID !=NULL) {
+        [self getCarInfoFromAPI];
+    } else {
+        [self getCarInfoWithTransmissionFromAPI];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,27 +79,36 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, car.imageURL]];
     [cell.mainCarImage setImageWithURL:url];
     
-    cell.carName.text = [NSString stringWithFormat:@"%@ %@", car.itemFullName, car.itemTransmissionName];
+    cell.carName.text = [NSString stringWithFormat:@"%@", car.itemFullName];
     cell.transmission.text = car.itemTransmissionName;
-    cell.engine.text = [NSString stringWithFormat:@"%@ л", car.itemEngine];
+    cell.engine.text = [NSString stringWithFormat:@"%@ л.", car.itemEngine];
     cell.power.text =  [NSString stringWithFormat:@"%@ л.с.",car.itemPower];
     cell.fuel.text = car.itemFuelName;
     
-    cell.deposit.text = [NSString stringWithFormat:@"%@ руб", car.deposit];
-    cell.priceFrom.text = [NSString stringWithFormat:@"от %@ руб", car.minimumPrice];
-    cell.priceRange1.text = [NSString stringWithFormat:@"%@ руб", car.priceRange1];
-    cell.priceRange2.text = [NSString stringWithFormat:@"%@ руб", car.priceRange2];
-    cell.priceRange3.text = [NSString stringWithFormat:@"%@ руб", car.priceRange3];
-    
+    cell.deposit.text = [NSString stringWithFormat:@"%@", car.deposit];
+    cell.priceFrom.text = [NSString stringWithFormat:@"от %@ руб.", car.minimumPrice];
+    cell.priceRange1.text = [NSString stringWithFormat:@"%@", car.priceRange1];
+    cell.priceRange2.text = [NSString stringWithFormat:@"%@", car.priceRange2];
+    cell.priceRange3.text = [NSString stringWithFormat:@"%@", car.priceRange3];
+
+    NSString* str = @"";
+    for (NSString* color in car.itemColor) {
+        
+         str = [NSString stringWithFormat:@"%@ %@", color, str];
+    }
+    cell.color.text = str;
     
     [cell.InfoButton addTarget:self action:@selector(infoClickEvent:event:) forControlEvents:UIControlEventTouchUpInside];
     if (self.expandedCellIndex == indexPath.item) {
         cell.InfoButton.selected =YES;
+        [cell.InfoButton setTitle:@"Скрыть характеристики" forState:UIControlStateNormal];
     } else {
         cell.InfoButton.selected =NO;
+        [cell.InfoButton setTitle:@"Показать характеристики" forState:UIControlStateNormal];
+
     }
     
-    //[cell.rentalButton addTarget:self action:@selector(StepOne) forControlEvents:<#(UIControlEvents)#>];
+    [cell.rentalButton addTarget:self action:@selector(StepOne:event:) forControlEvents:UIControlEventTouchUpInside];
     
     return [cell addCollectionViewCellProperty:cell];
     
@@ -109,19 +116,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
    
-    StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
-    [self.navigationController pushViewController:vc animated:YES];
-    
     
    }
 
 - (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.expandedCellIndex == indexPath.item) {
-        
-        return CGSizeMake(self.collectionView.frame.size.width - 16, 490);
+        return CGSizeMake(self.collectionView.frame.size.width - 16, 460);
       
     }
-    return CGSizeMake(self.collectionView.frame.size.width - 16, 270);
+    return CGSizeMake(self.collectionView.frame.size.width - 16, 355);
 }
 
 - (IBAction)infoClickEvent:(id) sender event: (id) event {
@@ -130,14 +133,14 @@
     UITouch *touch = [touches anyObject];
     CGPoint currentTouchPosition = [touch locationInView: self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint: currentTouchPosition];
-   // NSLog(@"Press info button at index %d", indexPath.item);
     
-     
+    
+
     
     if (self.expandedCellIndex == indexPath.item) {
         
         [UIView animateWithDuration:1 animations:^{
-            // cell.backgroundColor = [UIColor lightGrayColor];
+        
         }];
         self.expandedCellIndex = -1;
     } else {
@@ -147,6 +150,20 @@
         self.expandedCellIndex = indexPath.item;
     }
     [self.collectionView reloadData];
+    
+}
+
+- (IBAction)StepOne:(id) sender event: (id) event {
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView: self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint: currentTouchPosition];
+    
+    StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
+    vc.title = @"Шаг 1: Вабор периода аренды авто";
+    vc.car = [self.dataArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
+
     
 }
 
@@ -167,6 +184,17 @@
    } withCategoryID:self.categoryID];
     
 }
+
+- (void) getCarInfoWithTransmissionFromAPI {
+    
+    [[ServerManager sharedManager] getCarWithoutDriverDetailWithTransmissionOnSuccess:^(NSArray *thisData) {
+        [self.dataArray addObjectsFromArray:thisData];
+        [self.collectionView reloadData];
+    } onFail:^(NSError *error, NSInteger statusCode) {
+         NSLog(@"Error = %@", error);
+    } withCategoryID:self.transmissionID];
+}
+
 
 
 @end

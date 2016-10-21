@@ -11,5 +11,7 @@
 @interface WithoutDriverDetailController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (assign, nonatomic) NSNumber *categoryID;
+@property (assign, nonatomic) NSNumber *transmissionID;
+
 
 @end

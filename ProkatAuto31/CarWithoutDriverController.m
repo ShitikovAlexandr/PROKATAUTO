@@ -122,6 +122,7 @@
     } else {
         Category *category =[self.transmisionCategories objectAtIndex:indexPath.row];
         cell.categoryName.text = category.name;
+        cell.mainDescription.text = category.maimDescription;
         cell.carImageView.image = [UIImage imageNamed:category.image];
         return [cell addCollectionViewCellProperty:cell];
     }
@@ -131,14 +132,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
    
-     Category *category =[self.carCategories objectAtIndex:indexPath.row];
-    WithoutDriverDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WithoutDriverDetailController"];
-    vc.categoryID = category.categoryID;
+    if (indexPath.section ==0) {
+        Category *category =[self.carCategories objectAtIndex:indexPath.row];
+        WithoutDriverDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WithoutDriverDetailController"];
+        vc.categoryID = category.categoryID;
+        vc.title = category.name;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        
+        Category *category =[self.transmisionCategories objectAtIndex:indexPath.row];
+        WithoutDriverDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WithoutDriverDetailController"];
+        vc.transmissionID = category.categoryID;
+        vc.title = category.name;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     
     
     
-    vc.title = category.name;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    
 
 }
 
@@ -147,9 +159,14 @@
     Category *automaticTransmission = [[Category alloc] init];
     automaticTransmission.name = @"Авто с АКПП";
     automaticTransmission.image = @"akpp120x90.jpg";
+    automaticTransmission.categoryID = @2;
+    automaticTransmission.maimDescription = @"Автомобили с автоматической коробкой передач";
+    
     Category *manualTransmission = [[Category alloc] init];
     manualTransmission.name = @"Авто с МКПП";
     manualTransmission.image = @"mkpp120x90.jpg";
+    manualTransmission.categoryID = @1;
+    manualTransmission.maimDescription = @"Автомобили с механической (ручной) коробкой передач";
     
     return [NSMutableArray arrayWithObjects:manualTransmission, automaticTransmission, nil];
     
@@ -162,7 +179,17 @@
 - (void) getCarCategorieFromAPI {
     
     [[ServerManager sharedManager] getCarWithoutDriverCategoryOnSuccess:^(NSArray *thisData) {
-        [self.carCategories addObjectsFromArray:thisData];
+        /*
+        NSSortDescriptor *sortDescriptor;
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"categoryID"
+                                                     ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        self.carCategories = (NSMutableArray*)[thisData sortedArrayUsingDescriptors:sortDescriptors];
+        */
+        
+        [self.carCategories addObjectsFromArray:thisData] ;
+        
+        
         
         [self.collectionView performBatchUpdates:^{
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
@@ -172,6 +199,8 @@
     
     
 }
+
+
 
 
 @end

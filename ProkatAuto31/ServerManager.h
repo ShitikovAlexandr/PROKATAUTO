@@ -23,6 +23,8 @@
 
 - (void) getCarOtherCategoryOnSuccess:(void(^)(NSArray* thisData)) success
                                        onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void) getCarOtherCategoryWithPageOnSuccess:(void(^)(NSArray* thisData)) success
+                               onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 - (void) getCarWithoutDriverDetailOnSuccess:(void(^)(NSArray* thisData)) success
                                      onFail:(void(^)(NSError* error, NSInteger statusCode)) failure

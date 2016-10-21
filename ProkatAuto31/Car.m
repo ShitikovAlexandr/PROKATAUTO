@@ -15,6 +15,8 @@
     self = [super init];
     
     if (self) {
+        self.itemColor = [NSMutableArray array];
+        self.carID = [NSMutableArray array];
         
         self.itemCategoryId = [[responseObject objectForKey:@"category"] objectForKey:@"id"];
         self.itemCategoryId = [[responseObject objectForKey:@"category"] objectForKey:@"name"];
@@ -27,12 +29,9 @@
         
         self.itemEngine = [responseObject objectForKey:@"engine"];
         
-        
         NSDictionary *fuelDic = [[responseObject objectForKey:@"fuel"] objectAtIndex:0];
         self.itemFuelID = [fuelDic objectForKey:@"id"];
         self.itemFuelName = [fuelDic objectForKey:@"name"];
-
-        
         self.itemPower = [responseObject objectForKey:@"power"];
         
         self.itemTransmissionName = [[responseObject objectForKey:@"transmission"] objectForKey:@"name"];
@@ -42,6 +41,17 @@
         
         NSDictionary *imgDic = [[responseObject objectForKey:@"car_images"] objectAtIndex:0];
         self.imageURL = [imgDic objectForKey:@"url"];
+        
+        NSDictionary *idDic = [responseObject objectForKey:@"cars"] ;
+        for (NSDictionary*  str in idDic) {
+            NSString *carId = [str objectForKey:@"id"];
+            NSString *color = [[str objectForKey:@"color"] objectForKey:@"name"];
+            
+            [self.carID addObject:carId];
+            [self.itemColor addObject:color];
+        }
+      
+
         
         self.deposit = [responseObject objectForKey:@"deposit"];
         

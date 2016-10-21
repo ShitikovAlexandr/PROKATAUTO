@@ -28,32 +28,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    /*
-    Category *cat1 = [[Category alloc] init];
-    cat1.name = @"Трансферы";
-    
-    Category *cat2 = [[Category alloc] init];
-    cat2.name = @"Аренда с выкупом";
-    
-    Category *cat3 = [[Category alloc] init];
-    cat3.name = @"Корпоративные перевозки";
-    
-    Category *cat4 = [[Category alloc] init];
-    cat4.name = @"Грузовые авто с водителем";
-    
-    Category *cat5 = [[Category alloc] init];
-    cat5.name = @"Туристические поездки";
-    
-    Category *cat6 = [[Category alloc] init];
-    cat6.name = @"Эвакуатор";
-    
-    self.categoryArray = [NSMutableArray arrayWithObjects:cat1, cat2, cat3, cat4, cat5, cat6, nil];
-    */
+
     self.baseAddress = @"http://83.220.170.187";
 
     self.categoryArray = [NSMutableArray array];
     [self getCarCategorieFromAPI];
-    
     
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
@@ -98,17 +77,19 @@
 #pragma mark - API
 
 - (void) getCarCategorieFromAPI {
-    
     [[ServerManager sharedManager] getCarOtherCategoryOnSuccess:^(NSArray *thisData) {
         [self.categoryArray addObjectsFromArray:thisData];
-        [self.collectionView performBatchUpdates:^{
+        
+        [[ServerManager sharedManager] getCarOtherCategoryWithPageOnSuccess:^(NSArray *thisData) {
+            [self.categoryArray addObjectsFromArray:thisData];
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-        } completion:nil];
-    } onFail:^(NSError *error, NSInteger statusCode) {
-        //NSLog(@"error = %@, code = %d", [error localizedDescription], statusCode);
+        } onFail:^(NSError *error, NSInteger statusCode) {
+            NSLog(@"error = %@, ", error);
+        }];
+         } onFail:^(NSError *error, NSInteger statusCode) {
+        NSLog(@"error = %@, ", error);
     }];
-    
-    
+   // [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 
 

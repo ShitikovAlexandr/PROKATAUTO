@@ -19,15 +19,16 @@
 
 @property (weak, nonatomic) IBOutlet UIView *supplyCarView;
 @property (weak, nonatomic) IBOutlet UIView *ReturnCarView;
+
 @property (weak, nonatomic) IBOutlet UITextField *DateReturnTextField;
 @property (weak, nonatomic) IBOutlet UITextField *timeReturnTextField;
-
-
-
 @property (weak, nonatomic) IBOutlet UITextField *dateStartTextField;
 @property (weak, nonatomic) IBOutlet UITextField *timeStartTextField;
 
 
+@property (weak, nonatomic) IBOutlet UITextField *startPlase;
+@property (weak, nonatomic) IBOutlet UITextField *returnPlase;
 
+@property (weak, nonatomic) IBOutlet UIButton *rentalButton;
 
 @end

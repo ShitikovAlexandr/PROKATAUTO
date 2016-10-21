@@ -10,6 +10,7 @@
 
 @interface Car : NSObject
 
+@property (strong, nonatomic) NSMutableArray *carID;
 @property (strong, nonatomic) NSString *itemCategoryId;//
 @property (strong, nonatomic) NSString *itemCategoryName;//
 
@@ -20,7 +21,7 @@
 @property (strong, nonatomic) NSString *itemModelName;//
 @property (strong, nonatomic) NSString *itemModelID;//
 
-@property (strong, nonatomic) NSString *itemColor;
+@property (strong, nonatomic) NSMutableArray *itemColor;
 
 @property (strong, nonatomic) NSString *itemEngine;//
 @property (strong, nonatomic) NSString *itemFuelName;//

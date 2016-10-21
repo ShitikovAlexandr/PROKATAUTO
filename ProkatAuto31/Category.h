@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString *slug;
 @property (strong, nonatomic) NSString *image;
 @property (assign, nonatomic) NSNumber *categoryID;
+@property (strong, nonatomic) NSString *maimDescription;
 
 
 - (id) initWithServerResponse: (NSDictionary*) responseObject;
