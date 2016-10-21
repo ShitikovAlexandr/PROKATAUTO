@@ -14,6 +14,7 @@
 
 @interface CarsWithDriverListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
+@property (strong, nonatomic) NSMutableArray *descriptionsArray;
 @property (strong, nonatomic) NSString *baseAddress;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end
@@ -28,6 +29,7 @@
     
     self.baseAddress = @"http://83.220.170.187";
     self.dataArray = [NSMutableArray array];
+    self.descriptionsArray = [NSMutableArray array];
     
     [self getCarInfoFromAPI];
 }
@@ -56,20 +58,33 @@
     [cell.carImageView setImageWithURL:url];
 
     cell.modelLabel.text = car.name;
-    cell.descriptionLabel.attributedText = [[NSAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];;
-    
+    cell.descriptionLabel.attributedText = [self.descriptionsArray objectAtIndex:indexPath.row];
+
     [cell.descriptionLabel sizeToFit];
     
     return [cell addCollectionViewCellProperty:cell];
     
 }
 
+- (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CarWithDriver *car = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSAttributedString *desctiption = [[NSAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    
+    [self.descriptionsArray addObject:desctiption];
+    
+    CGRect descriptionRect = [desctiption boundingRectWithSize:CGSizeMake(self.collectionView.frame.size.width - 165, 0)
+                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                        context:nil];
+    CGFloat height = descriptionRect.size.height + 70;
+    return CGSizeMake(self.collectionView.frame.size.width - 16, height < 170 ? 170 : height);
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
 //    StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
-//    [self.navigationController pushViewController:vc animated:YES];
-    
-    
+//    [self.navigationController pushViewController:vc animated:YES];s
 }
 
 #pragma mark - API
