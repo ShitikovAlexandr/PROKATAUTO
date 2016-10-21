@@ -83,7 +83,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B5u-z9-jxp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-256" y="-1042"/>
+            <point key="canvasLocation" x="-255.5" y="-1057.5"/>
         </scene>
         <!--Cars With Driver List Controller-->
         <scene sceneID="HfQ-OH-yi1">
@@ -195,8 +195,8 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="OtherCollectionViewCell" id="UfD-wL-Nhb" customClass="CarMainCollectionViewCell">
-                                        <rect key="frame" x="37" y="0.0" width="302" height="124"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OtherCollectionViewCell" id="UfD-wL-Nhb" customClass="CarMainCollectionViewCell">
+                                        <rect key="frame" x="36" y="0.0" width="303" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="303" height="124"/>
