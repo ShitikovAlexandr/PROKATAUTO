@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "ServerManager.h"
 #import "CarWithDriver.h"
+#import "OrderCarWithDriverController.h"
 
 @interface CarsWithDriverListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -62,6 +63,8 @@
 
     [cell.descriptionLabel sizeToFit];
     
+    [cell.orderButton addTarget:self action:@selector(OrderCar:event:) forControlEvents:UIControlEventTouchUpInside];
+    
     return [cell addCollectionViewCellProperty:cell];
     
 }
@@ -81,10 +84,16 @@
     return CGSizeMake(self.collectionView.frame.size.width - 16, height < 170 ? 170 : height);
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (IBAction)OrderCar:(id) sender event: (id) event {
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView: self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint: currentTouchPosition];
     
-//    StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
-//    [self.navigationController pushViewController:vc animated:YES];s
+    OrderCarWithDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderCarWithDriverController"];
+    vc.title = @"Оформить заказ";
+    vc.car = [self.dataArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - API
