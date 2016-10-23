@@ -77,11 +77,11 @@
     
     [self.descriptionsArray addObject:desctiption];
     
-    CGRect descriptionRect = [desctiption boundingRectWithSize:CGSizeMake(self.collectionView.frame.size.width - 165, 0)
+    CGRect descriptionRect = [desctiption boundingRectWithSize:CGSizeMake(self.collectionView.frame.size.width - 185, 0)
                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                         context:nil];
     CGFloat height = descriptionRect.size.height + 70;
-    return CGSizeMake(self.collectionView.frame.size.width - 16, height < 170 ? 170 : height);
+    return CGSizeMake(self.collectionView.frame.size.width - 16, height < 150 ? 150 : height);
 }
 
 - (IBAction)OrderCar:(id) sender event: (id) event {
