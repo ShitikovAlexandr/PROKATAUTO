@@ -10,7 +10,6 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface OrderCarWithDriverController ()
-@property (strong, nonatomic) NSString *baseAddress;
 @property (strong, nonatomic) UIPickerView *countryCodePicker;
 @property (strong, nonatomic) NSDictionary *countryCodeArray;
 @end
@@ -23,9 +22,7 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
-    self.baseAddress = @"http://83.220.170.187";
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, self.car.imageURL]];
+    NSURL *url = [NSURL URLWithString:self.car.imageURL];
     [self.carImageView setImageWithURL:url];
     
     self.titleLabel.text = self.car.name;
@@ -89,10 +86,6 @@
     
     self.codeField.text = str;
     self.countryLabel.text = str2;
-    //save date
-    NSLog(@"Select picker");
-    
-    
 }
 
 - (NSDictionary*) dataForPickerCountry {

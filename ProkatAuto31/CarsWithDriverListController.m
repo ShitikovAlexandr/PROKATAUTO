@@ -16,7 +16,6 @@
 @interface CarsWithDriverListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
 @property (strong, nonatomic) NSMutableArray *descriptionsArray;
-@property (strong, nonatomic) NSString *baseAddress;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end
 
@@ -28,7 +27,6 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
-    self.baseAddress = @"http://83.220.170.187";
     self.dataArray = [NSMutableArray array];
     self.descriptionsArray = [NSMutableArray array];
     
@@ -55,7 +53,7 @@
     
     CarWithDriver *car = [self.dataArray objectAtIndex:indexPath.row];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, car.imageURL]];
+    NSURL *url = [NSURL URLWithString:car.imageURL];
     [cell.carImageView setImageWithURL:url];
 
     cell.modelLabel.text = car.name;

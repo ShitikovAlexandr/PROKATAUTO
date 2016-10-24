@@ -21,7 +21,7 @@
         self.carDescription = [responseObject objectForKey:@"description"];
 
         NSDictionary *imgDic = [[responseObject objectForKey:@"car_images"] objectAtIndex:0];
-        self.imageURL = [imgDic objectForKey:@"url"];
+        self.imageURL = [imgDic objectForKey:@"image"];
     }
     
     
