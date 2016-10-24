@@ -322,7 +322,7 @@
                         <outlet property="emailField" destination="ulW-Lq-6i7" id="eL4-86-7os"/>
                         <outlet property="nameField" destination="n62-Fq-BPY" id="u9j-td-eYB"/>
                         <outlet property="phoneField" destination="JQy-2r-nbZ" id="Xwn-jq-5Og"/>
-                        <outlet property="sendOrderField" destination="5nZ-tT-qAG" id="g2z-8B-xhd"/>
+                        <outlet property="sendOrderButton" destination="5nZ-tT-qAG" id="0Lz-Pt-Vez"/>
                         <outlet property="titleLabel" destination="Hx0-RS-zT7" id="0C8-kh-yK7"/>
                     </connections>
                 </tableViewController>

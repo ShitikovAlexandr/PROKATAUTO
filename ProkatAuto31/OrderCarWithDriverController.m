@@ -30,6 +30,8 @@
     
     [self.descriptionLabel sizeToFit];
     
+    [self.sendOrderButton addTarget:self action:@selector(SendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
+    
     self.countryCodeArray = [self dataForPickerCountry];
     self.countryCodePicker = [[UIPickerView alloc] init];
     self.countryCodePicker.layer.backgroundColor = [UIColor whiteColor].CGColor;
@@ -49,6 +51,18 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)SendOrder:(id) sender event: (id) event {
+    
+    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:nil
+                                                       message:@"Спасибо за Ваш заказ! Наши сотрудники свяжутся с Вами в ближайшее время."
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+    [theAlert show];
+    
+
+}
+
 - (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
     [textField starEditeffect:textField];
     return YES;
@@ -57,6 +71,11 @@
 - (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
     [textField EndEditeffect:textField];
     return YES;
+}
+
+- (void)alertView:(UIAlertView *)theAlert clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.navigationController popToRootViewControllerAnimated:TRUE];
 }
 
 #pragma mark - UIPickerViewDelegate
