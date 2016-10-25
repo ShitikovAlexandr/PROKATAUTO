@@ -18,6 +18,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
      [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    
+    //first init of attributed string to run nessasary threads and to make it faster in screens
+    NSMutableAttributedString *attrStringFromHtml = [[NSMutableAttributedString alloc]
+                                                     initWithData: [@"<span>html enabled</span>" dataUsingEncoding:NSUnicodeStringEncoding
+                                                                                              allowLossyConversion:NO]
+                                                     options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                     documentAttributes:nil error:nil];
+    NSLog(@"%@",[attrStringFromHtml string]);
     return YES;
 }
 

@@ -58,8 +58,6 @@
 
     cell.modelLabel.text = car.name;
     cell.descriptionLabel.attributedText = [self.descriptionsArray objectAtIndex:indexPath.row];
-
-    [cell.descriptionLabel sizeToFit];
     
     [cell.orderButton addTarget:self action:@selector(OrderCar:event:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -71,14 +69,14 @@
     
     CarWithDriver *car = [self.dataArray objectAtIndex:indexPath.row];
     
-    NSAttributedString *desctiption = [[NSAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    NSAttributedString *description = [[NSAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
     
-    [self.descriptionsArray addObject:desctiption];
+    [self.descriptionsArray addObject:description];
     
-    CGRect descriptionRect = [desctiption boundingRectWithSize:CGSizeMake(self.collectionView.frame.size.width - 185, 0)
+    CGRect descriptionRect = [description boundingRectWithSize:CGSizeMake(self.collectionView.frame.size.width - 185, 0)
                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                         context:nil];
-    CGFloat height = descriptionRect.size.height + 70;
+    CGFloat height = descriptionRect.size.height + 100;
     return CGSizeMake(self.collectionView.frame.size.width - 16, height < 150 ? 150 : height);
 }
 

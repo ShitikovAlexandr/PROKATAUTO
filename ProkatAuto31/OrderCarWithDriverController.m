@@ -34,8 +34,6 @@
     self.titleLabel.text = self.car.name;
     self.descriptionLabel.attributedText = [[NSAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
     
-    [self.descriptionLabel sizeToFit];
-    
     [self.sendOrderButton addTarget:self action:@selector(SendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
     
     self.countryCodeArray = [self dataForPickerCountry];
