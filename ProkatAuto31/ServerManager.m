@@ -225,7 +225,40 @@
                      }];
 }
 
-- (void) getCarWithoutDriverDetailWithTransmissionOnSuccess:(void(^)(NSArray* thisData)) success
+- (void) getCarWithDriverDetailOnSuccess:(void(^)(NSArray* thisData)) success
+                                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
+                             withCategoryID: (NSNumber*) categoryID {
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category", nil];
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    
+    [self.sessionManager GET:@"hourly-cars/"
+                  parameters:params
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         //NSLog(@"responseObject cars %@", responseObject);
+                         NSArray *dictsArray = [responseObject objectForKey:@"results"];
+                         NSMutableArray *objectsArray = [NSMutableArray array];
+                         
+                         for (NSDictionary* dic in dictsArray) {
+                             CarWithDriver *car = [[CarWithDriver alloc] initWithServerResponse:dic];
+                             
+                             [objectsArray addObject:car];
+                             
+                         }
+                         if (success) {
+                             success(objectsArray);
+                         }
+                         
+                         
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"Error: %@", error);
+                     }];
+}
+
+
+- (void) getCarWithDriverDetailWithTransmissionOnSuccess:(void(^)(NSArray* thisData)) success
                                                    onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
                                            withCategoryID: (NSNumber*) categoryID {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"transmission", nil];
@@ -254,6 +287,9 @@
 }
 - (void) getPlacesOnSuccess:(void(^)(NSArray* thisData)) success
                      onFail:(void(^)(NSError* error, NSInteger statusCode)) failure{
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    
     [self.sessionManager GET:@"services/"
                   parameters:nil
                     progress:nil
@@ -277,66 +313,164 @@
                  OnSuccess:(void(^)(NSArray* thisData)) success
                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            carId, @"car",
-                            dateFrom, @"date_from",
-                            dateTo, @"date_to" , nil];
+                            carId,      @"car",
+                            dateFrom,   @"date_from",
+                            dateTo,     @"date_to" , nil];
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    
     [self.sessionManager POST:@"cars/check/"
                    parameters:params
                      progress:nil
-                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {                           NSArray *dictsArray = [responseObject allObjects];
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          NSArray *dictsArray = [responseObject allObjects];
+                          NSLog(@"Resualt is1111111 %@", responseObject);
+
                           if (success) {
                               success(dictsArray);
                           }
                       }
-                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         //NSLog(@"Error: %@", error);
-         if (failure) {
-             failure(error, 7);
-             NSLog(@"hgfhjjgkjhkhjkhkhjkkhjhjk");
-         }
-     }]; } - (void) getCarOptionsOnSuccess:(void(^)(NSArray* thisData)) success
-                                    onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
-         [self.sessionManager GET:@"options/"
-                       parameters:nil
-                         progress:nil
-                          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {                          NSArray *dictsArray = [responseObject allObjects];
-                              NSMutableArray *objectsArray = [NSMutableArray array];
-                              for (NSDictionary* dic in dictsArray) {
-                                  Option *option = [[Option alloc] initWithServerResponse:dic];
-                                  [objectsArray addObject:option];
-                              }
-                              if (success) {
-                                  success(objectsArray);
-                              }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                           //NSLog(@"Error: %@", error);
+                          if (failure) {
+                              failure(error, 7);
+                              NSLog(@"Resualt 22222222 %@", error);
+
                           }
-                          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                              NSLog(@"Error: %@", error);
-                          }];
-     }
-- (void) getCarWithDriverDetailOnSuccess:(void(^)(NSArray* thisData)) success
-                                  onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
-                          withCategoryID: (NSNumber*) categoryID {
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category", nil];
-    [self.sessionManager GET:@"hourly-cars/"
-                  parameters:params
-                    progress:nil
-                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         //NSLog(@"responseObject cars %@", responseObject);
-         NSArray *dictsArray = [responseObject objectForKey:@"results"];
-         NSMutableArray *objectsArray = [NSMutableArray array];
-         for (NSDictionary* dic in dictsArray) {
-             CarWithDriver *car = [[CarWithDriver alloc] initWithServerResponse:dic];
-             [objectsArray addObject:car];
-         }
-         if (success) {
-             success(objectsArray);
-         }
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         NSLog(@"Error: %@", error);
-     }];
+                      }];
 }
+
+- (void) getCarOptionsOnSuccess:(void(^)(NSArray* thisData)) success
+                         onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    
+    [self.sessionManager GET:@"options/"
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSArray *dictsArray = [responseObject allObjects];
+                         NSMutableArray *objectsArray = [NSMutableArray array];
+                         
+                         for (NSDictionary* dic in dictsArray) {
+                             Option *option = [[Option alloc] initWithServerResponse:dic];
+                             [objectsArray addObject:option];
+                         }
+                         if (success) {
+                             success(objectsArray);
+                         }
+
+                         
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"Error: %@", error);
+                     }];
+}
+
+
+- (void) registrationGetCaptchaOnSuccess:(void (^)(NSString *))success
+                                  onFail:(void (^)(NSError *, NSInteger))failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    
+    [self.sessionManager GET:@"captcha/"
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSString *key = [responseObject objectForKey:@"key"];
+                         NSLog(@"capcha key %@", responseObject);
+                         if (success) {
+                             success(key);
+                         }
+
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"Error: %@", error);
+
+                     }];
+}
+
+- (void) registrationGetCaptchaImgWithKey:(NSString *)key
+                                OnSuccess:(void (^)(id))success
+                                   onFail:(void (^)(NSError *, NSInteger))failure {
+    
+    AFImageResponseSerializer *imgSerializer = [[AFImageResponseSerializer alloc] init];
+    self.sessionManager.responseSerializer = imgSerializer;
+    
+    [self.sessionManager GET:[NSString stringWithFormat:@"captcha/%@/", key]
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         UIImage *img = responseObject;
+                         
+                         if (success) {
+                             success(img);
+                         }
+                         
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"Error: %@", [NSString stringWithFormat:@"%@", error]);
+                     }];
+    
+}
+
+- (void) registrationWithPersonData: (Person*) person
+                             andKey: (NSString*) key
+                    PasswordFromImg:(NSString*) password
+                          OnSuccess:(void(^)(NSString* thisData)) success
+                             onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    //self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            [NSString stringWithFormat:@"%@", person.phoneNumber], @"phone",//
+                            person.Password,                                                             @"password",
+                            key,                                                                         @"captcha_key",
+                            password,                                                                    @"captcha_value",
+                            person.name,                                                                 @"first_name",
+                            person.surname,                                                              @"last_name",
+                            person.middleName,                                                           @"last_name",
+                            person.email,                                                                @"email",
+                            [NSString stringWithFormat:@"%@",[df stringFromDate:person.dateOfBirth]],    @"date_of_birth",
+                            person.passportSeries,                                                       @"passport_series",
+                            person.passportNumber,                                                       @"passport_number",
+                            [NSString stringWithFormat:@"%@",[df stringFromDate:person.dateOfPassport]], @"passport_issue_date",
+                            person.driverLicense,                                                        @"license_series",
+                            person.driverLicenseNumber,                                                  @"license_number",
+                            [NSString stringWithFormat:@"%@",[df stringFromDate:person.drivelLicenseDate]],@"license_issue_date", nil];
+
+    
+    [self.sessionManager POST:@"register/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          
+                          NSLog(@"register rspons______________%@", responseObject);
+                          
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          
+                          NSLog(@"error text field *** %@", task.response);
+                          NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                          NSLog(@"Error is %@",ErrorResponse);
+     
+                          NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
+                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                                       options:kNilOptions
+                                                                                         error:&error];
+                          NSLog(@"error----------- object %@",[jsonResponse allValues]);
+                      }];
+    
+   
+
+
+}
+
+
 
 @end
