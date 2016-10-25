@@ -71,6 +71,8 @@
             [self showAlert:self.sentMessage];
         } onFail:^(NSError *error, NSString *errorMessage) {
             [self showAlert:errorMessage];
+            [self getCapchaImg];
+            self.captchaField.text = @"";
         }];
     }
 
@@ -108,8 +110,6 @@
                                              cancelButtonTitle:@"OK"
                                              otherButtonTitles:nil];
     [theAlert show];
-    
-
 }
 
 -(BOOL) validateFieldsEmpty
