@@ -12,6 +12,7 @@
 #import "ServerManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "CarMainCollectionViewCell.h"
+#import "CarsWithDriverListController.h"
 
 
 @interface OtherController ()
@@ -71,6 +72,17 @@
 
 - (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(self.collectionView.frame.size.width - 16, 124);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    
+    Category *category =[self.categoryArray objectAtIndex:indexPath.row];
+    CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
+    vc.categoryID = category.categoryID;
+    
+    vc.title = category.name;
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 
