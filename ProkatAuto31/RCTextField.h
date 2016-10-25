@@ -10,6 +10,8 @@
 
 @interface RCTextField : UITextField
 
+@property (strong, nonatomic) UILabel *lable;
+
 - (void)starEditeffect: (UITextField*) textField;
 - (void)EndEditeffect: (UITextField*) textField;
 

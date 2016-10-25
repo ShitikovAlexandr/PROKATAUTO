@@ -109,7 +109,6 @@
         }
         dayPrice = rentalPeriodDay * range;
         
-        NSLog(@"dayPrice________ is %d", dayPrice);
         self.order.totalPrice = [NSNumber numberWithInteger:dayPrice];
         cell.rentalPrice.text = [NSString stringWithFormat:@"%@", self.order.totalPrice];
         cell.rentalPriceCalculation.text = [NSString stringWithFormat:@"%ld x %ld суток", (long)range, (long)rentalPeriodDay];
@@ -117,9 +116,7 @@
         
         
         
-        cell.rentalDayPeriod.text = [NSString stringWithFormat:@"%d суток", rentalPeriodDay];
-        NSLog(@"rental period in hower %d", rentalPeriod);
-        NSLog(@"rental period rentalPeriodDay %d", rentalPeriodDay);
+        cell.rentalDayPeriod.text = [NSString stringWithFormat:@"%ld суток", (long)rentalPeriodDay];
         
         cell.placeStart.text = self.order.startPlace.name;
         cell.placeend.text = self.order.endPlace.name;
@@ -190,6 +187,8 @@
     self.alert = nil;
     self.alert = [UIAlertController alertControllerWithTitle:
                   @"Количество" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.alert.view.transform = CGAffineTransformIdentity;
+    self.alert.view.transform = CGAffineTransformScale( self.alert.view.transform, 0.8, 0.8);
     
     
     for (int i = 0; i < [option.optionAvaliableAmount integerValue]; i++) {

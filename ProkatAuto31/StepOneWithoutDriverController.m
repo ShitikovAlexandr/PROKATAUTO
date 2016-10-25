@@ -232,6 +232,8 @@
         textField.text = [NSString stringWithFormat:@"%@", [df stringFromDate:self.order.dateOfRentalStart]];
         [datePicker setDate:self.order.dateOfRentalStart animated:YES];
         datePicker.datePickerMode = UIDatePickerModeDate;
+        datePicker.locale =  [NSLocale currentLocale];
+
         
         if ([self.order.dateOfRentalStart timeIntervalSinceNow]< 60) {
             self.order.timeOfRentalStart = [NSDate date];
@@ -240,6 +242,7 @@
         
     } else if (textField.tag == 2) { // stard time of rental
         self.tagTF = 2;
+        datePicker.locale =  [NSLocale currentLocale];
         textField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalStart]];
         datePicker.datePickerMode = UIDatePickerModeTime;
         
@@ -253,6 +256,7 @@
         }
 
     } else if (textField.tag == 3) { // end date of rental
+        datePicker.locale =  [NSLocale currentLocale];
         self.tagTF = 3;
         datePicker.minimumDate =  self.order.dateOfRentalStart;
         [datePicker setDate:self.order.dateOfRentalEnd animated:YES];
@@ -262,6 +266,7 @@
         
         
     } else if (textField.tag == 4) { // end time of rental
+        datePicker.locale =  [NSLocale currentLocale];
         self.tagTF = 4;
         textField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalEnd]];
         datePicker.datePickerMode = UIDatePickerModeTime;
@@ -277,7 +282,6 @@
         textField.inputView = self.picker;
     } else if (textField.tag == 6) {
         self.tagTF = 6;
-       //self.pickerStart = [[RCPickerView alloc] initWithShadowAndTextField:textField];
        textField.inputView = self.picker;
 
     }

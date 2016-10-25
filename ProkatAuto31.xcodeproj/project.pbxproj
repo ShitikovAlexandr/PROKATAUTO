@@ -101,6 +101,7 @@
 		FA06A3C51DA8D8B000E4DB5F /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3C41DA8D8B000E4DB5F /* Order.m */; };
 		FA06A3D91DA8F50900E4DB5F /* RCDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */; };
 		FA2015981DAE65BB0091D953 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2015971DAE65BB0091D953 /* Place.m */; };
+		FA2506EB1DBBF3DA00EF507A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2506EA1DBBF3DA00EF507A /* User.m */; };
 		FA5D275D1DAD2BBB0012FF57 /* RCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5D275C1DAD2BBB0012FF57 /* RCPickerView.m */; };
 		FA6A6A931DB5079D003BB8D1 /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6A6A921DB5079D003BB8D1 /* ButtonCell.m */; };
 		FA70B44A1DB7B5B80088FFE3 /* RCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = FA70B4491DB7B5B80088FFE3 /* RCTextField.m */; };
@@ -114,6 +115,7 @@
 		FA88FD911DABB1380039CF33 /* depositphotos_45370071-Car-insurance-icons-2.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD901DABB1380039CF33 /* depositphotos_45370071-Car-insurance-icons-2.png */; };
 		FA88FD931DABB2220039CF33 /* 12.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD921DABB2220039CF33 /* 12.png */; };
 		FA9DB7891DB66925006D81D5 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9DB7881DB66925006D81D5 /* RegistrationController.m */; };
+		FABFC1C91DB8EE49004BFF9E /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFC1C81DB8EE48004BFF9E /* Person.m */; };
 		FAC2E4661DAED28D0045A3C4 /* StepTwoWithoutDriverController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2E4651DAED28D0045A3C4 /* StepTwoWithoutDriverController.m */; };
 		FAC2E4691DAF7AFA0045A3C4 /* StepTwoMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2E4681DAF7AFA0045A3C4 /* StepTwoMainCell.m */; };
 		FAC2E46C1DAF82DB0045A3C4 /* StepTwoOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2E46B1DAF82DB0045A3C4 /* StepTwoOptionsCell.m */; };
@@ -255,6 +257,8 @@
 		FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDatePicker.m; sourceTree = "<group>"; };
 		FA2015961DAE65BB0091D953 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		FA2015971DAE65BB0091D953 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
+		FA2506E91DBBF3DA00EF507A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		FA2506EA1DBBF3DA00EF507A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		FA5D275B1DAD2BBB0012FF57 /* RCPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPickerView.h; sourceTree = "<group>"; };
 		FA5D275C1DAD2BBB0012FF57 /* RCPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPickerView.m; sourceTree = "<group>"; };
 		FA6A6A911DB5079D003BB8D1 /* ButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonCell.h; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 		FA88FD921DABB2220039CF33 /* 12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12.png; sourceTree = "<group>"; };
 		FA9DB7871DB66925006D81D5 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		FA9DB7881DB66925006D81D5 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
+		FABFC1C71DB8EE48004BFF9E /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		FABFC1C81DB8EE48004BFF9E /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		FAC2E4641DAED28D0045A3C4 /* StepTwoWithoutDriverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepTwoWithoutDriverController.h; sourceTree = "<group>"; };
 		FAC2E4651DAED28D0045A3C4 /* StepTwoWithoutDriverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepTwoWithoutDriverController.m; sourceTree = "<group>"; };
 		FAC2E4671DAF7AFA0045A3C4 /* StepTwoMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepTwoMainCell.h; sourceTree = "<group>"; };
@@ -587,6 +593,10 @@
 				FAE71E1E1DB4BFD300A92DA2 /* Option.m */,
 				FA6A6A911DB5079D003BB8D1 /* ButtonCell.h */,
 				FA6A6A921DB5079D003BB8D1 /* ButtonCell.m */,
+				FABFC1C71DB8EE48004BFF9E /* Person.h */,
+				FABFC1C81DB8EE48004BFF9E /* Person.m */,
+				FA2506E91DBBF3DA00EF507A /* User.h */,
+				FA2506EA1DBBF3DA00EF507A /* User.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -812,6 +822,7 @@
 				6359CEA81D928F5700E76AD4 /* OtherCollectionViewCell.m in Sources */,
 				63F4B85F1D82C842006B391D /* main.m in Sources */,
 				633E00851D880F8000436D99 /* UIButton+AFNetworking.m in Sources */,
+				FABFC1C91DB8EE49004BFF9E /* Person.m in Sources */,
 				FAE71E1F1DB4BFD300A92DA2 /* Option.m in Sources */,
 				FAED81191DA4FFD600A4EF39 /* StepOneCollectionViewCell.m in Sources */,
 				633E00681D880F7800436D99 /* AFSecurityPolicy.m in Sources */,
@@ -825,6 +836,7 @@
 				633E00811D880F8000436D99 /* AFAutoPurgingImageCache.m in Sources */,
 				FA5D275D1DAD2BBB0012FF57 /* RCPickerView.m in Sources */,
 				633E00691D880F7800436D99 /* AFURLRequestSerialization.m in Sources */,
+				FA2506EB1DBBF3DA00EF507A /* User.m in Sources */,
 				636B85411D993B4E005623EB /* Car.m in Sources */,
 				633E00411D86D08700436D99 /* CostomTabBarItem.m in Sources */,
 				633E00441D86DDBE00436D99 /* CarWithoutDriverController.m in Sources */,
