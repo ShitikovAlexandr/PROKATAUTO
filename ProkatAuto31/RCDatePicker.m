@@ -32,16 +32,18 @@
         self.layer.shadowOpacity = 3;
         self.layer.masksToBounds = NO;
         [self setLocale:[NSLocale systemLocale]];
-
+        
         UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"OK" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
         UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         self.toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+        
         [self.toolBar setTintColor:[UIColor grayColor]];
         [self.toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
         //[self addSubview:toolBar];
         [textField setInputAccessoryView:self.toolBar];
         [textField setInputView:self];
         //self.textField.layer.shadowColor =[UIColor redColor].CGColor;
+        
 
 
     }
@@ -53,9 +55,10 @@
 - (void) doneButtonPressed:(id)sender  {
     
     self.textField.layer.shadowColor =[UIColor grayColor].CGColor;
-    self.textField.textColor = [UIColor blackColor];
+    self.textField.textColor = [UIColor grayColor];
 
     [self.textField resignFirstResponder];
+
 }
 
 @end

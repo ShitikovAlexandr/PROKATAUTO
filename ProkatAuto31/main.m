@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
+NSString *baseAddress = @"http://83.220.170.187";
+
 int main(int argc, char * argv[]) {
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));

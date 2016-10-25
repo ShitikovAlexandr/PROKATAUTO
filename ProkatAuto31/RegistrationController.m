@@ -8,8 +8,13 @@
 
 #import "RegistrationController.h"
 #import "RCTextField.h"
+#import "ServerManager.h"
+#import "RCDatePicker.h"
+#import "Person.h"
 
 @interface RegistrationController ()
+@property (strong, nonatomic) UIAlertController *alert;
+
 
 @property (strong, nonatomic) UIPickerView *countriCodePicker;
 @property (strong, nonatomic) NSDictionary *pickerDateArray;
@@ -41,11 +46,22 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageWithPassword;
 @property (weak, nonatomic) IBOutlet RCTextField *passwordFromImage;
 
+@property (strong, nonatomic) NSString *CapchaKey;
+@property (strong, nonatomic) NSString *captchaValue;
+@property (strong, nonatomic) RCDatePicker *datePicker;
 
+@property (strong, nonatomic) Person *person;
 
+@property (assign, nonatomic) NSInteger datePickerFlag;
+
+@property (weak, nonatomic) IBOutlet UIButton *RegistrButton;
+
+extern NSString *baseAddress;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *CountryNameLabel;
+
+@property (strong, nonatomic) NSMutableArray *isTextFieldEnterText;
 
 
 @end
@@ -54,6 +70,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"baseAddress ____   ________ %@", baseAddress);
+    self.isTextFieldEnterText = [NSMutableArray array];
+    self.person = [[Person alloc] init];
+    self.person.countryCode = @"+7";
+    [self getCapchaImg];
+    
     // Do any additional setup after loading the view.
     
     self.pickerDateArray = [[NSDictionary alloc] init];
@@ -85,12 +107,9 @@
     
     [self.countriCodePicker selectRow:(int)[self.pickerDateArray objectForKey:@"Russia"] inComponent:0 animated:YES];
     
-   
-    
-    
+    [self.RegistrButton addTarget:self action:@selector(sendRegisterForm) forControlEvents:UIControlEventTouchUpInside];
     
 
-    
     
 }
 
@@ -143,13 +162,247 @@
 
 
 - (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
-    [textField starEditeffect:textField];
-    return YES;
+    
+    
+    if (textField.tag !=6 && textField.tag !=7) {
+        [textField starEditeffect:textField];
+    }
+    
+    if (textField.tag == 7  || textField.tag == 10 || textField.tag == 13) {
+        
+        self.datePicker = [[RCDatePicker alloc] initWithShadowAndTextField:textField];
+        [self.datePicker addTarget:self action:@selector (textFieldDidChange:) forControlEvents:UIControlEventValueChanged];
+        self.datePicker.locale =  [NSLocale currentLocale];
+        self.datePicker.datePickerMode = UIDatePickerModeDate;
+        textField.inputView = self.datePicker;
+        self.datePicker.maximumDate = [NSDate date];
+    }
+    
+    if (textField.tag == 7) { // date
+        self.datePickerFlag = 7;
+    } else if (textField.tag == 10) { // date
+        self.datePickerFlag = 10;
+    } else if (textField.tag == 13) { // date
+        self.datePickerFlag = 13;
+    }
+    
+    
+    
+    
+        return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
-    [textField EndEditeffect:textField];
+    if (textField.tag !=6 && textField.tag !=7) {
+        [textField EndEditeffect:textField];
+        
+        if (textField.tag == 1) {
+            self.person.surname = [NSString stringWithFormat:@"%@",textField.text];
+        } else if (textField.tag == 2) {
+            self.person.name = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 3) {
+            self.person.middleName = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 4) {
+            self.person.email = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 5) {
+            self.person.phoneNumber = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 6) {
+            self.person.countryCode = [NSString stringWithFormat:@"%@", textField.text];
+        }  else if (textField.tag == 8) {
+            self.person.passportSeries = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 9) {
+            self.person.passportNumber = [NSString stringWithFormat:@"%@", textField.text];
+            self.person.driverLicense = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 12) {
+            self.person.driverLicenseNumber = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 15) {
+            self.person.Password = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 16) {
+            self.passwordFromImage.text = [NSString stringWithFormat:@"%@", textField.text];
+        }
+        else {
+            self.datePickerFlag = 0;
+        }
+
+
+    }
+    
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+}
+
+-(void)textFieldDidChange:(UIDatePicker*) datePicker {
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"dd-MM-yyyy"];
+    if (self.datePickerFlag == 7) {
+        self.person.dateOfBirth = datePicker.date;
+        self.dateOfBirthTextField.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.dateOfBirth]];
+        NSLog(@"dateOfBirth%@", self.person.dateOfBirth);
+
+    } else if (self.datePickerFlag == 10) {
+        self.person.dateOfPassport = datePicker.date;
+        self.dateOfPassport.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.dateOfPassport]];
+        NSLog(@"dateOfPassport%@", self.person.dateOfPassport);
+
+
+    } else if (self.datePickerFlag == 13) {
+        self.person.drivelLicenseDate = datePicker.date;
+        self.drivelLicenseDate.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.drivelLicenseDate]];
+        NSLog(@"drivelLicenseDate%@", self.person.drivelLicenseDate);
+
+    }
+    
+    
+    
+}
+
+- (BOOL)textFieldShouldReturn:(RCTextField *)textField {
+    UIView *view = [self.view viewWithTag:textField.tag + 1];
+    if (!view)
+        [textField resignFirstResponder];
+    else
+        [view becomeFirstResponder];
+    return YES;
+}
+
+
+#pragma mark - API
+
+- (IBAction) sendRegisterForm {
+    
+    [self chackTextfield];
+    /*
+    NSLog(@"person data *** %@", self.person.name);
+    
+    [[ServerManager sharedManager] registrationWithPersonData:self.person
+                                                       andKey:self.CapchaKey
+                                              PasswordFromImg:self.passwordFromImage.text
+                                                    OnSuccess:^(NSString *thisData) {
+                                                        
+                                                    }
+                                                       onFail:^(NSError *error, NSInteger statusCode) {
+                                                           
+                                                       }];
+    
+    */
+}
+
+- (void) getCapchaImg {
+    
+    [[ServerManager sharedManager] registrationGetCaptchaOnSuccess:^(NSString *thisData) {
+        
+        self.CapchaKey = [NSString stringWithString:thisData];
+        NSLog(@"self.CapchaKey %@", self.CapchaKey);
+        
+        [[ServerManager sharedManager] registrationGetCaptchaImgWithKey:self.CapchaKey
+                                                              OnSuccess:^(id thisData) {
+                                                                  self.imageWithPassword.image = thisData;
+                                                                  
+                                                              }
+                                                                 onFail:^(NSError *error, NSInteger statusCode) {
+                                                                     
+                                                                 }];
+        
+    }
+                                                            onFail:^(NSError *error, NSInteger statusCode) {
+                                                                
+                                                            }];
+    
+}
+
+- (void) ErrorTextFieldInput: (NSString*) errorText {
+    
+    self.alert = nil;
+    self.alert = [UIAlertController alertControllerWithTitle:
+                  errorText message:nil preferredStyle:UIAlertControllerStyleAlert];
+    //self.alert.view.transform = CGAffineTransformIdentity;
+    //self.alert.view.transform = CGAffineTransformScale( self.alert.view.transform, 0.5, 0.5);
+    
+    
+    UIAlertAction *okButtlon = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive
+                                                  handler:^(UIAlertAction * _Nonnull action) {
+                                                      
+                                                  }];
+
+
+    [self.alert addAction:okButtlon];
+
+    
+    [self presentViewController:self.alert animated:YES completion:nil];
+
+
+    
+}
+
+- (BOOL) chackTextfield {
+    
+    [self.isTextFieldEnterText removeAllObjects];
+    NSString *empty = [NSString string];
+    empty = @"Заполните все поля!";
+
+    if ([self.person.name length] <1) {
+       // empty = @"name";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.middleName length] <1) {
+        //empty = @"middleName";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.surname length] <1) {
+       // empty = @"surname";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.email length] <6 || ([self.person.email rangeOfString:@"@"].location == NSNotFound)) {
+        empty = @"Введите корректный адрес электронной почты";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.countryCode length]<1) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.phoneNumber length]<1) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if (self.person.dateOfBirth == NULL) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.passportSeries length] < 1) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.passportNumber length] <1) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if (self.person.dateOfPassport == NULL) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.driverLicense length] <1) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.driverLicenseNumber length] <1) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if (self.person.drivelLicenseDate == NULL) {
+        empty = @"Заполните все поля!";
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.Password length] <8) {
+        empty = @"Password";
+        [self.isTextFieldEnterText addObject:empty];
+    }
+    NSLog(@"errors count in array is %d", (int)[self.isTextFieldEnterText count]);
+    if ([self.isTextFieldEnterText count] >0) {
+        [self ErrorTextFieldInput:empty];
+        return NO;
+    } else {
+        return YES;
+    }
+    
 }
 
 
@@ -408,11 +661,11 @@
                             @"Zimbabwe"                                     : @"+263"
                             };
     
-   
-    
     return codes;
     
 }
+
+
 
 
 

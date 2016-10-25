@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Category.h"
+#import "Person.h"
 
 @interface ServerManager : NSObject
 
@@ -47,6 +48,15 @@
 
 - (void) getCarOptionsOnSuccess:(void(^)(NSArray* thisData)) success
                          onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
+- (void) registrationGetCaptchaOnSuccess:(void(^)(NSString* thisData)) success
+                                  onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
+- (void) registrationGetCaptchaImgWithKey:(NSString*) key  OnSuccess:(void(^)(id thisData)) success
+                                  onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void) registrationWithPersonData: (Person*) person andKey: (NSString*) key PasswordFromImg:(NSString*) password OnSuccess:(void(^)(NSString* thisData)) success
+                             onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
 
 
 

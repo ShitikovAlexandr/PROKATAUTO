@@ -43,7 +43,7 @@
         NSURL *url = [NSURL URLWithString:@"http://83.220.170.187/api/v1/public/"];
         
         self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:url];
-        [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
+       //[self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
     }
     return self;
 }
@@ -52,6 +52,8 @@
 
 - (void) getCarWithoutDriverCategoryOnSuccess:(void(^)(NSArray* thisData)) success
                                        onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
     
     [self.sessionManager GET:@"thesaurus/"
                   parameters:nil
@@ -77,6 +79,8 @@
 
 - (void) getCarWithDriverCategoryOnSuccess:(void(^)(NSArray* thisData)) success
                                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
     
     [self.sessionManager GET:@"thesaurus/"
                   parameters:nil
@@ -118,6 +122,8 @@
 
 - (void) getCarOtherCategoryOnSuccess:(void(^)(NSArray* thisData)) success
                                onFail:(void(^)(NSError* error, NSInteger statusCode)) failure  {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
 
     
     [self.sessionManager GET:@"thesaurus/"
@@ -160,6 +166,8 @@
 
 - (void) getCarOtherCategoryWithPageOnSuccess:(void(^)(NSArray* thisData)) success
                                        onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
     [self.sessionManager GET:@"pages/"
                   parameters:nil
                     progress:nil
@@ -190,6 +198,8 @@
                                         withCategoryID: (NSNumber*) categoryID {
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category", nil];
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
     
     [self.sessionManager GET:@"cars/"
                   parameters:params
@@ -219,6 +229,8 @@
                                                    onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
                                            withCategoryID: (NSNumber*) categoryID {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"transmission", nil];
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
     
     [self.sessionManager GET:@"cars/"
                   parameters:params
