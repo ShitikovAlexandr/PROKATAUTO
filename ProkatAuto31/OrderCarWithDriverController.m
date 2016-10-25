@@ -8,10 +8,13 @@
 
 #import "OrderCarWithDriverController.h"
 #import "UIImageView+AFNetworking.h"
+#import "ServerManager.h"
 
 @interface OrderCarWithDriverController ()
 @property (strong, nonatomic) UIPickerView *countryCodePicker;
 @property (strong, nonatomic) NSDictionary *countryCodeArray;
+@property (strong, nonatomic) NSString *capchaKey;
+@property (strong, nonatomic) NSString *sentMessage;
 @end
 
 @implementation OrderCarWithDriverController
@@ -19,11 +22,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.sentMessage = @"Спасибо за Ваш заказ! Наши сотрудники свяжутся с Вами в ближайшее время.";
+    
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
     NSURL *url = [NSURL URLWithString:self.car.imageURL];
     [self.carImageView setImageWithURL:url];
+    [self getCapchaImg];
     
     self.titleLabel.text = self.car.name;
     self.descriptionLabel.attributedText = [[NSAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
@@ -53,13 +59,14 @@
 
 - (IBAction)SendOrder:(id) sender event: (id) event {
     
-    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:nil
-                                                       message:@"Спасибо за Ваш заказ! Наши сотрудники свяжутся с Вами в ближайшее время."
-                                                      delegate:self
-                                             cancelButtonTitle:@"OK"
-                                             otherButtonTitles:nil];
-    [theAlert show];
-    
+    if([self validateFieldsEmpty])
+        [self showAlert:@"Заполните все поля!"];
+    else if(![self validatePhoneNumber])
+        [self showAlert:@"Введите корректный номер телефона"];
+    else if(![self validateEmail])
+        [self showAlert:@"Введите корректный адрес электронной почты"];
+    else
+        [self showAlert:self.sentMessage];
 
 }
 
@@ -73,9 +80,56 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldReturn:(RCTextField *)textField {
+    UIView *view = [self.view viewWithTag:textField.tag + 1];
+    if (!view)
+        [textField endEditing:TRUE];
+    else
+        [view becomeFirstResponder];
+    return YES;
+}
+
 - (void)alertView:(UIAlertView *)theAlert clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popToRootViewControllerAnimated:TRUE];
+    if([theAlert.message isEqualToString:self.sentMessage])
+        [self.navigationController popToRootViewControllerAnimated:TRUE];
+}
+- (void)showAlert:(NSString *) message
+{
+    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:nil
+                                                       message:message
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+    [theAlert show];
+    
+
+}
+
+-(BOOL) validateFieldsEmpty
+{
+    NSMutableArray *fieldsArray = [[NSMutableArray alloc] init ];
+    [fieldsArray addObject:[self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.phoneField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.descriptionField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    return [fieldsArray indexOfObject:@""] != NSNotFound;
+}
+
+-(BOOL) validateEmail
+{
+    BOOL stricterFilter = NO;
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:self.emailField.text];
+}
+
+-(BOOL) validatePhoneNumber
+{
+    return [self.phoneField.text rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location != NSNotFound;
 }
 
 #pragma mark - UIPickerViewDelegate
@@ -105,6 +159,28 @@
     
     self.codeField.text = str;
     self.countryLabel.text = str2;
+}
+
+- (void) getCapchaImg {
+    
+    [[ServerManager sharedManager] registrationGetCaptchaOnSuccess:^(NSString *thisData) {
+        
+        self.capchaKey = [NSString stringWithString:thisData];
+        
+        [[ServerManager sharedManager] registrationGetCaptchaImgWithKey:self.capchaKey
+                                                              OnSuccess:^(id thisData) {
+                                                                  self.captchaImageView.image = thisData;
+                                                                  
+                                                              }
+                                                                 onFail:^(NSError *error, NSInteger statusCode) {
+                                                                     
+                                                                 }];
+        
+    }
+                                                            onFail:^(NSError *error, NSInteger statusCode) {
+                                                                
+                                                            }];
+    
 }
 
 - (NSDictionary*) dataForPickerCountry {
