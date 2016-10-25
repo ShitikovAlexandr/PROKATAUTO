@@ -59,14 +59,20 @@
 
 - (IBAction)SendOrder:(id) sender event: (id) event {
     
-    if([self validateFieldsEmpty])
+    if(![self validateFieldsEmpty])
         [self showAlert:@"Заполните все поля!"];
     else if(![self validatePhoneNumber])
         [self showAlert:@"Введите корректный номер телефона"];
     else if(![self validateEmail])
         [self showAlert:@"Введите корректный адрес электронной почты"];
     else
-        [self showAlert:self.sentMessage];
+    {
+        [[ServerManager sharedManager] orderCarWithDriver:self.car.carId userName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderDescription:self.descriptionField.text andKey:self.capchaKey passwordFromImg:self.captchaField.text OnSuccess:^ {
+            [self showAlert:self.sentMessage];
+        } onFail:^(NSError *error, NSString *errorMessage) {
+            [self showAlert:errorMessage];
+        }];
+    }
 
 }
 
@@ -114,7 +120,7 @@
     [fieldsArray addObject:[self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     [fieldsArray addObject:[self.descriptionField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-    return [fieldsArray indexOfObject:@""] != NSNotFound;
+    return [fieldsArray indexOfObject:@""] == NSNotFound;
 }
 
 -(BOOL) validateEmail

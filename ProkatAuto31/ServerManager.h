@@ -56,6 +56,15 @@
                                   onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
 - (void) registrationWithPersonData: (Person*) person andKey: (NSString*) key PasswordFromImg:(NSString*) password OnSuccess:(void(^)(NSString* thisData)) success
                              onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void) orderCarWithDriver: (NSNumber*) carId
+                  userName : (NSString*) name
+            userPhoneNumber: (NSString*) phone
+                  userEmail: (NSString*) email
+           orderDescription: (NSString*) description
+                     andKey: (NSString*) key
+            passwordFromImg: (NSString*) password
+                  OnSuccess: (void(^)()) success
+                     onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
 
 
