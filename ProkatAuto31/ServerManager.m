@@ -553,7 +553,6 @@
                           NSError* JSONerror;
                           if (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey]) {
                               NSDictionary *dJSON = [NSJSONSerialization JSONObjectWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:NSJSONReadingAllowFragments error:&JSONerror];
-
                               NSLog(@"password %@", [dJSON objectForKey:@"password"]);
                               NSArray *dictsArray = [dJSON allValues];
                               NSLog(@"errorArray %@", dictsArray);
@@ -565,9 +564,58 @@
                               NSLog(@"Error JSONerror %@",ErrorResponse);
                               
                           }
-
                           
                       }];
+}
+
+- (void) orderCarWithDriver: (NSNumber*) carId
+                  userName : (NSString*) name
+            userPhoneNumber: (NSString*) phone
+                  userEmail: (NSString*) email
+           orderDescription: (NSString*) description
+                     andKey: (NSString*) key
+            passwordFromImg: (NSString*) password
+                  OnSuccess: (void(^)()) success
+                     onFail: (void(^)(NSError* error, NSString* errorMessage)) failure
+{
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            [NSString stringWithFormat:@"%@", carId], @"car",
+                            description, @"description",
+                            name, @"name",
+                            phone, @"phone",
+                            email, @"email",
+                            key, @"captcha_key",
+                            password, @"captcha_value", nil];
+    
+    
+    [self.sessionManager POST:@"hourly-orders/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          
+                          if(success)
+                              success();
+                          
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          
+                          NSLog(@"error text field *** %@", task.response);
+                          NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                          NSLog(@"Error is %@",ErrorResponse);
+                          
+                          NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
+                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                                       options:kNilOptions
+                                                                                         error:&error];
+                          NSString *errorMessage = [[[jsonResponse allValues] objectAtIndex:0] objectAtIndex:0];
+                          if(failure)
+                              failure(error, errorMessage);
+                      }];
+    
+    
 }
 
 
