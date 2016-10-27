@@ -18,7 +18,6 @@
     
     if (self)
     {
-        NSLog(@"initWithCoder");
         [self setBorderStyle:UITextBorderStyleNone];
         self.layer.backgroundColor = [UIColor whiteColor].CGColor;
         self.layer.shadowColor = [UIColor grayColor].CGColor;
@@ -57,7 +56,6 @@
                         
     } completion:^(BOOL finished) {
     }];
-    //textField.layer.shadowColor = [UIColor redColor].CGColor;
     
 }
 

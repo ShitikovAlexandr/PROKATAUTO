@@ -33,12 +33,6 @@
 @property (assign, nonatomic) int chackCount;
 
 
-
-
-
-
-
-
 @property (strong, nonatomic) StepOneCollectionViewCell *cell;
 
 @end

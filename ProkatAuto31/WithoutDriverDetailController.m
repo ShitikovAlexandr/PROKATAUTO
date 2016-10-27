@@ -168,7 +168,8 @@
 }
 
 -(void) myCustomBack {
-    // Some anything you need to do before leaving
+    
+  
     [self.navigationController popViewControllerAnimated:YES];
 }
 

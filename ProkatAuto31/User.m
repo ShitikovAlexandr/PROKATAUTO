@@ -61,16 +61,13 @@
         self.licenseIssueDate = [[responseObject objectForKey:@"profile"] objectForKey:@"license_issue_date"];
         self.licenseIssueDepartment = [[responseObject objectForKey:@"profile"] objectForKey:@"license_issue_department"];
         self.licenseIssue = [[responseObject objectForKey:@"profile"] objectForKey:@"license_issue"];
+        
+        
+       
 
 
 
-        
-        
-        
-        
-        
-        
-        
+
     }
     
     return self;

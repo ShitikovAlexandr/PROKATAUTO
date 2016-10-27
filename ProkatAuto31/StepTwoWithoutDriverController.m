@@ -14,6 +14,8 @@
 #import "Option.h"
 #import "ButtonCell.h"
 #import "RegistrationController.h"
+#import "AuthorizationController.h"
+#import "StepFourWithoutdriverController.h"
 
 
 
@@ -42,8 +44,11 @@
     
     [self getCarOptionsFromAPI];
     
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+
     
-    // Do any additional setup after loading the view.
+    
    }
 
 - (void)didReceiveMemoryWarning {
@@ -209,7 +214,30 @@
 
 
 - (void) registerOrLoginAlert {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults valueForKey:@"tokenString"];
+    NSLog(@"token strin is %@", token);
+
     
+    if ([token length] > 1) {
+        
+        StepFourWithoutdriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
+        [self.navigationController pushViewController:vc animated:YES];
+        NSLog(@"go to step four");
+
+    } else {
+        
+        AuthorizationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AuthorizationController"];
+        vc.title = @"Авторизация";
+        StepFourWithoutdriverController *nVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
+        nVC.title = @"Шаг 4:Подтверждение заказа";
+        vc.nextController = nVC;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    
+        /*
     self.alert = nil;
     self.alert = [UIAlertController alertControllerWithTitle:
                   @"Вход" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -243,10 +271,14 @@
     
     [self presentViewController:self.alert animated:YES completion:nil];
 
-    
+    */
     
 }
 
+-(void) myCustomBack {
+    // Some anything you need to do before leaving
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 #pragma mark - API

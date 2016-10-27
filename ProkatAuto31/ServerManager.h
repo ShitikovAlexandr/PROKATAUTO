@@ -50,8 +50,12 @@
 
 - (void) registrationGetCaptchaImgWithKey:(NSString*) key  OnSuccess:(void(^)(id thisData)) success
                                   onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
-- (void) registrationWithPersonData: (Person*) person andKey: (NSString*) key PasswordFromImg:(NSString*) password OnSuccess:(void(^)(NSString* thisData)) success
-                             onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
+- (void) registrationWithPersonData: (Person*) person andKey: (NSString*) key PasswordFromImg:(NSString*) password OnSuccess:(void(^)(NSString* token, id user)) success
+                             onFail:(void(^)(NSError* error, NSInteger statusCode, NSArray* dataArray)) failure;
+
+- (void) logInWithLogin: (NSString*) login andPassword: (NSString*) password OnSuccess:(void(^)(NSString* token, id user)) success
+                 onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 
 

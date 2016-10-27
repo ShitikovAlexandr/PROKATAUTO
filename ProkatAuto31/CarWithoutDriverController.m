@@ -37,7 +37,6 @@
     [super viewDidLoad];
     
     
-    
     self.baseAddress = @"http://83.220.170.187";
 
     self.carCategories = [NSMutableArray array];

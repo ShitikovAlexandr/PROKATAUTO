@@ -102,6 +102,9 @@
 		FA06A3D91DA8F50900E4DB5F /* RCDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */; };
 		FA2015981DAE65BB0091D953 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2015971DAE65BB0091D953 /* Place.m */; };
 		FA2506EB1DBBF3DA00EF507A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2506EA1DBBF3DA00EF507A /* User.m */; };
+		FA467E1B1DC0A35000B466C3 /* AuthorizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA467E1A1DC0A35000B466C3 /* AuthorizationController.m */; };
+		FA467E1E1DC0D13700B466C3 /* StepFourWithoutdriverController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA467E1D1DC0D13700B466C3 /* StepFourWithoutdriverController.m */; };
+		FA467E211DC0F16B00B466C3 /* RememberPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA467E201DC0F16B00B466C3 /* RememberPasswordController.m */; };
 		FA5D275D1DAD2BBB0012FF57 /* RCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5D275C1DAD2BBB0012FF57 /* RCPickerView.m */; };
 		FA6A6A931DB5079D003BB8D1 /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6A6A921DB5079D003BB8D1 /* ButtonCell.m */; };
 		FA70B44A1DB7B5B80088FFE3 /* RCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = FA70B4491DB7B5B80088FFE3 /* RCTextField.m */; };
@@ -112,7 +115,7 @@
 		FA88FD871DAB8A0A0039CF33 /* ic_menu_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD841DAB8A0A0039CF33 /* ic_menu_2x.png */; };
 		FA88FD881DAB8A0A0039CF33 /* ic_menu_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD851DAB8A0A0039CF33 /* ic_menu_3x.png */; };
 		FA88FD891DAB8A0A0039CF33 /* ic_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD861DAB8A0A0039CF33 /* ic_menu.png */; };
-		FA88FD911DABB1380039CF33 /* depositphotos_45370071-Car-insurance-icons-2.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD901DABB1380039CF33 /* depositphotos_45370071-Car-insurance-icons-2.png */; };
+		FA88FD911DABB1380039CF33 /* oherCar.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD901DABB1380039CF33 /* oherCar.png */; };
 		FA88FD931DABB2220039CF33 /* 12.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD921DABB2220039CF33 /* 12.png */; };
 		FA9DB7891DB66925006D81D5 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9DB7881DB66925006D81D5 /* RegistrationController.m */; };
 		FABFC1C91DB8EE49004BFF9E /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFC1C81DB8EE48004BFF9E /* Person.m */; };
@@ -259,6 +262,12 @@
 		FA2015971DAE65BB0091D953 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		FA2506E91DBBF3DA00EF507A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		FA2506EA1DBBF3DA00EF507A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		FA467E191DC0A35000B466C3 /* AuthorizationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizationController.h; sourceTree = "<group>"; };
+		FA467E1A1DC0A35000B466C3 /* AuthorizationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizationController.m; sourceTree = "<group>"; };
+		FA467E1C1DC0D13700B466C3 /* StepFourWithoutdriverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepFourWithoutdriverController.h; sourceTree = "<group>"; };
+		FA467E1D1DC0D13700B466C3 /* StepFourWithoutdriverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepFourWithoutdriverController.m; sourceTree = "<group>"; };
+		FA467E1F1DC0F16B00B466C3 /* RememberPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RememberPasswordController.h; sourceTree = "<group>"; };
+		FA467E201DC0F16B00B466C3 /* RememberPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RememberPasswordController.m; sourceTree = "<group>"; };
 		FA5D275B1DAD2BBB0012FF57 /* RCPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPickerView.h; sourceTree = "<group>"; };
 		FA5D275C1DAD2BBB0012FF57 /* RCPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPickerView.m; sourceTree = "<group>"; };
 		FA6A6A911DB5079D003BB8D1 /* ButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonCell.h; sourceTree = "<group>"; };
@@ -274,7 +283,7 @@
 		FA88FD841DAB8A0A0039CF33 /* ic_menu_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_menu_2x.png; sourceTree = "<group>"; };
 		FA88FD851DAB8A0A0039CF33 /* ic_menu_3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_menu_3x.png; sourceTree = "<group>"; };
 		FA88FD861DAB8A0A0039CF33 /* ic_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_menu.png; sourceTree = "<group>"; };
-		FA88FD901DABB1380039CF33 /* depositphotos_45370071-Car-insurance-icons-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "depositphotos_45370071-Car-insurance-icons-2.png"; sourceTree = "<group>"; };
+		FA88FD901DABB1380039CF33 /* oherCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oherCar.png; sourceTree = "<group>"; };
 		FA88FD921DABB2220039CF33 /* 12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12.png; sourceTree = "<group>"; };
 		FA9DB7871DB66925006D81D5 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		FA9DB7881DB66925006D81D5 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
@@ -410,7 +419,7 @@
 			isa = PBXGroup;
 			children = (
 				FA88FD921DABB2220039CF33 /* 12.png */,
-				FA88FD901DABB1380039CF33 /* depositphotos_45370071-Car-insurance-icons-2.png */,
+				FA88FD901DABB1380039CF33 /* oherCar.png */,
 				FA88FD841DAB8A0A0039CF33 /* ic_menu_2x.png */,
 				FA88FD851DAB8A0A0039CF33 /* ic_menu_3x.png */,
 				FA88FD861DAB8A0A0039CF33 /* ic_menu.png */,
@@ -558,6 +567,12 @@
 				FAC2E4651DAED28D0045A3C4 /* StepTwoWithoutDriverController.m */,
 				FA9DB7871DB66925006D81D5 /* RegistrationController.h */,
 				FA9DB7881DB66925006D81D5 /* RegistrationController.m */,
+				FA467E191DC0A35000B466C3 /* AuthorizationController.h */,
+				FA467E1A1DC0A35000B466C3 /* AuthorizationController.m */,
+				FA467E1C1DC0D13700B466C3 /* StepFourWithoutdriverController.h */,
+				FA467E1D1DC0D13700B466C3 /* StepFourWithoutdriverController.m */,
+				FA467E1F1DC0F16B00B466C3 /* RememberPasswordController.h */,
+				FA467E201DC0F16B00B466C3 /* RememberPasswordController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -784,7 +799,7 @@
 				6306F5411D90137100915F22 /* ic_info_outline_2x.png in Resources */,
 				6306F54B1D90138100915F22 /* ic_person_2x.png in Resources */,
 				6306F56A1D90306200915F22 /* withoutDriver2x.png in Resources */,
-				FA88FD911DABB1380039CF33 /* depositphotos_45370071-Car-insurance-icons-2.png in Resources */,
+				FA88FD911DABB1380039CF33 /* oherCar.png in Resources */,
 				6306F5401D90137100915F22 /* ic_info_outline.png in Resources */,
 				6306F56C1D90306200915F22 /* withDriver2x.png in Resources */,
 				6306F5551D90139000915F22 /* ic_lock_open_3x.png in Resources */,
@@ -819,6 +834,7 @@
 				633E00821D880F8000436D99 /* AFImageDownloader.m in Sources */,
 				FA2015981DAE65BB0091D953 /* Place.m in Sources */,
 				633E00471D86DE0B00436D99 /* CarWithDriverController.m in Sources */,
+				FA467E1B1DC0A35000B466C3 /* AuthorizationController.m in Sources */,
 				6359CEA81D928F5700E76AD4 /* OtherCollectionViewCell.m in Sources */,
 				63F4B85F1D82C842006B391D /* main.m in Sources */,
 				633E00851D880F8000436D99 /* UIButton+AFNetworking.m in Sources */,
@@ -828,6 +844,7 @@
 				633E00681D880F7800436D99 /* AFSecurityPolicy.m in Sources */,
 				FA06A3C51DA8D8B000E4DB5F /* Order.m in Sources */,
 				633E004A1D86DE2A00436D99 /* OtherController.m in Sources */,
+				FA467E211DC0F16B00B466C3 /* RememberPasswordController.m in Sources */,
 				633E00841D880F8000436D99 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				633E008D1D8811E900436D99 /* SWRevealViewController.m in Sources */,
 				633E00831D880F8000436D99 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -835,6 +852,7 @@
 				636441C51D97C0CD00089E84 /* CarWithoutDriverDetailsCell.m in Sources */,
 				633E00811D880F8000436D99 /* AFAutoPurgingImageCache.m in Sources */,
 				FA5D275D1DAD2BBB0012FF57 /* RCPickerView.m in Sources */,
+				FA467E1E1DC0D13700B466C3 /* StepFourWithoutdriverController.m in Sources */,
 				633E00691D880F7800436D99 /* AFURLRequestSerialization.m in Sources */,
 				FA2506EB1DBBF3DA00EF507A /* User.m in Sources */,
 				636B85411D993B4E005623EB /* Car.m in Sources */,
