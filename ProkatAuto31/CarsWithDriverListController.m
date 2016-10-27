@@ -69,7 +69,8 @@
     
     CarWithDriver *car = [self.dataArray objectAtIndex:indexPath.row];
     
-    NSAttributedString *description = [[NSAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
     
     [self.descriptionsArray addObject:description];
     

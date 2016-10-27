@@ -32,7 +32,9 @@
     [self getCapchaImg];
     
     self.titleLabel.text = self.car.name;
-    self.descriptionLabel.attributedText = [[NSAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
+    self.descriptionLabel.attributedText = description;
     
     [self.sendOrderButton addTarget:self action:@selector(SendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
     
