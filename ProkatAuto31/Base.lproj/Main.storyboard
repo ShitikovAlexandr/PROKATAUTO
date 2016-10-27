@@ -1678,7 +1678,7 @@
                                             <outlet property="delegate" destination="Dvn-om-jD5" id="CSD-Q8-66m"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите текст с картинки" textAlignment="natural" minimumFontSize="17" id="qmo-WK-IjJ" customClass="RCTextField">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите текст с картинки" textAlignment="natural" minimumFontSize="17" id="qmo-WK-IjJ" customClass="RCTextField">
                                         <frame key="frameInset" minX="8" width="256" height="30" maxY="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

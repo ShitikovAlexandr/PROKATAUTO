@@ -57,6 +57,11 @@
 - (void) logInWithLogin: (NSString*) login andPassword: (NSString*) password OnSuccess:(void(^)(NSString* token, id user)) success
                  onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
+- (void) rememberPasswordWithCapchaKey: (NSString*) key
+                        andCapchaValue: (NSString*) value andPhone: (NSString*) phone
+                             OnSuccess:(void(^)(NSString* data)) success
+                                onFail:(void(^)(NSError* error, NSInteger statusCode, NSArray* dataArray)) failure;
+
 
 
 

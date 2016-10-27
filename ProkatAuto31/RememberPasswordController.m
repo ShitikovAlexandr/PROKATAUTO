@@ -16,6 +16,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *CountryNameLabel;
 
 @property (strong, nonatomic) NSString *CapchaKey;
+@property (strong, nonatomic) NSString *captchaText;
+@property (strong, nonatomic) NSString *phoneText;
+
+@property (strong, nonatomic) UIAlertController *alert;
 
 
 
@@ -67,6 +71,8 @@
     [self.countriCodePicker selectRow:(int)[self.pickerDateArray objectForKey:@"Russia"] inComponent:0 animated:YES];
     self.CountryNameLabel.text = @"Russia";
     self.countryCode.placeholder =  [NSString stringWithFormat:@"%@", [self.pickerDateArray objectForKey:@"Russia"]];
+    
+    [self.getNewPasswordButton addTarget:self action:@selector(PressButtonPassword) forControlEvents:UIControlEventTouchDown];
 
     
     
@@ -93,14 +99,17 @@
 - (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
     if (textField.tag >0) {
         [textField EndEditeffect:textField];
+        
+        if (textField.tag == 1) {
+            self.phoneText = textField.text;
+        } else if (textField.tag == 2) {
+            self.captchaText = textField.text;
+        }
     }
     
     return YES;
     
 }
-
-
-
 
 
 - (void) styleRCButton: (UIButton*) button {
@@ -182,6 +191,56 @@
                                                             onFail:^(NSError *error, NSInteger statusCode) {
                                                                 
                                                             }];
+    
+}
+
+- (void) PressButtonPassword {
+    
+    [self getNewPasswordWithKey:self.CapchaKey andCapchaValue:self.captchaText andPhone:self.phoneText];
+}
+
+- (void) getNewPasswordWithKey: (NSString*) key andCapchaValue: (NSString*) value andPhone: (NSString*) phone  {
+    NSLog(@"self.CapchaKey****** %@", self.CapchaKey);
+    [[ServerManager sharedManager]  rememberPasswordWithCapchaKey:key
+                                                   andCapchaValue:value
+                                                         andPhone:phone
+                                                        OnSuccess:^(NSString *data) {
+                                                            
+                                                            [self ErrorTextFieldInput:@"Новый пароль отправлен в СМС"];
+                                                        }
+                                                           onFail:^(NSError *error, NSInteger statusCode, NSArray* dataArray) {
+                                                               
+                                                               if (dataArray) {
+                                                                   NSString* newString = [[[dataArray objectAtIndex:0]objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+                                                                   [self ErrorTextFieldInput:[NSString stringWithFormat:@"%@",newString]];
+                                                               }
+
+                                                               
+                                                           }];
+    
+}
+
+- (void) ErrorTextFieldInput: (NSString*) errorText {
+    
+    self.alert = nil;
+    self.alert = [UIAlertController alertControllerWithTitle:
+                  errorText message:nil preferredStyle:UIAlertControllerStyleAlert];
+    //self.alert.view.transform = CGAffineTransformIdentity;
+    //self.alert.view.transform = CGAffineTransformScale( self.alert.view.transform, 0.5, 0.5);
+    
+    
+    UIAlertAction *okButtlon = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive
+                                                      handler:^(UIAlertAction * _Nonnull action) {
+                                                          
+                                                      }];
+    
+    
+    [self.alert addAction:okButtlon];
+    
+    
+    [self presentViewController:self.alert animated:YES completion:nil];
+    
+    
     
 }
 

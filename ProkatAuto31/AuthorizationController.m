@@ -156,7 +156,7 @@ return YES;
                                             if (tokenString != NULL) {
                                                 [self.navigationController pushViewController:self.nextController animated:YES];
                                             } else {
-                                                [self RCAlertController];
+                                                NSLog(@"input date is (()()() %@", tokenString);
                                             }
 
                                         }

@@ -498,5 +498,48 @@
                       }];
 }
 
+- (void) rememberPasswordWithCapchaKey:(NSString *)key
+                        andCapchaValue:(NSString *)value
+                              andPhone:(NSString *)phone
+                             OnSuccess:(void (^)(NSString *))success
+                                onFail:(void (^)(NSError *, NSInteger, NSArray* dataArray))failure {
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            phone,  @"phone",
+                            key,    @"key",
+                            value,  @"captcha_value",nil];
+    
+    [self.sessionManager POST:@"remember-password/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          NSLog(@"responseObject rememberPassword %@", responseObject);
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error ) {
+                          
+                          NSLog(@"error text field *** %@", task.response);
+                          NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                          NSLog(@"Error is %@",ErrorResponse);
+                          
+                          
+                          NSError* JSONerror;
+                          if (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey]) {
+                              NSDictionary *dJSON = [NSJSONSerialization JSONObjectWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:NSJSONReadingAllowFragments error:&JSONerror];
+
+                              NSLog(@"password %@", [dJSON objectForKey:@"password"]);
+                              NSArray *dictsArray = [dJSON allValues];
+                              NSLog(@"errorArray %@", dictsArray);
+                              if (failure) {
+                                  failure(error, 1, dictsArray);
+                              }
+                              
+                          } else {
+                              NSLog(@"Error JSONerror %@",ErrorResponse);
+                              
+                          }
+
+                          
+                      }];
+}
+
 
 @end
