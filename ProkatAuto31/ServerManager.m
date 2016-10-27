@@ -324,17 +324,18 @@
                      progress:nil
                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                           NSArray *dictsArray = [responseObject allObjects];
-                          NSLog(@"Resualt is1111111 %@", responseObject);
 
                           if (success) {
                               success(dictsArray);
+                              
+                              NSLog(@"____________  car clear responseObject %@", responseObject);
                           }
                       }
                       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                            //NSLog(@"Error: %@", error);
                           if (failure) {
                               failure(error, 7);
-                              NSLog(@"Resualt 22222222 %@", error);
+                              NSLog(@"Resualt _________chack error %@", error);
 
                           }
                       }];
@@ -417,8 +418,8 @@
 - (void) registrationWithPersonData: (Person*) person
                              andKey: (NSString*) key
                     PasswordFromImg:(NSString*) password
-                          OnSuccess:(void(^)(NSString* thisData)) success
-                             onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                          OnSuccess:(void(^)(NSString* token, id user )) success
+                             onFail:(void(^)(NSError* error, NSInteger statusCode, NSArray* dataArray)) failure {
     //self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
@@ -451,6 +452,13 @@
                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                           
                           NSLog(@"register rspons______________%@", responseObject);
+                          User *user = [[User alloc] initWithServerResponse:[responseObject objectForKey:@"user"]];
+                          NSString *tokenString = [responseObject objectForKey:@"token"];
+                          
+                                                   
+                          if (success) {
+                              success (tokenString, user);
+                          }
                           
                       }
                       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -458,17 +466,32 @@
                           NSLog(@"error text field *** %@", task.response);
                           NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
                           NSLog(@"Error is %@",ErrorResponse);
-     
-                          NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
-                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                                       options:kNilOptions
-                                                                                         error:&error];
-                          NSLog(@"error----------- object %@",[jsonResponse allValues]);
-                      }];
-    
-   
+                          
+                         // NSArray *errorArray = [[NSArray alloc] initWithObjects:ErrorResponse, nil];
+                         
+                          NSError* JSONerror;
+                          if (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey]) {
+                              NSDictionary *dJSON = [NSJSONSerialization JSONObjectWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:NSJSONReadingAllowFragments error:&JSONerror];
+                              
+                              NSLog(@"errorInfo*** %@", dJSON);
+                              
+                              
+                              NSLog(@"password %@", [dJSON objectForKey:@"password"]);
+                               NSArray *dictsArray = [dJSON allValues];
+                              NSLog(@"errorArray %@", dictsArray);
+                              if (failure) {
+                                  failure(error, 1, dictsArray);
+                              }
+                              
+                          } else {
+                              NSLog(@"Error JSONerror %@",ErrorResponse);
 
-
+                          }
+                          
+                          
+                          
+                          
+                                              }];
 }
 
 - (void) orderCarWithDriver: (NSNumber*) carId
@@ -523,6 +546,36 @@
     
     
     
+}
+
+- (void) logInWithLogin:(NSString *)login
+            andPassword:(NSString *)password
+              OnSuccess:(void (^)(NSString *, id))success
+                 onFail:(void (^)(NSError *, NSInteger))failure {
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            login,    @"phone",
+                            password, @"password", nil];
+    
+    [self.sessionManager POST:@"auth/obtain-jwt-token/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          NSLog(@"responseObject %@", responseObject);
+                          
+                          User *user = [[User alloc] initWithServerResponse:[responseObject objectForKey:@"user"]];
+                          NSString *tokenString = [responseObject objectForKey:@"token"];
+                          if (success) {
+                              success (tokenString, user);
+                          }
+
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          NSLog(@"Error LogIn %@", error);
+                          if (failure) {
+                              failure (error, 7);
+                          }
+                      }];
 }
 
 

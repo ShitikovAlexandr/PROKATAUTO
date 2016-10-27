@@ -1,104 +1,50 @@
 //
-//  RegistrationController.m
+//  RememberPasswordController.m
 //  ProkatAuto31
 //
-//  Created by alex on 18.10.16.
+//  Created by alex on 26.10.16.
 //  Copyright © 2016 Asta.Mobi. All rights reserved.
 //
 
-
-/*
-  ** to get values use keys:
- 
- @"tokenString"
- @"firstName"
- @"lastName"
- @"fatherName"
- @"phone"
- @"dateOfBirth"
- @"passportSeries"
- @"passportNumber"
- @"passportIssueDate"
- 
- exemple:
- 
- NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
- NSLog(@"user saved data %@", [defaults valueForKey:@"tokenString"]);
- 
- */
-
-#import "RegistrationController.h"
-#import "RCTextField.h"
+#import "RememberPasswordController.h"
 #import "ServerManager.h"
-#import "RCDatePicker.h"
-#import "Person.h"
-#import "User.h"
 
-@interface RegistrationController ()
-@property (strong, nonatomic) UIAlertController *alert;
-
+@interface RememberPasswordController ()
 
 @property (strong, nonatomic) UIPickerView *countriCodePicker;
 @property (strong, nonatomic) NSDictionary *pickerDateArray;
-
-//main info
-@property (weak, nonatomic) IBOutlet RCTextField *surnameTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *nameTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *middleNameTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *emailTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *countryCodeTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *phoneNumberTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *dateOfBirthTextField;
-
-// passport info
-@property (weak, nonatomic) IBOutlet RCTextField *passportSeriesTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *passportNumberTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *dateOfPassport;
-
-// Driver's license info
-@property (weak, nonatomic) IBOutlet RCTextField *driverLicenseTextField;
-@property (weak, nonatomic) IBOutlet RCTextField *driverLicenseNumber;
-@property (weak, nonatomic) IBOutlet RCTextField *drivelLicenseDate;
-
-// password
-
-@property (weak, nonatomic) IBOutlet RCTextField *firstPassword;
-@property (weak, nonatomic) IBOutlet RCTextField *secondPassword;
-@property (weak, nonatomic) IBOutlet UISwitch *switcherLicenseArg;
-@property (weak, nonatomic) IBOutlet UIImageView *imageWithPassword;
-@property (weak, nonatomic) IBOutlet RCTextField *passwordFromImage;
-
-@property (strong, nonatomic) NSString *CapchaKey;
-@property (strong, nonatomic) NSString *captchaValue;
-@property (strong, nonatomic) RCDatePicker *datePicker;
-
-@property (strong, nonatomic) Person *person;
-
-@property (assign, nonatomic) NSInteger datePickerFlag;
-
-@property (weak, nonatomic) IBOutlet UIButton *RegistrButton;
-
-extern NSString *baseAddress;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *CountryNameLabel;
 
-@property (strong, nonatomic) NSMutableArray *isTextFieldEnterText;
+@property (strong, nonatomic) NSString *CapchaKey;
+
+
 
 
 @end
 
-@implementation RegistrationController
+@implementation RememberPasswordController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"baseAddress ____   ________ %@", baseAddress);
-    self.isTextFieldEnterText = [NSMutableArray array];
-    self.person = [[Person alloc] init];
-    self.person.countryCode = @"+7";
+    
     [self getCapchaImg];
     
+    self.title = @"Восстановление пароля";
+    
     // Do any additional setup after loading the view.
+    [self styleRCButton:self.getNewPasswordButton];
+    self.alertView.layer.cornerRadius = 2.f;
+    self.alertView.layer.borderWidth = 0.5f;
+    self.alertView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    self.alertView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.alertView.layer.shadowOffset = CGSizeMake(2.f, 2.0f);
+    self.alertView.layer.shadowRadius = 2.0f;
+    self.alertView.layer.shadowOpacity = 2.0f;
+    self.alertView.layer.masksToBounds = NO;
+    self.alertView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.alertView.bounds cornerRadius:self.alertView.layer.cornerRadius].CGPath;
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
     self.pickerDateArray = [[NSDictionary alloc] init];
     self.countriCodePicker = [[UIPickerView alloc] init];
@@ -113,29 +59,17 @@ extern NSString *baseAddress;
     UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     [toolBar setTintColor:[UIColor grayColor]];
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
-    [self.countryCodeTextField setInputAccessoryView:toolBar];
-    self.countryCodeTextField.inputView = self.countriCodePicker;
-
+    [self.countryCode setInputAccessoryView:toolBar];
+    self.countryCode.inputView = self.countriCodePicker;
     
     self.pickerDateArray = [self dataForPickerCountry];
     self.countriCodePicker.delegate = self;
-    self.countriCodePicker.dataSource = self;
-    self.countryCodeTextField.delegate = self;
-    
-    self.pickerDateArray = [self dataForPickerCountry];
-    self.countryCodeTextField.placeholder =  [NSString stringWithFormat:@"%@", [self.pickerDateArray objectForKey:@"Russia"]];
-    self.CountryNameLabel.text = @"Russia";
-    
     [self.countriCodePicker selectRow:(int)[self.pickerDateArray objectForKey:@"Russia"] inComponent:0 animated:YES];
-    
-    [self.RegistrButton addTarget:self action:@selector(sendRegisterForm) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
-    
-    
-    [self styleRCButton:self.RegistrButton];
+    self.CountryNameLabel.text = @"Russia";
+    self.countryCode.placeholder =  [NSString stringWithFormat:@"%@", [self.pickerDateArray objectForKey:@"Russia"]];
 
+    
+    
     
 
     
@@ -146,15 +80,49 @@ extern NSString *baseAddress;
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
+    
+    if (textField.tag >0) {
+        [textField starEditeffect:textField];
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
+    if (textField.tag >0) {
+        [textField EndEditeffect:textField];
+    }
+    
+    return YES;
+    
+}
+
+
+
+
+
+- (void) styleRCButton: (UIButton*) button {
+    
+    button.layer.cornerRadius = 3.f;
+    button.layer.borderWidth = 1.0f;
+    button.layer.borderColor = [UIColor blackColor].CGColor;
+    button.layer.masksToBounds = YES;
+}
+
+-(void) myCustomBack {
+        [self.navigationController popViewControllerAnimated:YES];
+ }
+
+
+#pragma mark - CountryCodePicker
 
 - (void) doneButtonPressed:(id)sender  {
     
-    [self.countryCodeTextField resignFirstResponder];
-    self.countryCodeTextField.layer.shadowColor = [UIColor grayColor].CGColor;
-    //self.countryCodeTextField.textColor = [UIColor blackColor];
+    [self.countryCode resignFirstResponder];
+    self.countryCode.layer.shadowColor = [UIColor grayColor].CGColor;
 }
-
-#pragma mark - UIPickerViewDelegate
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     
@@ -171,7 +139,7 @@ extern NSString *baseAddress;
     
     NSString *str = [NSString stringWithFormat:@"%@ %@",[self.pickerDateArray allKeys][row], [self.pickerDateArray objectForKey:[self.pickerDateArray allKeys][row]]];
     
-   return str;
+    return str;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
@@ -179,121 +147,8 @@ extern NSString *baseAddress;
     NSString *str = [NSString stringWithFormat:@"%@", [self.pickerDateArray objectForKey:[self.pickerDateArray allKeys][row]]];
     NSString *str2 = [NSString stringWithFormat:@"%@", [self.pickerDateArray allKeys][row]];
     
-    self.countryCodeTextField.text = str;
+    self.countryCode.text = str;
     self.CountryNameLabel.text = str2;
-    //save date
-    NSLog(@"Select picker");
-    
-    
-}
-
-
-
-- (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
-    
-    
-    if (textField.tag !=6 && textField.tag !=7) {
-        [textField starEditeffect:textField];
-    }
-    
-    if (textField.tag == 7  || textField.tag == 10 || textField.tag == 13) {
-        
-        self.datePicker = [[RCDatePicker alloc] initWithShadowAndTextField:textField];
-        [self.datePicker addTarget:self action:@selector (textFieldDidChange:) forControlEvents:UIControlEventValueChanged];
-        self.datePicker.locale =  [NSLocale currentLocale];
-        self.datePicker.datePickerMode = UIDatePickerModeDate;
-        textField.inputView = self.datePicker;
-        self.datePicker.maximumDate = [NSDate date];
-    }
-    
-    if (textField.tag == 7) { // date
-        self.datePickerFlag = 7;
-    } else if (textField.tag == 10) { // date
-        self.datePickerFlag = 10;
-    } else if (textField.tag == 13) { // date
-        self.datePickerFlag = 13;
-    }
-    
-    
-    
-    
-        return YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
-    if (textField.tag !=6 && textField.tag !=7) {
-        [textField EndEditeffect:textField];
-        
-        if (textField.tag == 1) {
-            self.person.surname = [NSString stringWithFormat:@"%@",textField.text];
-        } else if (textField.tag == 2) {
-            self.person.name = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 3) {
-            self.person.middleName = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 4) {
-            self.person.email = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 5) {
-            self.person.phoneNumber = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 6) {
-            self.person.countryCode = [NSString stringWithFormat:@"%@", textField.text];
-        }  else if (textField.tag == 8) {
-            self.person.passportSeries = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 9) {
-            self.person.passportNumber = [NSString stringWithFormat:@"%@", textField.text];
-            self.person.driverLicense = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 12) {
-            self.person.driverLicenseNumber = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 15) {
-            self.person.Password = [NSString stringWithFormat:@"%@", textField.text];
-        } else if (textField.tag == 16) {
-            self.passwordFromImage.text = [NSString stringWithFormat:@"%@", textField.text];
-        }
-        else {
-            self.datePickerFlag = 0;
-        }
-
-
-    }
-    
-    return YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-}
-
--(void)textFieldDidChange:(UIDatePicker*) datePicker {
-    
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd-MM-yyyy"];
-    if (self.datePickerFlag == 7) {
-        self.person.dateOfBirth = datePicker.date;
-        self.dateOfBirthTextField.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.dateOfBirth]];
-        NSLog(@"dateOfBirth%@", self.person.dateOfBirth);
-
-    } else if (self.datePickerFlag == 10) {
-        self.person.dateOfPassport = datePicker.date;
-        self.dateOfPassport.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.dateOfPassport]];
-        NSLog(@"dateOfPassport%@", self.person.dateOfPassport);
-
-
-    } else if (self.datePickerFlag == 13) {
-        self.person.drivelLicenseDate = datePicker.date;
-        self.drivelLicenseDate.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.drivelLicenseDate]];
-        NSLog(@"drivelLicenseDate%@", self.person.drivelLicenseDate);
-
-    }
-    
-    
-    
 }
 
 - (BOOL)textFieldShouldReturn:(RCTextField *)textField {
@@ -305,60 +160,7 @@ extern NSString *baseAddress;
     return YES;
 }
 
-
 #pragma mark - API
-
-- (IBAction) sendRegisterForm {
-    
-    [self chackTextfield];
-    
-    if ([self chackTextfield]) {
-        
-        [[ServerManager sharedManager] registrationWithPersonData:self.person
-                                                           andKey:self.CapchaKey
-                                                  PasswordFromImg:self.passwordFromImage.text
-                                                        OnSuccess:^(NSString* token, id user) {
-                                                            
-                                                            // save data
-                                                            
-                                                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                                            NSString *tokenString = token;
-                                                            
-                                                            [defaults setValue:tokenString forKey:@"tokenString"];
-
-                                                            User *newUser = [[User alloc] init];
-                                                            newUser = user;
-                                                            [defaults setValue:newUser.firstName forKey:@"firstName"];
-                                                            [defaults setValue:newUser.lastName forKey:@"lastName"];
-                                                            [defaults setValue:newUser.fatherName forKey:@"fatherName"];
-                                                            [defaults setValue:newUser.phone forKey:@"phone"];
-                                                            [defaults setValue:newUser.dateOfBirth forKey:@"dateOfBirth"];
-                                                            [defaults setValue:newUser.passportSeries forKey:@"passportSeries"];
-                                                            [defaults setValue:newUser.passportNumber forKey:@"passportNumber"];
-                                                            [defaults setValue:newUser.passportIssueDate forKey:@"passportIssueDate"];
-
-                                                            NSLog(@"user %@", newUser);
-                                                            NSLog(@"token %@", tokenString);
-                                                            
-
-                                                        }
-                                                           onFail:^(NSError *error, NSInteger statusCode, NSArray* dictsArray) {
-                                                               //[self getCapchaImg];
-                                                               if (dictsArray) {
-                                                                  NSString* newString = [[[dictsArray objectAtIndex:0]objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-                                                                   [self ErrorTextFieldInput:[NSString stringWithFormat:@"%@",newString]];
-                                                                   self.passwordFromImage.text = @"";
-                                                                   [self getCapchaImg];
-                                                               }
-                                                               
-                                                               
-                                                           }];
-
-    }
-    
-
-  
-}
 
 - (void) getCapchaImg {
     
@@ -369,7 +171,7 @@ extern NSString *baseAddress;
         
         [[ServerManager sharedManager] registrationGetCaptchaImgWithKey:self.CapchaKey
                                                               OnSuccess:^(id thisData) {
-                                                                  self.imageWithPassword.image = thisData;
+                                                                  self.captchaImg.image = thisData;
                                                                   
                                                               }
                                                                  onFail:^(NSError *error, NSInteger statusCode) {
@@ -382,103 +184,6 @@ extern NSString *baseAddress;
                                                             }];
     
 }
-
-- (void) ErrorTextFieldInput: (NSString*) errorText {
-    
-    self.alert = nil;
-    self.alert = [UIAlertController alertControllerWithTitle:
-                  errorText message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //self.alert.view.transform = CGAffineTransformIdentity;
-    //self.alert.view.transform = CGAffineTransformScale( self.alert.view.transform, 0.5, 0.5);
-    
-    
-    UIAlertAction *okButtlon = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive
-                                                  handler:^(UIAlertAction * _Nonnull action) {
-                                                      
-                                                  }];
-
-
-    [self.alert addAction:okButtlon];
-
-    
-    [self presentViewController:self.alert animated:YES completion:nil];
-
-
-    
-}
-// return NO  when have error in TextFields
-- (BOOL) chackTextfield {
-    
-    [self.isTextFieldEnterText removeAllObjects];
-    NSString *empty = [NSString string];
-    empty = @"Заполните все поля!";
-
-    if ([self.person.name length] <1) {
-       // empty = @"name";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.middleName length] <1) {
-        //empty = @"middleName";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.surname length] <1) {
-       // empty = @"surname";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.email length] <6 || ([self.person.email rangeOfString:@"@"].location == NSNotFound)) {
-        empty = @"Введите корректный адрес электронной почты";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.countryCode length]<1) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.phoneNumber length]<1) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if (self.person.dateOfBirth == NULL) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.passportSeries length] < 1) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.passportNumber length] <1) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if (self.person.dateOfPassport == NULL) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.driverLicense length] <1) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.driverLicenseNumber length] <1) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if (self.person.drivelLicenseDate == NULL) {
-        empty = @"Заполните все поля!";
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.Password length] <8) {
-        empty = @"Password";
-        [self.isTextFieldEnterText addObject:empty];
-    }
-    NSLog(@"errors count in array is %d", (int)[self.isTextFieldEnterText count]);
-    if ([self.isTextFieldEnterText count] >0) {
-        [self ErrorTextFieldInput:empty];
-        return NO;
-    } else {
-        return YES;
-    }
-    
-}
-
--(void) myCustomBack {
-    // Some anything you need to do before leaving
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void) styleRCButton: (UIButton*) button {
-    
-    button.layer.cornerRadius = 3.f;
-    button.layer.borderWidth = 1.0f;
-    button.layer.borderColor = [UIColor blackColor].CGColor;
-    button.layer.masksToBounds = YES;
-}
-
 
 
 
@@ -740,8 +445,6 @@ extern NSString *baseAddress;
     return codes;
     
 }
-
-
 
 
 
