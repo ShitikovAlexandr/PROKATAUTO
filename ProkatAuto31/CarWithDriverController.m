@@ -7,6 +7,7 @@
 //
 
 #import "CarWithDriverController.h"
+#import "CarsWithDriverListController.h"
 #import "SWRevealViewController.h"
 #import "Category.h"
 #import "ServerManager.h"
@@ -73,6 +74,17 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, category.image]];
     [cell.carImageView setImageWithURL:url];
     return [cell addCollectionViewCellProperty:cell];
+    
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    
+    Category *category =[self.categoryWithDriverArray objectAtIndex:indexPath.row];
+    CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
+    vc.categoryID = category.categoryID;
+        
+    vc.title = category.name;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

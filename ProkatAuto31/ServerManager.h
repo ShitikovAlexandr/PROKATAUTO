@@ -32,6 +32,10 @@
                              withCategoryID: (NSNumber*) categoryID;
 
 - (void) getCarWithoutDriverDetailWithTransmissionOnSuccess:(void(^)(NSArray* thisData)) success
+                                                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
+                                             withCategoryID: (NSNumber*) categoryID;
+
+- (void) getCarWithDriverDetailOnSuccess:(void(^)(NSArray* thisData)) success
                                      onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
                              withCategoryID: (NSNumber*) categoryID;
 
@@ -50,19 +54,30 @@
 
 - (void) registrationGetCaptchaImgWithKey:(NSString*) key  OnSuccess:(void(^)(id thisData)) success
                                   onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
-
-- (void) registrationWithPersonData: (Person*) person andKey: (NSString*) key PasswordFromImg:(NSString*) password OnSuccess:(void(^)(NSString* token, id user)) success
+- (void) registrationWithPersonData: (Person*) person
+                             andKey: (NSString*) key
+                    PasswordFromImg:(NSString*) password
+                          OnSuccess:(void(^)(NSString* token, id user)) success
                              onFail:(void(^)(NSError* error, NSInteger statusCode, NSArray* dataArray)) failure;
+- (void) orderCarWithDriver: (NSNumber*) carId
+                  userName : (NSString*) name
+            userPhoneNumber: (NSString*) phone
+                  userEmail: (NSString*) email
+           orderDescription: (NSString*) description
+                     andKey: (NSString*) key
+            passwordFromImg: (NSString*) password
+                  OnSuccess: (void(^)()) success
+                     onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
-- (void) logInWithLogin: (NSString*) login andPassword: (NSString*) password OnSuccess:(void(^)(NSString* token, id user)) success
+- (void) logInWithLogin: (NSString*) login
+            andPassword: (NSString*) password
+              OnSuccess:(void(^)(NSString* token, id user)) success
                  onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 - (void) rememberPasswordWithCapchaKey: (NSString*) key
                         andCapchaValue: (NSString*) value andPhone: (NSString*) phone
                              OnSuccess:(void(^)(NSString* data)) success
                                 onFail:(void(^)(NSError* error, NSInteger statusCode, NSArray* dataArray)) failure;
-
-
 
 
 @end
