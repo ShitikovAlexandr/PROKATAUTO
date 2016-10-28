@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface OrdersListController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
