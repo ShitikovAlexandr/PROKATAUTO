@@ -72,4 +72,13 @@
     return self;
 }
 
+- (id) initWithServerOrderResponse: (NSDictionary*) responseObject
+{
+    self.carID = [responseObject objectForKey:@"id"];
+    self.itemFullName = [responseObject objectForKey:@"full_name"];
+    self.regNumber = [responseObject objectForKey:@"reg_number"];
+    
+    return self;
+}
+
 @end

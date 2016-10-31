@@ -43,12 +43,14 @@
 @property (strong, nonatomic) NSNumber *priceRange3;//
 
 @property (strong, nonatomic) NSString *imageURL;//
+@property (strong, nonatomic) NSString *regNumber;
 
 
 
 
 
 - (id) initWithServerResponse: (NSDictionary*) responseObject;
+- (id) initWithServerOrderResponse: (NSDictionary*) responseObject;
 
 
 

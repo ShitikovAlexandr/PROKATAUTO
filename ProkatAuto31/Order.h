@@ -12,6 +12,7 @@
 
 @interface Order : NSObject
 
+@property (strong, nonatomic) NSNumber *orderId;
 @property (strong, nonatomic) Car *car;
 
 @property (strong, nonatomic) NSDate *dateOfRentalStart;
@@ -26,8 +27,14 @@
 @property (strong, nonatomic) NSString *startDateOfRentalString;
 @property (strong, nonatomic) NSString *endDateOfRentalString;
 
-
+@property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *number;
+@property (strong, nonatomic) NSString *days;
+@property (strong, nonatomic) NSString *paymentStatus;
 
 @property (strong, nonatomic) NSNumber *totalPrice;
+@property (strong, nonatomic) NSNumber *paid;
+
+- (id) initWithServerResponse: (NSDictionary*) responseObject;
 
 @end
