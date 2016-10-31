@@ -16,6 +16,7 @@
 #import "Person.h"
 #import "CarWithDriver.h"
 #import "SideMenuItem.h"
+#import "Order.h"
 
 
 @interface ServerManager ()
@@ -671,6 +672,34 @@
                      }
                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                          NSLog(@"error %@", error);
+                     }];
+}
+
+- (void) ordersHistory:(void (^)(NSArray *))success
+                onFail:(void (^)(NSError *))failure {
+    
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [self.sessionManager GET:@"orders/"
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+                         NSArray *dicArray = [responseObject objectForKey:@"result"];
+                         NSMutableArray *dataArray = [NSMutableArray array];
+                         
+                         for(NSDictionary* dic in dicArray) {
+                             Order *item = [[Order alloc] initWithServerResponse:dic];
+                             [dataArray addObject:item];
+                         }
+                         
+                         if (success) {
+                             success(dataArray);
+                         }
+                         
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"error orders %@", error);
                      }];
 }
 

@@ -84,6 +84,8 @@
 
 - (void) sideMenuWithPageId:(NSNumber*) pageId OnSuccess:(void(^)(NSString* title, NSString* content)) success
                     onFail:(void(^)(NSError* error)) failure;
+- (void) ordersHistory:(void (^)(NSArray *))success
+                onFail:(void (^)(NSError *))failure;
 
 
 @end

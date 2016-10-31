@@ -113,7 +113,8 @@
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:88]]) {
         NSLog(@"go to change password ----->>>>");
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:77]]) {
-        NSLog(@"go to orders ----->>>>");
+        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
+        [self presentViewController:navVC animated:YES completion:nil];
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:66]]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *token =  [defaults valueForKey:@"tokenString"];

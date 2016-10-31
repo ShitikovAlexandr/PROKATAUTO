@@ -7,6 +7,9 @@
 //
 
 #import "OrdersListController.h"
+#import "ServerManager.h"
+#import "OrderCell.h"
+#import "Order.h"
 
 @interface OrdersListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -23,7 +26,7 @@
     
     self.dataArray = [NSMutableArray array];
     
-    //[self getCarInfoFromAPI];
+    [self getOrdersFromAPI];
 }
 
 -(void) myCustomBack {
@@ -40,23 +43,31 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-//    NSString *const identifier = @"CarWithDriverCell";
-//    
-//    CarWithDriverCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-//    
-//    CarWithDriver *car = [self.dataArray objectAtIndex:indexPath.row];
-//    
-//    NSURL *url = [NSURL URLWithString:car.imageURL];
-//    [cell.carImageView setImageWithURL:url];
-//    
-//    cell.modelLabel.text = car.name;
+    NSString *const identifier = @"OrderCell";
+    
+    OrderCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
+    Order *order = [self.dataArray objectAtIndex:indexPath.row];
+    
+    cell.numberLabel.text = [NSString stringWithFormat:@"№%@", order.number];
 //    cell.descriptionLabel.attributedText = [self.descriptionsArray objectAtIndex:indexPath.row];
 //    
 //    [cell.orderButton addTarget:self action:@selector(OrderCar:event:) forControlEvents:UIControlEventTouchUpInside];
     
-//    return [cell addCollectionViewCellProperty:cell];
-    return NULL;
+    return [cell addCollectionViewCellProperty:cell];
     
 }
 
+#pragma mark - API
+
+- (void) getOrdersFromAPI {
+    
+    [[ServerManager sharedManager] ordersHistory:^(NSArray *thisData) {
+        [self.dataArray addObjectsFromArray:thisData];
+        [self.collectionView reloadData];
+    } onFail:^(NSError *error) {
+        NSLog(@"Error = %@", error);
+    }];
+    
+}
 @end
