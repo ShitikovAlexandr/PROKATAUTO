@@ -635,6 +635,8 @@
 				84109E221DA997E600010EA3 /* CarWithDriverCell.m */,
 				8486453D1DB8000A00D6D813 /* CarWithDriver.h */,
 				8486453B1DB7FF7900D6D813 /* CarWithDriver.m */,
+				FA464BCE1DC340A3000EDF79 /* SideMenuItem.h */,
+				FA464BCF1DC340A3000EDF79 /* SideMenuItem.m */,
 				8435724C1DC33D38009CFFC0 /* OrderCell.h */,
 				8435724D1DC33D38009CFFC0 /* OrderCell.m */,
 			);

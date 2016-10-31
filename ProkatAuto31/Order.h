@@ -27,10 +27,13 @@
 @property (strong, nonatomic) NSString *startDateOfRentalString;
 @property (strong, nonatomic) NSString *endDateOfRentalString;
 
+@property (strong, nonatomic) NSMutableArray *selectOptionArray;
 @property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSString *number;
 @property (strong, nonatomic) NSString *days;
 @property (strong, nonatomic) NSString *paymentStatus;
+
+
 
 @property (strong, nonatomic) NSNumber *totalPrice;
 @property (strong, nonatomic) NSNumber *paid;
