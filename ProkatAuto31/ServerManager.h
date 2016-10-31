@@ -79,5 +79,11 @@
                              OnSuccess:(void(^)(NSString* data)) success
                                 onFail:(void(^)(NSError* error, NSInteger statusCode, NSArray* dataArray)) failure;
 
+- (void) sideMenuOnSuccess:(void(^)(NSArray* data)) success
+                    onFail:(void(^)(NSError* error)) failure;
+
+- (void) sideMenuWithPageId:(NSNumber*) pageId OnSuccess:(void(^)(NSString* title, NSString* content)) success
+                    onFail:(void(^)(NSError* error)) failure;
+
 
 @end

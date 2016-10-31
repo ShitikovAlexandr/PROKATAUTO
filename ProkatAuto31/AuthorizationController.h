@@ -23,6 +23,8 @@
 @property (strong, nonatomic ) id nextController;
 @property (strong, nonatomic ) id backController;
 
+@property (assign, nonatomic) BOOL StepBack;
+
 
 
 

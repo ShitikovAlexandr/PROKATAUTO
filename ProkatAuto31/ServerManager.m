@@ -15,6 +15,7 @@
 #import "User.h"
 #import "Person.h"
 #import "CarWithDriver.h"
+#import "SideMenuItem.h"
 
 
 @interface ServerManager ()
@@ -42,13 +43,15 @@
 {
     self = [super init];
     if (self) {
-        NSURL *url = [NSURL URLWithString:@"http://83.220.170.187/api/v1/public/"];
         
+        NSURL *url = [NSURL URLWithString:@"http://83.220.170.187/api/v1/public/"];
         self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:url];
-       //[self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
+        [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadRevalidatingCacheData];
     }
     return self;
 }
+
+
 
 #pragma mark - API Methods
 
@@ -260,9 +263,9 @@
 }
 
 
-- (void) getCarWithDriverDetailWithTransmissionOnSuccess:(void(^)(NSArray* thisData)) success
-                                                   onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
-                                           withCategoryID: (NSNumber*) categoryID {
+- (void) getCarWithoutDriverDetailWithTransmissionOnSuccess:(void(^)(NSArray* thisData)) success
+                                                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
+                                             withCategoryID: (NSNumber*) categoryID {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"transmission", nil];
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
 
@@ -427,10 +430,12 @@
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
                                                                      @"text/json", @"text/javascript",@"text/html", nil];
+    
+    NSString *currentPhoneNumber = [NSString stringWithFormat:@"%@%@", [person.countryCode stringByReplacingOccurrencesOfString:@"+" withString:@""], person.phoneNumber];
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yyyy-MM-dd"];
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
-                            [NSString stringWithFormat:@"%@", person.phoneNumber], @"phone",//
+                            currentPhoneNumber, @"phone",
                             person.Password,
                             @"password",
                             key,
@@ -616,6 +621,57 @@
                       }];
     
     
+}
+
+
+- (void) sideMenuOnSuccess:(void (^)(NSArray *))success
+                    onFail:(void (^)(NSError *))failure {
+    
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    [self.sessionManager GET:@"side-menu/"
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSLog(@"side menu responseObject %@", responseObject);
+                         NSArray *dicArray = [responseObject allObjects];
+                         NSMutableArray *dataArray = [NSMutableArray array];
+                         
+                         for(NSDictionary* dic in dicArray) {
+                             SideMenuItem *item = [[SideMenuItem alloc] initWithServerResponse:dic];
+                             [dataArray addObject:item];
+                         }
+                         
+                         if (success) {
+                             success(dataArray);
+                         }
+                        
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"error side menu %@", error);
+                     }];
+}
+
+- (void) sideMenuWithPageId:(NSNumber*) pageId OnSuccess:(void(^)(NSString* title, NSString* content)) success
+                     onFail:(void(^)(NSError* error)) failure {
+    
+    
+    [self.sessionManager GET:[NSString stringWithFormat:@"side-menu/%@/", pageId]
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSLog(@"responseObject WithPageId: %@ -> %@", pageId, responseObject);
+                         NSString *content = [responseObject objectForKey:@"content"];
+                         NSString *title = [responseObject objectForKey:@"title"];
+                         
+                         if (success) {
+                             success (content, title);
+                         }
+                         
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"error %@", error);
+                     }];
 }
 
 
