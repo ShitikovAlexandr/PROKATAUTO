@@ -99,6 +99,7 @@
 		FA05C6081DC250C500F79B05 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA05C6061DC250C500F79B05 /* Crashlytics.framework */; };
 		FA06A3C51DA8D8B000E4DB5F /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3C41DA8D8B000E4DB5F /* Order.m */; };
 		FA06A3D91DA8F50900E4DB5F /* RCDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */; };
+		FA13E9C71DC7A14200E4A549 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA13E9C61DC7A14200E4A549 /* ProfileController.m */; };
 		FA2015981DAE65BB0091D953 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2015971DAE65BB0091D953 /* Place.m */; };
 		FA2506EB1DBBF3DA00EF507A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2506EA1DBBF3DA00EF507A /* User.m */; };
 		FA2ED0331DC69DE2007A646C /* SidePageIdController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2ED0321DC69DE2007A646C /* SidePageIdController.m */; };
@@ -275,6 +276,8 @@
 		FA06A3C41DA8D8B000E4DB5F /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		FA06A3D71DA8F50800E4DB5F /* RCDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDatePicker.h; sourceTree = "<group>"; };
 		FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDatePicker.m; sourceTree = "<group>"; };
+		FA13E9C51DC7A14200E4A549 /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileController.h; sourceTree = "<group>"; };
+		FA13E9C61DC7A14200E4A549 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileController.m; sourceTree = "<group>"; };
 		FA2015961DAE65BB0091D953 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		FA2015971DAE65BB0091D953 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		FA2506E91DBBF3DA00EF507A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -766,6 +769,8 @@
 				633E008F1D8812F800436D99 /* SliderBarViewController.m */,
 				FA2ED0311DC69DE2007A646C /* SidePageIdController.h */,
 				FA2ED0321DC69DE2007A646C /* SidePageIdController.m */,
+				FA13E9C51DC7A14200E4A549 /* ProfileController.h */,
+				FA13E9C61DC7A14200E4A549 /* ProfileController.m */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -790,6 +795,7 @@
 				63F4B8561D82C842006B391D /* Sources */,
 				63F4B8571D82C842006B391D /* Frameworks */,
 				63F4B8581D82C842006B391D /* Resources */,
+				FAD301E41DC7776F001FE7DC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -811,7 +817,8 @@
 				TargetAttributes = {
 					63F4B8591D82C842006B391D = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = D7BCEBCF9Z;
+						DevelopmentTeam = N5UQ397JF2;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -905,6 +912,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		FAD301E41DC7776F001FE7DC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run a1a3a916c70184cac25a7b436e7debd044fb3300 2135867180aeefcc9afe54a56842d44f8628e9dfc0406d46eef06842a2f1174e";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		63F4B8561D82C842006B391D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -938,6 +961,7 @@
 				FA06A3C51DA8D8B000E4DB5F /* Order.m in Sources */,
 				633E004A1D86DE2A00436D99 /* OtherController.m in Sources */,
 				FA467E211DC0F16B00B466C3 /* RememberPasswordController.m in Sources */,
+				FA13E9C71DC7A14200E4A549 /* ProfileController.m in Sources */,
 				633E00841D880F8000436D99 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				633E008D1D8811E900436D99 /* SWRevealViewController.m in Sources */,
 				633E00831D880F8000436D99 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1087,7 +1111,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = D7BCEBCF9Z;
+				DEVELOPMENT_TEAM = N5UQ397JF2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1095,9 +1119,10 @@
 				INFOPLIST_FILE = ProkatAuto31/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Asta.Mobi.ProkatAuto31;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scythgames.math;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6622763b-c941-4fdf-992d-97446240dd5a";
+				PROVISIONING_PROFILE_SPECIFIER = Asta.Mobi;
 			};
 			name = Debug;
 		};
@@ -1107,7 +1132,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = D7BCEBCF9Z;
+				DEVELOPMENT_TEAM = N5UQ397JF2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1115,9 +1140,10 @@
 				INFOPLIST_FILE = ProkatAuto31/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Asta.Mobi.ProkatAuto31;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scythgames.math;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6622763b-c941-4fdf-992d-97446240dd5a";
+				PROVISIONING_PROFILE_SPECIFIER = Asta.Mobi;
 			};
 			name = Release;
 		};

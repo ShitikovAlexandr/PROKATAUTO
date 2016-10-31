@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-//#import <Fabric/Fabric.h>
-//#import <Crashlytics/Crashlytics.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
 
@@ -29,7 +29,7 @@
                                                      documentAttributes:nil error:nil];
     NSLog(@"%@",[attrStringFromHtml string]);
     
-    //[Fabric with:@[[Crashlytics class]]];
+    [Fabric with:@[[Crashlytics class]]];
     
     return YES;
 }
