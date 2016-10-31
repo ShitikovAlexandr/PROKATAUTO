@@ -114,6 +114,12 @@
     if (indexPath.section == 0) {
         Category *category =[self.carCategories objectAtIndex:indexPath.row];
         cell.categoryName.text = category.name;
+        CGRect frame = cell.categoryName.frame;
+        frame.origin.y= cell.categoryName.frame.origin.y+ 20.f;
+        frame.origin.x= cell.categoryName.frame.origin.x;
+        cell.categoryName.frame = frame;
+        
+        
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, category.image]];
         [cell.carImageView setImageWithURL:url];
         return [cell addCollectionViewCellProperty:cell];
