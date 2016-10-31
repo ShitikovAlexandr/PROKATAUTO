@@ -13,6 +13,7 @@
 #import "AuthorizationController.h"
 #import "CarWithoutDriverController.h"
 #import "SidePageIdController.h"
+#import "SWRevealViewController.h"
 
 @interface SliderBarViewController ()
 
@@ -118,17 +119,43 @@
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:66]]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *token =  [defaults valueForKey:@"tokenString"];
-        
-        if ([token length] > 6) {
-            NSString *tokenString = @"";
-            [defaults setValue:tokenString forKey:@"tokenString"];
-            [self.tableView reloadData];
+
+               if ([token length] > 6) {
+                   [self alertExit];
         } else {
+            [self.tableView reloadData];
             UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"NavReg"];
             [self presentViewController:vc animated:YES completion:nil];
         }
         NSLog(@"you press Exit/Enter");
     }
+}
+
+- (void) alertExit {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                  @"Выход" message:@"Вы действительно хотите выйти?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Да" style:UIAlertActionStyleDestructive
+                                                  handler:^(UIAlertAction * _Nonnull action) {
+                                                      
+                                                      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                                      NSString *tokenString = @"";
+                                                      [defaults setValue:tokenString forKey:@"tokenString"];
+                                                      self.exit.title = @"Вход";
+                                                      SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+                                                      [self presentViewController:vc animated:YES completion:nil];
+
+                                                                                                      }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет" style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {}];
+    
+    [alert addAction:exit];
+    [alert addAction:cancel];
+
+    [self presentViewController:alert animated:YES completion:nil];
+
+
+    
 }
 
 #pragma mark - API
