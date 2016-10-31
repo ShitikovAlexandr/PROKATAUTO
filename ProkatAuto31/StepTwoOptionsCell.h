@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIView *nameView;
 @property (weak, nonatomic) IBOutlet UIView *priceView;
 @property (weak, nonatomic) IBOutlet UIView *countView;
+@property (weak, nonatomic) IBOutlet UIImageView *dropDownImg;
 
 @end

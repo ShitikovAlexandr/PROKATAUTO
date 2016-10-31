@@ -8,12 +8,16 @@
 
 #import "AuthorizationController.h"
 #import "RegistrationController.h"
+#import "RememberPasswordController.h"
+#import "CarWithoutDriverController.h"
+#import "SWRevealViewController.h"
 #import "ServerManager.h"
 #import "User.h"
 
 @interface AuthorizationController ()
 
 @property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *countryCodeText;
 @property (strong, nonatomic) NSString *passwordInput;
 
 @property (strong, nonatomic) UIPickerView *countriCodePicker;
@@ -28,6 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"Авторизация";
     
     [self styleRCButton:self.RegisterButton];
     [self styleRCButton:self.EnterButton];
@@ -47,6 +53,7 @@
     
     [self.EnterButton addTarget:self action:@selector(enterAction) forControlEvents:UIControlEventTouchDown];
     [self.RegisterButton addTarget:self action:@selector(regAction) forControlEvents:UIControlEventTouchDown];
+    [self.forgetPasswordButton addTarget:self action:@selector(RememberController) forControlEvents:UIControlEventTouchDown];
     
     self.pickerDateArray = [[NSDictionary alloc] init];
     self.countriCodePicker = [[UIPickerView alloc] init];
@@ -69,6 +76,7 @@
     [self.countriCodePicker selectRow:(int)[self.pickerDateArray objectForKey:@"Russia"] inComponent:0 animated:YES];
     self.CountryNameLabel.text = @"Russia";
     self.CountryCode.placeholder =  [NSString stringWithFormat:@"%@", [self.pickerDateArray objectForKey:@"Russia"]];
+    self.countryCodeText = @"+7";
 
 
 
@@ -104,6 +112,10 @@
     if (textField.tag >0) {
         [textField EndEditeffect:textField];
     }
+    if (textField.tag == 0) {
+        self.countryCodeText = textField.text;
+    }
+    
     if (textField.tag == 1) {
         self.phone = textField.text;
     } else if (textField.tag == 2) {
@@ -121,8 +133,13 @@ return YES;
     if (self.backController) {
          [self.navigationController pushViewController:self.backController animated:YES];
         
-    } else {
+    } else if (self.StepBack) {
         [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+        [self presentViewController:vc animated:YES completion:nil];
+        
+        
 
     }
     
@@ -130,10 +147,14 @@ return YES;
 }
 
 - (void) enterAction {
-    [self authorizationWithLogin:self.phone andPassword:self.passwordInput];
+     NSString *currentPhoneNumber = [NSString stringWithFormat:@"%@%@", [self.countryCodeText stringByReplacingOccurrencesOfString:@"+" withString:@""], self.phone];
+    
+    [self authorizationWithLogin:currentPhoneNumber andPassword:self.passwordInput];
 }
 
 - (void) authorizationWithLogin: (NSString*) phone andPassword: (NSString*) password {
+    
+    
     
     [[ServerManager sharedManager] logInWithLogin:phone
                                       andPassword:password
@@ -154,7 +175,13 @@ return YES;
                                             [defaults setValue:newUser.passportIssueDate forKey:@"passportIssueDate"];
                                             
                                             if (tokenString != NULL) {
-                                                [self.navigationController pushViewController:self.nextController animated:YES];
+                                                if (self.nextController ) {
+                                                    [self.navigationController pushViewController:self.nextController animated:YES];
+                                                } else {
+                                                    SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+                                                    [self presentViewController:vc animated:YES completion:nil];
+                                                }
+                                                
                                             } else {
                                                 NSLog(@"input date is (()()() %@", tokenString);
                                             }
@@ -190,6 +217,12 @@ return YES;
     
     [self.CountryCode resignFirstResponder];
     self.CountryCode.layer.shadowColor = [UIColor grayColor].CGColor;
+}
+
+- (void) RememberController {
+    
+    RememberPasswordController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RememberPasswordController"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {

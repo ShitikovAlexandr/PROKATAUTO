@@ -152,9 +152,7 @@
             if ([option.optionAvaliableAmount intValue] >1) {
                 NSLog(@"option name %@", option.optionAvaliableAmount);
                 [cell.optionCount setUserInteractionEnabled:YES];
-                cell.optionCount.layer.borderColor = [UIColor grayColor].CGColor;
-                cell.optionCount.layer.cornerRadius = 6.f;
-                cell.optionCount.layer.borderWidth = 1.f;
+                cell.dropDownImg.image = [UIImage imageNamed:@"ic_arrow_drop_down_2x.png"];
                 
                 UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectOptionCount:)];
                 [tapGestureRecognizer setNumberOfTapsRequired:1];
@@ -189,6 +187,8 @@
      NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
     Option *option = [self.optionsArray objectAtIndex:indexPath.row];
     
+    StepTwoOptionsCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
     self.alert = nil;
     self.alert = [UIAlertController alertControllerWithTitle:
                   @"Количество" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -199,16 +199,23 @@
     for (int i = 0; i < [option.optionAvaliableAmount integerValue]; i++) {
         
         NSString *value = [NSString stringWithFormat:@"%d",i+1];
-        NSLog(@"value is _______ %@", value);
-        
         UIAlertAction *point = [UIAlertAction actionWithTitle:value style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                          [cell.switchOption setOn:YES animated:YES];
+                                                          [cell.switchOption addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+                                                          
+                                                          cell.optionCount.text = value;
                                                           
                                                       }];
                 [self.alert addAction:point];
         
     }
     [self presentViewController:self.alert animated:YES completion:nil];
+}
+
+- (void) switchChanged:(id)sender {
+    UISwitch* switchControl = sender;
+    NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
 }
 
 
@@ -219,16 +226,15 @@
     NSLog(@"token strin is %@", token);
 
     
-    if ([token length] > 1) {
+    if ([token length] > 6) {
         
         StepFourWithoutdriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
         [self.navigationController pushViewController:vc animated:YES];
-        NSLog(@"go to step four");
 
     } else {
         
         AuthorizationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AuthorizationController"];
-        vc.title = @"Авторизация";
+        vc.StepBack = true;
         StepFourWithoutdriverController *nVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
         nVC.title = @"Шаг 4:Подтверждение заказа";
         vc.nextController = nVC;
@@ -236,43 +242,6 @@
         [self.navigationController pushViewController:vc animated:YES];
 
     }
-    
-        /*
-    self.alert = nil;
-    self.alert = [UIAlertController alertControllerWithTitle:
-                  @"Вход" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-
-    UIAlertAction *LogIn = [UIAlertAction actionWithTitle:@"Войти" style:UIAlertActionStyleDefault
-                                                 handler:^(UIAlertAction * _Nonnull action) {
-                                                     
-                                                 }];
-    
-    
-    UIAlertAction *registration = [UIAlertAction actionWithTitle:@"Регистрация" style:UIAlertActionStyleDefault
-                                                  handler:^(UIAlertAction * _Nonnull action) {
-                                                      
-                                                      RegistrationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistrationController"];
-                                                      
-                                                      vc.title = @"Регистрация";
-                                                      [self.navigationController pushViewController:vc animated:YES];
-                                                      
-                                                      
-                                                  }];
-    
-    UIAlertAction *forgetPassword = [UIAlertAction actionWithTitle:@"Забыли пароль?" style:UIAlertActionStyleDestructive
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             
-                                                         }];
-
-    
-    [self.alert addAction:LogIn];
-    [self.alert addAction:registration];
-    [self.alert addAction:forgetPassword];
-    
-    [self presentViewController:self.alert animated:YES completion:nil];
-
-    */
-    
 }
 
 -(void) myCustomBack {
@@ -289,7 +258,6 @@
         [self.optionsArray addObjectsFromArray:thisData];
         [self.tableView reloadData];
     } onFail:^(NSError *error, NSInteger statusCode) {
-        //
     }];
     
 }

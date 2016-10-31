@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+//#import <Fabric/Fabric.h>
+//#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
 
@@ -26,6 +28,9 @@
                                                      options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
                                                      documentAttributes:nil error:nil];
     NSLog(@"%@",[attrStringFromHtml string]);
+    
+    //[Fabric with:@[[Crashlytics class]]];
+    
     return YES;
 }
 

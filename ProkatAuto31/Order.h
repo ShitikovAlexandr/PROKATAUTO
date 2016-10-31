@@ -26,6 +26,8 @@
 @property (strong, nonatomic) NSString *startDateOfRentalString;
 @property (strong, nonatomic) NSString *endDateOfRentalString;
 
+@property (strong, nonatomic) NSMutableArray *selectOptionArray;
+
 
 
 @property (strong, nonatomic) NSNumber *totalPrice;

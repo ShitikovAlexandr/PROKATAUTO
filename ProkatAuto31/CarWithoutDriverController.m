@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+       
     self.baseAddress = @"http://83.220.170.187";
 
     self.carCategories = [NSMutableArray array];
@@ -189,11 +189,12 @@
         [self.carCategories addObjectsFromArray:thisData] ;
         
         
-        
         [self.collectionView performBatchUpdates:^{
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+
         } completion:nil];
     } onFail:^(NSError *error, NSInteger statusCode) {
+         
     }];
     
     

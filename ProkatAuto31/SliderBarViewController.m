@@ -8,12 +8,19 @@
 
 #import "SliderBarViewController.h"
 #import "Category.h"
+#import "ServerManager.h"
+#import "SideMenuItem.h"
+#import "AuthorizationController.h"
+#import "CarWithoutDriverController.h"
+#import "SidePageIdController.h"
 
 @interface SliderBarViewController ()
 
-@property (strong, nonatomic) NSArray *objectsInSlideBar;
+@property (strong, nonatomic) NSMutableArray *objectsInSlideBar;
 @property (strong, nonatomic) NSArray *icons;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) SideMenuItem *exit;
+
 
 @end
 
@@ -21,9 +28,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.objectsInSlideBar = [NSArray arrayWithObjects:@"Мой профиль", @"Мои заказы",
-                              @"Статус", @"Где заказать", @"Условия аренды",
-                              @"О компании", @"Соц. сети",@"Оферта", @"Выход", nil];
+    self.objectsInSlideBar = [NSMutableArray array];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token =  [defaults valueForKey:@"tokenString"];
+    
+    self.exit = [[SideMenuItem alloc] init];
+    self.exit.itemId = @66;
+    self.exit.image = @"ic_exit_to_app.png";
+    
+    if ([token length] > 6) {
+        SideMenuItem *profile = [[SideMenuItem alloc] init];
+        profile.itemId = @99;
+        profile.image = @"ic_person.png";
+        profile.title = @"Мой профиль";
+        [self.objectsInSlideBar addObject:profile];
+        SideMenuItem *changePassword = [[SideMenuItem alloc] init];
+        changePassword.itemId = @88;
+        changePassword.title = @"Сменить пароль";
+        changePassword.image = @"ic_lock_open.png";
+        [self.objectsInSlideBar addObject:changePassword];
+        SideMenuItem *orders = [[SideMenuItem alloc]  init];
+        orders.itemId = @77;
+        orders.title = @"Мои заказы";
+        orders.image = @"ic_inbox.png";
+        [self.objectsInSlideBar addObject:orders];
+        self.exit.title = @"Выход";
+        [self.tableView reloadData];
+    } else {
+        self.exit.title = @"Вход";
+    }
+    
+    
+    
+    
+    
+    [self getSideMenuItems];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,9 +86,63 @@
         cell = [[UITableViewCell alloc]  initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifierCell];
        
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.objectsInSlideBar objectAtIndex:indexPath.row]];
+    SideMenuItem *item = [self.objectsInSlideBar objectAtIndex:indexPath.row];
+    cell.textLabel.minimumScaleFactor = 0.4f;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", item.title];
+    cell.imageView.image = [UIImage imageNamed:item.image];
     return cell;
 
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
+    
+    SideMenuItem *item = [self.objectsInSlideBar objectAtIndex:indexPath.row];
+    
+    if ([item.itemId integerValue] < 30) {
+        //NavSideId
+        ;
+        
+        SidePageIdController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SidePageIdController"];
+        vc.pageId = item.itemId;
+        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"NavSideId"];
+        [navVC setViewControllers:@[vc] animated:NO];
+        [self presentViewController:navVC animated:YES completion:nil];
+        NSLog(@"go to controller with id page = %@", item.itemId);
+    } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:99]]) {
+        NSLog(@"go to profile");
+    } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:88]]) {
+        NSLog(@"go to change password ----->>>>");
+    } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:77]]) {
+        NSLog(@"go to orders ----->>>>");
+    } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:66]]) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *token =  [defaults valueForKey:@"tokenString"];
+        
+        if ([token length] > 6) {
+            NSString *tokenString = @"";
+            [defaults setValue:tokenString forKey:@"tokenString"];
+            [self.tableView reloadData];
+        } else {
+            UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"NavReg"];
+            [self presentViewController:vc animated:YES completion:nil];
+        }
+        NSLog(@"you press Exit/Enter");
+    }
+}
+
+#pragma mark - API
+
+- (void) getSideMenuItems {
+    
+    [[ServerManager sharedManager] sideMenuOnSuccess:^(NSArray *data) {
+        NSLog(@"objects in side menu array %d", [data count] );
+        [self.objectsInSlideBar addObjectsFromArray:data];
+        [self.objectsInSlideBar addObject:self.exit];
+        [self.tableView reloadData];
+    } onFail:^(NSError *error) {
+        NSLog(@"Что то пошло не так");
+        
+    }];
 }
 
 
