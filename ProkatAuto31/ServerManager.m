@@ -679,6 +679,9 @@
                 onFail:(void (^)(NSError *))failure {
     
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *tokenString = [defaults valueForKey:@"tokenString"];
+    [self.sessionManager.requestSerializer setValue:tokenString forHTTPHeaderField:@"x-csrftoken"];
     
     [self.sessionManager GET:@"orders/"
                   parameters:nil
