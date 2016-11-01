@@ -8,7 +8,7 @@
 
 #import "OrderCell.h"
 
-@implementation OrderCell
+@implementation OrderCell : UICollectionViewCell
 
 - (UICollectionViewCell*) addCollectionViewCellProperty: (UICollectionViewCell*) cell {
     

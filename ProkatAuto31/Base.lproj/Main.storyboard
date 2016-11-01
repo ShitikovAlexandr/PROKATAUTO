@@ -362,14 +362,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OtherCollectionViewCell" id="UfD-wL-Nhb" customClass="CarMainCollectionViewCell">
-                                        <rect key="frame" x="37" y="0.0" width="302" height="124"/>
+                                        <rect key="frame" x="36" y="0.0" width="302" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="124"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Авто без водителя" lineBreakMode="wordWrap" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8xi-tM-SkU">
-                                                    <frame key="frameInset" minY="28" width="39.66%" height="59" maxX="7"/>
+                                                    <frame key="frameInset" minY="28" width="39.53%" height="59" maxX="6"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -2226,7 +2226,6 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="tableView" destination="oQp-ye-UIL" id="Hib-fH-dcU"/>
-                        <segue destination="8F5-H8-Raq" kind="push" id="UeW-Gt-HED"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzs-un-Xce" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2257,6 +2256,25 @@
             </objects>
             <point key="canvasLocation" x="-1138" y="-1056"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zDt-m8-h3s">
+            <objects>
+                <navigationController storyboardIdentifier="OrdersNavigationController" id="wk7-Ds-pbO" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qmM-k8-FNs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.14901960780000001" green="0.20000000000000001" blue="0.25882352939999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8F5-H8-Raq" kind="relationship" relationship="rootViewController" id="X46-6P-9tw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0TZ-7U-hBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationItem id="NAK-WN-Ykg"/>
+            </objects>
+            <point key="canvasLocation" x="-746" y="-4238"/>
+        </scene>
         <!--Orders List Controller-->
         <scene sceneID="sx4-9W-GTU">
             <objects>
@@ -2269,6 +2287,7 @@
                                 <frame key="frameInset"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="contentInset" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="W9x-2B-fkk">
                                     <size key="itemSize" width="375" height="171"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -2276,9 +2295,9 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" id="aPg-hz-8CG" customClass="OrderCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="OrderCell" id="aPg-hz-8CG" customClass="OrderCell">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="171"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="171"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -2312,8 +2331,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z4t-7k-AdH">
-                                                    <frame key="frameInset" minY="10" width="100" height="35" maxX="5"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <frame key="frameInset" minY="10" width="27.03%" height="35" maxX="5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2334,11 +2353,11 @@
                                                 </label>
                                             </subviews>
                                         </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="carLabel" destination="QuP-u6-mly" id="y8X-Ay-xdp"/>
                                             <outlet property="dateLabel" destination="ZqN-aN-XDL" id="moU-vN-l14"/>
                                             <outlet property="daysLabel" destination="fiq-cq-X4t" id="bjx-lq-atu"/>
-                                            <outlet property="numberCell" destination="gIH-R5-JYD" id="Byb-0i-6ZC"/>
                                             <outlet property="numberLabel" destination="gIH-R5-JYD" id="5jl-HM-mrX"/>
                                             <outlet property="paymentStatus" destination="hH8-4f-wpR" id="vC4-FA-bsN"/>
                                             <outlet property="priceLabel" destination="UJ1-qA-GtG" id="fhb-Dt-KYa"/>
@@ -2360,8 +2379,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0qP-k0-9hO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationItem title="Title" id="8SU-6t-2qp"/>
             </objects>
-            <point key="canvasLocation" x="-1131.5" y="-2480.5"/>
+            <point key="canvasLocation" x="-233" y="-4237"/>
         </scene>
         <!--АВТО БЕЗ ВОДИТЕЛЯ-->
         <scene sceneID="eRJ-v9-vyr">

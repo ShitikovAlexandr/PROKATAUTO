@@ -681,14 +681,14 @@
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *tokenString = [defaults valueForKey:@"tokenString"];
-    [self.sessionManager.requestSerializer setValue:tokenString forHTTPHeaderField:@"x-csrftoken"];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
     
     [self.sessionManager GET:@"orders/"
                   parameters:nil
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-                         NSArray *dicArray = [responseObject objectForKey:@"result"];
+                         NSArray *dicArray = [responseObject objectForKey:@"results"];
                          NSMutableArray *dataArray = [NSMutableArray array];
                          
                          for(NSDictionary* dic in dicArray) {

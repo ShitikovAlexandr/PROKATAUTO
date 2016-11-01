@@ -10,6 +10,7 @@
 #import "ServerManager.h"
 #import "OrderCell.h"
 #import "Order.h"
+#import "SWRevealViewController.h"
 
 @interface OrdersListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -24,6 +25,8 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
+    self.title = @"Список заказов";
+    
     self.dataArray = [NSMutableArray array];
     
     [self getOrdersFromAPI];
@@ -31,7 +34,8 @@
 
 -(void) myCustomBack {
     // Some anything you need to do before leaving
-    [self.navigationController popViewControllerAnimated:YES];
+    SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -50,12 +54,17 @@
     Order *order = [self.dataArray objectAtIndex:indexPath.row];
     
     cell.numberLabel.text = [NSString stringWithFormat:@"№%@", order.number];
-//    cell.descriptionLabel.attributedText = [self.descriptionsArray objectAtIndex:indexPath.row];
-//    
-//    [cell.orderButton addTarget:self action:@selector(OrderCar:event:) forControlEvents:UIControlEventTouchUpInside];
-    
+    cell.statusLabel.text = order.status;
+    cell.carLabel.text = [NSString stringWithFormat:@"%@ %@", order.car.itemFullName, order.car.regNumber];
+    NSString *daysText = [NSString stringWithFormat:@"%@", order.days];
+    cell.daysLabel.text = [NSString stringWithFormat:@"%@ %@", order.days, [daysText hasSuffix:@"1"] ? @"сутки" : @"суток"];
+
     return [cell addCollectionViewCellProperty:cell];
     
+}
+
+- (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(self.collectionView.frame.size.width - 16, 170);
 }
 
 #pragma mark - API
