@@ -21,6 +21,14 @@
         self.number = [responseObject objectForKey:@"number"];
         self.startDateOfRentalString = [responseObject objectForKey:@"date_from"];
         self.endDateOfRentalString = [responseObject objectForKey:@"date_to"];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssz"];
+        self.dateOfRentalStart = [[NSDate alloc] init];
+        self.dateOfRentalStart = [dateFormatter dateFromString:self.startDateOfRentalString];
+        self.dateOfRentalEnd = [[NSDate alloc] init];
+        self.dateOfRentalEnd = [dateFormatter dateFromString:self.endDateOfRentalString];
+        
         self.days = [responseObject objectForKey:@"days"];
         self.totalPrice = [responseObject objectForKey:@"total_amount"];
         self.paymentStatus = [responseObject objectForKey:@"payment_status"];

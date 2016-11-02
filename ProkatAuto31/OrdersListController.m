@@ -54,17 +54,44 @@
     Order *order = [self.dataArray objectAtIndex:indexPath.row];
     
     cell.numberLabel.text = [NSString stringWithFormat:@"№%@", order.number];
-    cell.statusLabel.text = order.status;
+    [self manageLabelWithStatus:order.status statusLabel:cell.statusLabel];
     cell.carLabel.text = [NSString stringWithFormat:@"%@ %@", order.car.itemFullName, order.car.regNumber];
     NSString *daysText = [NSString stringWithFormat:@"%@", order.days];
     cell.daysLabel.text = [NSString stringWithFormat:@"%@ %@", order.days, [daysText hasSuffix:@"1"] ? @"сутки" : @"суток"];
-
+    
+    cell.priceLabel.text = [NSString stringWithFormat:@"%@ рублей", order.totalPrice];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd.MM.yy"];
+    NSString *fromDate = [dateFormatter stringFromDate:order.dateOfRentalStart];
+    NSString *toDate = [dateFormatter stringFromDate:order.dateOfRentalEnd];
+    cell.dateLabel.text = [NSString stringWithFormat:@"с %@ по %@", fromDate, toDate];
+    
     return [cell addCollectionViewCellProperty:cell];
     
 }
 
 - (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(self.collectionView.frame.size.width - 16, 170);
+}
+
+-(void) manageLabelWithStatus: (NSString *) status
+                  statusLabel: (UILabel *) label
+{
+    if([status isEqualToString:@"created"])
+    {
+        label.text = @"Новый";
+        label.textColor = [UIColor blackColor];
+    }else if([status isEqualToString:@"cancel"])
+    {
+        label.text = @"Отмена";
+        label.textColor = [UIColor redColor];
+    }
+    else
+    {
+        label.text = @"Ошыбка";
+        label.textColor = [UIColor redColor];
+    }
 }
 
 #pragma mark - API
