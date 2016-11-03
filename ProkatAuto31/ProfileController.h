@@ -15,4 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIView *registerView;
 @property (weak, nonatomic) IBOutlet UIView *driverLicenceView;
 
+
+- (void) setRCStyleOfView: (UIView*) view;
+
 @end

@@ -120,6 +120,9 @@
 		FA88FD911DABB1380039CF33 /* oherCar.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD901DABB1380039CF33 /* oherCar.png */; };
 		FA88FD931DABB2220039CF33 /* 12.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD921DABB2220039CF33 /* 12.png */; };
 		FA9DB7891DB66925006D81D5 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9DB7881DB66925006D81D5 /* RegistrationController.m */; };
+		FABE7B741DC9E6120043F8F1 /* ChangePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */; };
+		FABE7B771DCA111F0043F8F1 /* PaymentController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE7B761DCA111F0043F8F1 /* PaymentController.m */; };
+		FABE7B7A1DCA421E0043F8F1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABE7B791DCA421E0043F8F1 /* WebKit.framework */; };
 		FABFC1C91DB8EE49004BFF9E /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFC1C81DB8EE48004BFF9E /* Person.m */; };
 		FAC2E4661DAED28D0045A3C4 /* StepTwoWithoutDriverController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2E4651DAED28D0045A3C4 /* StepTwoWithoutDriverController.m */; };
 		FAC2E4691DAF7AFA0045A3C4 /* StepTwoMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2E4681DAF7AFA0045A3C4 /* StepTwoMainCell.m */; };
@@ -311,6 +314,11 @@
 		FA88FD921DABB2220039CF33 /* 12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12.png; sourceTree = "<group>"; };
 		FA9DB7871DB66925006D81D5 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		FA9DB7881DB66925006D81D5 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
+		FABE7B721DC9E6120043F8F1 /* ChangePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordController.h; sourceTree = "<group>"; };
+		FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordController.m; sourceTree = "<group>"; };
+		FABE7B751DCA111F0043F8F1 /* PaymentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentController.h; sourceTree = "<group>"; };
+		FABE7B761DCA111F0043F8F1 /* PaymentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentController.m; sourceTree = "<group>"; };
+		FABE7B791DCA421E0043F8F1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		FABFC1C71DB8EE48004BFF9E /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		FABFC1C81DB8EE48004BFF9E /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		FAC2E4641DAED28D0045A3C4 /* StepTwoWithoutDriverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepTwoWithoutDriverController.h; sourceTree = "<group>"; };
@@ -334,6 +342,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FABE7B7A1DCA421E0043F8F1 /* WebKit.framework in Frameworks */,
 				FA05C6081DC250C500F79B05 /* Crashlytics.framework in Frameworks */,
 				FA05C6071DC250C500F79B05 /* Fabric.framework in Frameworks */,
 			);
@@ -592,6 +601,10 @@
 				FA467E1A1DC0A35000B466C3 /* AuthorizationController.m */,
 				FA467E1F1DC0F16B00B466C3 /* RememberPasswordController.h */,
 				FA467E201DC0F16B00B466C3 /* RememberPasswordController.m */,
+				FABE7B721DC9E6120043F8F1 /* ChangePasswordController.h */,
+				FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */,
+				FABE7B751DCA111F0043F8F1 /* PaymentController.h */,
+				FABE7B761DCA111F0043F8F1 /* PaymentController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -660,6 +673,7 @@
 				63F4B85C1D82C842006B391D /* ProkatAuto31 */,
 				63F4B85B1D82C842006B391D /* Products */,
 				636AB1FD1D84108100D33413 /* frameworks */,
+				FABE7B781DCA421E0043F8F1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -775,6 +789,14 @@
 			name = SideMenu;
 			sourceTree = "<group>";
 		};
+		FABE7B781DCA421E0043F8F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FABE7B791DCA421E0043F8F1 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FAD301D91DC73836001FE7DC /* ic_contacts.imageset */ = {
 			isa = PBXGroup;
 			children = (
@@ -817,7 +839,7 @@
 				TargetAttributes = {
 					63F4B8591D82C842006B391D = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = N5UQ397JF2;
+						DevelopmentTeam = KEUKVBV6MH;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -951,6 +973,7 @@
 				FA2015981DAE65BB0091D953 /* Place.m in Sources */,
 				633E00471D86DE0B00436D99 /* CarWithDriverController.m in Sources */,
 				FA467E1B1DC0A35000B466C3 /* AuthorizationController.m in Sources */,
+				FABE7B771DCA111F0043F8F1 /* PaymentController.m in Sources */,
 				6359CEA81D928F5700E76AD4 /* OtherCollectionViewCell.m in Sources */,
 				63F4B85F1D82C842006B391D /* main.m in Sources */,
 				633E00851D880F8000436D99 /* UIButton+AFNetworking.m in Sources */,
@@ -987,6 +1010,7 @@
 				633E00671D880F7800436D99 /* AFNetworkReachabilityManager.m in Sources */,
 				FA70B44A1DB7B5B80088FFE3 /* RCTextField.m in Sources */,
 				633E00891D880F8000436D99 /* UIWebView+AFNetworking.m in Sources */,
+				FABE7B741DC9E6120043F8F1 /* ChangePasswordController.m in Sources */,
 				633E006A1D880F7800436D99 /* AFURLResponseSerialization.m in Sources */,
 				848645401DBC040400D6D813 /* OrderCarWithDriverController.m in Sources */,
 				633E00861D880F8000436D99 /* UIImageView+AFNetworking.m in Sources */,
@@ -1111,7 +1135,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = N5UQ397JF2;
+				DEVELOPMENT_TEAM = KEUKVBV6MH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1119,10 +1143,10 @@
 				INFOPLIST_FILE = ProkatAuto31/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.scythgames.math;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Asta.Mobi.RC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6622763b-c941-4fdf-992d-97446240dd5a";
-				PROVISIONING_PROFILE_SPECIFIER = Asta.Mobi;
+				PROVISIONING_PROFILE = "8c7b584b-509e-4f38-8420-01a674171d7e";
+				PROVISIONING_PROFILE_SPECIFIER = RentalCar31;
 			};
 			name = Debug;
 		};
@@ -1132,7 +1156,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = N5UQ397JF2;
+				DEVELOPMENT_TEAM = KEUKVBV6MH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1140,10 +1164,10 @@
 				INFOPLIST_FILE = ProkatAuto31/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.scythgames.math;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Asta.Mobi.RC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6622763b-c941-4fdf-992d-97446240dd5a";
-				PROVISIONING_PROFILE_SPECIFIER = Asta.Mobi;
+				PROVISIONING_PROFILE = "8c7b584b-509e-4f38-8420-01a674171d7e";
+				PROVISIONING_PROFILE_SPECIFIER = RentalCar31;
 			};
 			name = Release;
 		};

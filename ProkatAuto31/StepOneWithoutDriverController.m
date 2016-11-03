@@ -35,13 +35,22 @@
 
 @property (strong, nonatomic) StepOneCollectionViewCell *cell;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+
+
 @end
 
 @implementation StepOneWithoutDriverController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
+
     [self getPlacesFromAPI];
     
     self.PickerDateArray = [[NSMutableArray alloc] init];
@@ -392,6 +401,8 @@
     
     [[ServerManager sharedManager] getPlacesOnSuccess:^(NSArray *thisData) {
         [self.PickerDateArray addObjectsFromArray:thisData];
+        [self.activityIndicatorView stopAnimating];
+
         for(Place* pl in self.PickerDateArray) {
             if ([pl.serviceType isEqualToString:@"1"]) {
                 [self.startPlace addObject:pl];
@@ -405,17 +416,22 @@
         [self.collectionView reloadData];
         
     } onFail:^(NSError *error, NSInteger statusCode) {
+        [self.activityIndicatorView stopAnimating];
+
         
     }];
 }
 
 - (void) chckCarForFreeAPI {
+    [self.activityIndicatorView startAnimating];
 
     //for(NSNumber* numId in self.car.carID) {
     [[ServerManager sharedManager] checkCarWithCarId:[self.car.carID objectAtIndex:0]
                                         withDateFrom:self.order.startDateOfRentalString
                                           withDateTo:self.order.endDateOfRentalString
                                            OnSuccess:^(NSArray *thisData ) {
+                                               [self.activityIndicatorView stopAnimating];
+
                                                if (thisData == NULL) {
                                                   // NSLog(@"авто СВОБОДНО %hhd", stopChack);
                                                    
@@ -429,7 +445,8 @@
 
                                            }
                                               onFail:^(NSError *error, NSInteger statusCode) {
-                                                
+                                                  [self.activityIndicatorView stopAnimating];
+
                                                   if (statusCode == 7) {
                                                       NSLog(@"Это авто занято!!!!!");
                                                       [self carsBusyAlert];
@@ -437,11 +454,7 @@
                                     
                                               }];
     
-        
 
-          // }
-    
-    
 }
 
 

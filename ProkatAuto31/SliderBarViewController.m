@@ -14,14 +14,20 @@
 #import "CarWithoutDriverController.h"
 #import "SidePageIdController.h"
 #import "SWRevealViewController.h"
+#import "ProfileController.h"
+#import "ChangePasswordController.h"
+#import "PaymentController.h"
 
 @interface SliderBarViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *clienHellow;
+
 
 @property (strong, nonatomic) NSMutableArray *objectsInSlideBar;
 @property (strong, nonatomic) NSArray *icons;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) SideMenuItem *exit;
 
+@property (weak, nonatomic) IBOutlet UIButton *testPay;
 
 @end
 
@@ -29,6 +35,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.testPay addTarget:self action:@selector(paymentScreen) forControlEvents:UIControlEventTouchDown];
+    
     self.objectsInSlideBar = [NSMutableArray array];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token =  [defaults valueForKey:@"tokenString"];
@@ -38,6 +47,8 @@
     self.exit.image = @"ic_exit_to_app.png";
     
     if ([token length] > 6) {
+        self.clienHellow.text = [NSString stringWithFormat:@"%@ %@", [defaults valueForKey:@"lastName"],
+                                 [defaults valueForKey:@"firstName"]];
         SideMenuItem *profile = [[SideMenuItem alloc] init];
         profile.itemId = @99;
         profile.image = @"ic_person.png";
@@ -57,6 +68,7 @@
         [self.tableView reloadData];
     } else {
         self.exit.title = @"Вход";
+        self.clienHellow.text = @"уважаемый Клиент.";
     }
     
     
@@ -109,9 +121,19 @@
         [navVC setViewControllers:@[vc] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
         NSLog(@"go to controller with id page = %@", item.itemId);
+        
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:99]]) {
+        ProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileController"];
+        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
+        [navVC setViewControllers:@[vc] animated:NO];
+        [self presentViewController:navVC animated:YES completion:nil];
         NSLog(@"go to profile");
+        
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:88]]) {
+        ChangePasswordController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordController"];
+        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
+        [navVC setViewControllers:@[vc] animated:NO];
+        [self presentViewController:navVC animated:YES completion:nil];
         NSLog(@"go to change password ----->>>>");
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:77]]) {
         NSLog(@"go to orders ----->>>>");
@@ -172,5 +194,16 @@
     }];
 }
 
+// testMethod
+- (void) paymentScreen {
+    
+    PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
+    UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
+    [navVC setViewControllers:@[vc] animated:NO];
+    [self presentViewController:navVC animated:YES completion:nil];
+
+    
+    
+}
 
 @end

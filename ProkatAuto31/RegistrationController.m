@@ -20,7 +20,17 @@
  @"passportNumber"
  @"passportIssueDate"
  
- exemple:
+ @"passport_issue"
+ 
+ @"license_issue"
+ @"license_series"
+ @"license_number"
+ @"license_issue_date"
+ 
+ @"address"
+ @"fakt_address"
+
+  exemple:
  
  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
  NSLog(@"user saved data %@", [defaults valueForKey:@"tokenString"]);
@@ -85,6 +95,9 @@ extern NSString *baseAddress;
 
 @property (strong, nonatomic) NSMutableArray *isTextFieldEnterText;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+
+
 
 @end
 
@@ -92,7 +105,15 @@ extern NSString *baseAddress;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"baseAddress ____   ________ %@", baseAddress);
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
+
+    
     self.isTextFieldEnterText = [NSMutableArray array];
     self.person = [[Person alloc] init];
     self.person.countryCode = @"+7";
@@ -309,6 +330,8 @@ extern NSString *baseAddress;
 #pragma mark - API
 
 - (IBAction) sendRegisterForm {
+    [self.activityIndicatorView startAnimating];
+
     
     [self chackTextfield];
     
@@ -318,7 +341,8 @@ extern NSString *baseAddress;
                                                            andKey:self.CapchaKey
                                                   PasswordFromImg:self.passwordFromImage.text
                                                         OnSuccess:^(NSString* token, id user) {
-                                                            
+                                                            [self.activityIndicatorView stopAnimating];
+
                                                             // save data
                                                             
                                                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -336,13 +360,24 @@ extern NSString *baseAddress;
                                                             [defaults setValue:newUser.passportSeries forKey:@"passportSeries"];
                                                             [defaults setValue:newUser.passportNumber forKey:@"passportNumber"];
                                                             [defaults setValue:newUser.passportIssueDate forKey:@"passportIssueDate"];
+                                                            
+                                                            [defaults setValue:newUser.passportIssue forKey:@"passport_issue"];
+                                                            [defaults setValue:newUser.licenseNumber forKey:@"license_number"];
+                                                            [defaults setValue:newUser.licenseSeries forKey:@"license_series"];
+                                                            [defaults setValue:newUser.licenseIssueDate forKey:@"license_issue_date"];
+                                                            [defaults setValue:newUser.licenseIssue forKey:@"license_issue"];
+                                                            
+                                                            [defaults setValue:newUser.address forKey:@"address"];
+                                                            [defaults setValue:newUser.faktAddress forKey:@"fakt_address"];
 
-                                                            NSLog(@"user %@", newUser);
-                                                            NSLog(@"token %@", tokenString);
+
+
                                                             
 
                                                         }
                                                            onFail:^(NSError *error, NSInteger statusCode, NSArray* dictsArray) {
+                                                               [self.activityIndicatorView stopAnimating];
+
                                                                //[self getCapchaImg];
                                                                if (dictsArray) {
                                                                   NSString* newString = [[[dictsArray objectAtIndex:0]objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
@@ -366,19 +401,23 @@ extern NSString *baseAddress;
         
         self.CapchaKey = [NSString stringWithString:thisData];
         NSLog(@"self.CapchaKey %@", self.CapchaKey);
+
         
         [[ServerManager sharedManager] registrationGetCaptchaImgWithKey:self.CapchaKey
                                                               OnSuccess:^(id thisData) {
                                                                   self.imageWithPassword.image = thisData;
-                                                                  
+                                                                  [self.activityIndicatorView stopAnimating];
+
                                                               }
                                                                  onFail:^(NSError *error, NSInteger statusCode) {
-                                                                     
+                                                                     [self.activityIndicatorView stopAnimating];
+
                                                                  }];
         
     }
                                                             onFail:^(NSError *error, NSInteger statusCode) {
-                                                                
+                                                                [self.activityIndicatorView stopAnimating];
+
                                                             }];
     
 }
@@ -408,7 +447,8 @@ extern NSString *baseAddress;
 }
 // return NO  when have error in TextFields
 - (BOOL) chackTextfield {
-    
+    [self.activityIndicatorView stopAnimating];
+
     [self.isTextFieldEnterText removeAllObjects];
     NSString *empty = [NSString string];
     empty = @"Заполните все поля!";
