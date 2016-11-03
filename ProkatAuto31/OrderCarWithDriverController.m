@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSDictionary *countryCodeArray;
 @property (strong, nonatomic) NSString *capchaKey;
 @property (strong, nonatomic) NSString *sentMessage;
+@property (strong, nonatomic) NSString *tokenString;
 @end
 
 @implementation OrderCarWithDriverController
@@ -29,7 +30,16 @@
     
     NSURL *url = [NSURL URLWithString:self.car.imageURL];
     [self.carImageView setImageWithURL:url];
-    [self getCapchaImg];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.tokenString = [defaults valueForKey:@"tokenString"];
+    if([self.tokenString isEqualToString:@""])
+    {
+        [self getCapchaImg];
+    }else
+    {
+        [self hideElements];
+    }
     
     self.titleLabel.text = self.car.name;
     NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
@@ -48,6 +58,12 @@
     self.countryCodePicker.layer.masksToBounds = NO;
     self.countryCodePicker.delegate = self;
     self.countryCodePicker.dataSource = self;
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"OK" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
+    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [toolBar setTintColor:[UIColor grayColor]];
+    [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    [self.codeField setInputAccessoryView:toolBar];
     
     self.codeField.inputView = self.countryCodePicker;
 }
@@ -57,8 +73,42 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void) doneButtonPressed:(id)sender  {
+    [self.phoneField becomeFirstResponder];
+}
+
+-(void) hideElements
+{
+    self.contactDataLabel.hidden = TRUE;
+    self.nameField.hidden = TRUE;
+    self.countryLabel.hidden = TRUE;
+    self.codeField.hidden = TRUE;
+    self.phoneField.hidden = TRUE;
+    self.emailField.hidden = TRUE;
+    self.captchaImageView.hidden = TRUE;
+    self.captchaLabel.hidden = TRUE;
+    self.captchaField.hidden = TRUE;
+    
+    self.orderDescriptionLabel.frame = self.contactDataLabel.frame;
+    self.descriptionField.frame = self.nameField.frame;
+    self.sendOrderButton.frame = CGRectMake(self.sendOrderButton.frame.origin.x, self.descriptionField.frame.origin.y + self.descriptionField.frame.size.height + 10, self.sendOrderButton.frame.size.width, self.sendOrderButton.frame.size.height);
+    self.tableView.scrollEnabled = FALSE;
+}
+
 - (IBAction)SendOrder:(id) sender event: (id) event {
     
+    if([self.tokenString isEqualToString:@""])
+    {
+        [self sendOrderWithCaptcha];
+    }else
+    {
+        [self sendOrderWithToken];
+    }
+
+}
+
+-(void) sendOrderWithCaptcha
+{
     if(![self validateFieldsEmpty])
         [self showAlert:@"Заполните все поля!"];
     else if(![self validatePhoneNumber])
@@ -75,7 +125,20 @@
             self.captchaField.text = @"";
         }];
     }
+}
 
+-(void) sendOrderWithToken
+{
+    if([self.descriptionField.text isEqualToString:@""])
+        [self showAlert:@"Заполните все поля!"];
+    else
+    {
+        [[ServerManager sharedManager] orderCarWithDriverWithToken:self.tokenString carId:self.car.carId orderDescription:self.descriptionField.text OnSuccess:^ {
+            [self showAlert:self.sentMessage];
+        } onFail:^(NSError *error, NSString *errorMessage) {
+            [self showAlert:errorMessage];
+        }];
+    }
 }
 
 - (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {

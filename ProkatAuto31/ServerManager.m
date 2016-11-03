@@ -854,6 +854,51 @@
     
 }
 
+- (void) orderCarWithDriverWithToken: (NSString*) tokenString
+                              carId : (NSNumber*) car
+                    orderDescription: (NSString*) description
+                           OnSuccess: (void(^)()) success
+                              onFail: (void(^)(NSError* error, NSString* errorMessage)) failure
+{
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            [NSString stringWithFormat:@"%@", car], @"car",
+                            description, @"description", nil];
+    
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    
+    
+    [self.sessionManager POST:@"hourly-orders/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          
+                          if(success)
+                              success();
+                          
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          
+                          NSLog(@"error text field *** %@", task.response);
+                          NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                          NSLog(@"Error is %@",ErrorResponse);
+                          
+                          NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
+                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                                       options:kNilOptions
+                                                                                         error:&error];
+                          NSString *errorMessage = [[[jsonResponse allValues] objectAtIndex:0] objectAtIndex:0];
+                          if(failure)
+                              failure(error, errorMessage);
+                      }];
+    
+    
+}
+
 
 
 @end
