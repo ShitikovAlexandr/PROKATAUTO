@@ -718,34 +718,140 @@
 
 - (void) ordersHistory:(void (^)(NSArray *))success
                 onFail:(void (^)(NSError *))failure {
-    
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *tokenString = [defaults valueForKey:@"tokenString"];
     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
-    
     [self.sessionManager GET:@"orders/"
                   parameters:nil
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
                          NSArray *dicArray = [responseObject objectForKey:@"results"];
                          NSMutableArray *dataArray = [NSMutableArray array];
-                         
                          for(NSDictionary* dic in dicArray) {
                              Order *item = [[Order alloc] initWithServerResponse:dic];
                              [dataArray addObject:item];
                          }
-                         
                          if (success) {
                              success(dataArray);
                          }
-                         
                      }
                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                          NSLog(@"error orders %@", error);
                      }];
 }
+
+- (void) getProfileInfoWithToken:(NSString *)tokenString
+                       OnSuccess:(void (^)(NSNumber* days, NSNumber* orderCount, NSNumber* penalties, NSNumber* status))success
+                          onFail:(void (^)(NSError *))failure {
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [self.sessionManager GET:@"profile/"
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSLog(@"data with token %@", responseObject);
+                         NSNumber *days = [responseObject objectForKey:@"days"];
+                         NSNumber *orderCount = [responseObject objectForKey:@"order_count"];
+                         NSNumber *penalties = [responseObject objectForKey:@"penalties"];                          NSNumber *status = [responseObject objectForKey:@"status"];
+                         if (success) {
+                             success(days, orderCount,penalties,status);
+                         }
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"error with token %@", error);
+                         NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                         NSLog(@"Error is %@",ErrorResponse);
+                     }];
+}
+
+- (void) changePasswordWithToken: (NSString*) tokenString
+                     OldPassword: (NSString*) oldPassword
+                     newPassword: (NSString*) password
+                     RetryPassword: (NSString*) retryPassword
+                       OnSuccess:(void(^)(NSString* massage)) success
+                          onFail:(void(^)(NSArray* errorArray)) failure {
+    
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            oldPassword, @"old_password",
+                            password, @"new_password",
+                            retryPassword, @"retype_new_password", nil];
+    
+    [self.sessionManager POST:@"change-password/"
+                  parameters:params
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSLog(@"responseObject change password %@", responseObject);
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                         NSLog(@"Error changePassword %@",ErrorResponse);
+                         
+                         NSError* JSONerror;
+                          if (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey]) {
+                         NSDictionary *dJSON = [NSJSONSerialization JSONObjectWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:NSJSONReadingAllowFragments error:&JSONerror];
+                         NSArray *dictsArray = [dJSON allValues];
+                         NSLog(@"errorArray %@", dictsArray);
+                         if (failure) {
+                             failure( dictsArray);
+                         }
+                     } else {
+                         NSLog(@"Error пароль сменен упешно %@",ErrorResponse);
+                         NSArray *dictsArray = [[NSArray alloc] init];
+                         failure( dictsArray);
+                     }
+
+                     }];
+}
+
+- (void) preparePaymentWithOrderId: (NSString*) orderId
+                         AndMethod: (NSString*) payMethod
+                         AndtToken: (NSString*) tokenString
+                         OnSuccess:(void(^)(NSString* urlString)) success
+                            onFail:(void(^)(NSArray* errorArray)) failure {
+    
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:payMethod, @"method", nil];
+    
+    [self.sessionManager POST:[NSString stringWithFormat:@"orders/%@/prepare_payment/", orderId]
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          NSString* payURL = [responseObject objectForKey:@"sberbank_payment_form"];
+                          
+                          if (success) {
+                              success(payURL);
+                          }
+                          
+                          NSLog(@"pay responseObject %@", responseObject);
+                      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                                   
+                          NSError* JSONerror;
+                          if (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey]) {
+                              NSDictionary *dJSON = [NSJSONSerialization JSONObjectWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:NSJSONReadingAllowFragments error:&JSONerror];
+                              NSArray *dictsArray = [dJSON allValues];
+                              NSLog(@"errorArray %@", dictsArray);
+                              if (failure) {
+                                  failure( dictsArray);
+                              }
+                          }
+                          
+                          
+                          
+
+                      }];
+    
+    
+}
+
 
 
 @end
