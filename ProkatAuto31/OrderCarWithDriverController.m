@@ -58,6 +58,12 @@
     self.countryCodePicker.layer.masksToBounds = NO;
     self.countryCodePicker.delegate = self;
     self.countryCodePicker.dataSource = self;
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"OK" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
+    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [toolBar setTintColor:[UIColor grayColor]];
+    [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    [self.codeField setInputAccessoryView:toolBar];
     
     self.codeField.inputView = self.countryCodePicker;
 }
@@ -65,6 +71,10 @@
 -(void) myCustomBack {
     // Some anything you need to do before leaving
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) doneButtonPressed:(id)sender  {
+    [self.phoneField becomeFirstResponder];
 }
 
 -(void) hideElements
