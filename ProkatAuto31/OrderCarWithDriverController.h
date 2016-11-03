@@ -11,6 +11,7 @@
 #import "RCTextField.h"
 
 @interface OrderCarWithDriverController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *carImageView;
@@ -23,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *countryLabel;
 @property (weak, nonatomic) IBOutlet RCTextField *codeField;
 @property (weak, nonatomic) IBOutlet UIButton *sendOrderButton;
+@property (weak, nonatomic) IBOutlet UILabel *contactDataLabel;
+@property (weak, nonatomic) IBOutlet UILabel *orderDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *captchaLabel;
 
 @property (strong, nonatomic) CarWithDriver *car;
 

@@ -105,6 +105,12 @@
                          OnSuccess:(void(^)(NSString* urlString)) success
                          onFail:(void(^)(NSArray* errorArray)) failure;
 
+- (void) orderCarWithDriverWithToken: (NSString*) tokenString
+                              carId : (NSNumber*) car
+                    orderDescription: (NSString*) description
+                           OnSuccess: (void(^)()) success
+                              onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
+
 
 
 @end
