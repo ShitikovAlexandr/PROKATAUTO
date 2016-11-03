@@ -33,6 +33,10 @@
         self.totalPrice = [responseObject objectForKey:@"total_amount"];
         self.paymentStatus = [responseObject objectForKey:@"payment_status"];
         self.paid = [responseObject objectForKey:@"paid"];
+        
+        self.penaltyStatus = [responseObject objectForKey:@"penalty_status"];
+        self.penalty = [responseObject objectForKey:@"penalty"];
+        self.penaltyPaid = [responseObject objectForKey:@"penalty_paid"];
     }
     
     

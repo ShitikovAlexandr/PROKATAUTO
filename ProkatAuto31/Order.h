@@ -32,11 +32,12 @@
 @property (strong, nonatomic) NSString *number;
 @property (strong, nonatomic) NSString *days;
 @property (strong, nonatomic) NSString *paymentStatus;
-
-
+@property (strong, nonatomic) NSString *penaltyStatus;
 
 @property (strong, nonatomic) NSNumber *totalPrice;
 @property (strong, nonatomic) NSNumber *paid;
+@property (strong, nonatomic) NSNumber *penalty;
+@property (strong, nonatomic) NSNumber *penaltyPaid;
 
 - (id) initWithServerResponse: (NSDictionary*) responseObject;
 
