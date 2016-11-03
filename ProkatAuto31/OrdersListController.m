@@ -81,16 +81,32 @@
     if([status isEqualToString:@"created"])
     {
         label.text = @"Новый";
-        label.textColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor grayColor];
+    }else if([status isEqualToString:@"rejected"])
+    {
+        label.text = @"Отказ";
+        label.backgroundColor = [UIColor redColor];
     }else if([status isEqualToString:@"cancel"])
     {
         label.text = @"Отмена";
-        label.textColor = [UIColor redColor];
+        label.backgroundColor = [UIColor redColor];
+    }else if([status isEqualToString:@"reserve"])
+    {
+        label.text = @"Бронь";
+        label.backgroundColor = [UIColor orangeColor];
+    }else if([status isEqualToString:@"onwork"])
+    {
+        label.text = @"Аренда";
+        label.backgroundColor = [UIColor greenColor];
+    }else if([status isEqualToString:@"finished"])
+    {
+        label.text = @"Архив";
+        label.backgroundColor = [UIColor blueColor];
     }
     else
     {
         label.text = @"Ошыбка";
-        label.textColor = [UIColor redColor];
+        label.backgroundColor = [UIColor redColor];
     }
 }
 

@@ -28,8 +28,6 @@
     
     cell.userInteractionEnabled = YES;
     
-    cell.statusLabel.layer.borderColor = cell.statusLabel.textColor.CGColor;
-    cell.statusLabel.layer.borderWidth = 2.0f;
     cell.statusLabel.layer.cornerRadius = 4.f;
     
     return cell;
