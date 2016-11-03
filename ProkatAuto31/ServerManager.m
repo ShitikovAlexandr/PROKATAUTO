@@ -719,6 +719,8 @@
 - (void) ordersHistory:(void (^)(NSArray *))success
                 onFail:(void (^)(NSError *))failure {
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *tokenString = [defaults valueForKey:@"tokenString"];
     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];

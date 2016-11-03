@@ -72,7 +72,7 @@
 }
 
 - (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.collectionView.frame.size.width - 16, 170);
+    return CGSizeMake(self.collectionView.frame.size.width - 16, 145);
 }
 
 -(void) manageLabelWithStatus: (NSString *) status
