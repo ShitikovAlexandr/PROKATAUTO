@@ -12,14 +12,22 @@
 
 @interface SidePageIdController ()
 @property (weak, nonatomic) IBOutlet UILabel *contantLable;
-
-
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 @end
 
 @implementation SidePageIdController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
+
+    
     [self sideItemInfoWithPageId:self.pageId];
     
     self.navigationItem.hidesBackButton = YES;
@@ -48,10 +56,11 @@
                                                 NSMutableAttributedString *titlelable = [[NSMutableAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
                                                 [titlelable removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, titlelable.length)];
                                                 self.title = content;
-                                              
+                                                [self.activityIndicatorView stopAnimating];
+
                                             }
                                                onFail:^(NSError *error) {
-                                                   
+                                                   [self.activityIndicatorView stopAnimating];
                                                }];
 }
 

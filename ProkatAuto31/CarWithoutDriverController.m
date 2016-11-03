@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 @property (strong, nonatomic) NSString *baseAddress;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
 
 
@@ -35,6 +36,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
     
        
     self.baseAddress = @"http://83.220.170.187";
@@ -115,7 +122,7 @@
         Category *category =[self.carCategories objectAtIndex:indexPath.row];
         cell.categoryName.text = category.name;
         CGRect frame = cell.categoryName.frame;
-        frame.origin.y= cell.categoryName.frame.origin.y+ 20.f;
+        frame.origin.y= 36.f;
         frame.origin.x= cell.categoryName.frame.origin.x;
         cell.categoryName.frame = frame;
         
@@ -193,14 +200,17 @@
         */
         
         [self.carCategories addObjectsFromArray:thisData] ;
-        
+        [self.activityIndicatorView stopAnimating];
+
         
         [self.collectionView performBatchUpdates:^{
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 
         } completion:nil];
     } onFail:^(NSError *error, NSInteger statusCode) {
-         
+        [self.activityIndicatorView stopAnimating];
+
+        
     }];
     
     

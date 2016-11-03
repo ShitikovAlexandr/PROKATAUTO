@@ -174,6 +174,18 @@ return YES;
                                             [defaults setValue:newUser.passportNumber forKey:@"passportNumber"];
                                             [defaults setValue:newUser.passportIssueDate forKey:@"passportIssueDate"];
                                             
+                                            [defaults setValue:newUser.passportIssue forKey:@"passport_issue"];
+                                            [defaults setValue:newUser.licenseNumber forKey:@"license_number"];
+                                            [defaults setValue:newUser.licenseSeries forKey:@"license_series"];
+                                            [defaults setValue:newUser.licenseIssueDate forKey:@"license_issue_date"];
+                                            [defaults setValue:newUser.licenseIssue forKey:@"license_issue"];
+                                            
+                                            [defaults setValue:newUser.address forKey:@"address"];
+                                            [defaults setValue:newUser.faktAddress forKey:@"fakt_address"];
+
+
+                                            
+                                            
                                             if (tokenString != NULL) {
                                                 if (self.nextController ) {
                                                     [self.navigationController pushViewController:self.nextController animated:YES];

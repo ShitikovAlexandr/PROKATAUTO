@@ -6,9 +6,44 @@
 //  Copyright © 2016 Asta.Mobi. All rights reserved.
 //
 
+/*
+ @"tokenString"
+ @"firstName"
+ @"lastName"
+ @"fatherName"
+ @"phone"
+ @"dateOfBirth"
+ @"passportSeries"
+ @"passportNumber"
+ @"passportIssueDate"
+ */
+
 #import "ProfileController.h"
+#import "SWRevealViewController.h"
+#import "ServerManager.h"
 
 @interface ProfileController ()
+
+//main info
+@property (weak, nonatomic) IBOutlet UILabel *ordersCount;
+@property (weak, nonatomic) IBOutlet UILabel *arrears;
+@property (weak, nonatomic) IBOutlet UILabel *fines;
+@property (weak, nonatomic) IBOutlet UILabel *clientType;
+//personal data
+@property (weak, nonatomic) IBOutlet UILabel *fullName;
+@property (weak, nonatomic) IBOutlet UILabel *phoneNumber;
+@property (weak, nonatomic) IBOutlet UILabel *dateOfBirth;
+//passport data
+@property (weak, nonatomic) IBOutlet UILabel *siriesAndNumberPassport;
+@property (weak, nonatomic) IBOutlet UILabel *dateOfPassport;
+// adresses
+@property (weak, nonatomic) IBOutlet UILabel *mainAdress;
+@property (weak, nonatomic) IBOutlet UILabel *realAdress;
+// driver's
+@property (weak, nonatomic) IBOutlet UILabel *siriesAndNumberLicense;
+@property (weak, nonatomic) IBOutlet UILabel *dateLicense;
+
+
 
 @end
 
@@ -17,11 +52,59 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.title = @"Мой профиль";
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    
+    [self setRCStyleOfView:self.orderView];
+    [self setRCStyleOfView:self.personalDataView];
+    [self setRCStyleOfView:self.passportView];
+    [self setRCStyleOfView:self.registerView];
+    [self setRCStyleOfView:self.driverLicenceView];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.fullName.text = [NSString stringWithFormat:@"%@ %@ %@", [defaults valueForKey:@"lastName"],
+                                                                 [defaults valueForKey:@"firstName"],
+                                                                 [defaults valueForKey:@"fatherName"]];
+    self.phoneNumber.text = [NSString stringWithFormat:@"+ %@", [defaults valueForKey:@"phone"]];
+    self.dateOfBirth.text = [self dataFormaterMethod:[defaults valueForKey:@"dateOfBirth"]];
+    self.siriesAndNumberPassport.text = [NSString stringWithFormat:@"%@ %@",[defaults valueForKey:@"passportSeries"],
+                                                                            [defaults valueForKey:@"passportNumber"]];
+    self.dateOfPassport.text = [NSString stringWithFormat:@"%@  %@", [self dataFormaterMethod:[defaults valueForKey:@"passportIssueDate"]],
+                                                                     [defaults valueForKey:@"passport_issue"]];
+    self.mainAdress.text = [defaults valueForKey:@"address"];
+    self.realAdress.text = [defaults valueForKey:@"fakt_address"];
+    
+    self.siriesAndNumberLicense.text = [NSString stringWithFormat:@"%@ %@", [defaults valueForKey:@"license_series"],
+                                                                 [defaults valueForKey:@"license_number"]];
+    
+    self.dateLicense.text = [self dataFormaterMethod:[defaults valueForKey:@"license_issue_date"]];
+
+  
+
+    
+    
+    
+    
+    /*
+     @"address"
+     @"fakt_address"
+     [defaults setValue:newUser.passportIssue forKey:@"passport_issue"];
+     [defaults setValue:newUser.licenseNumber forKey:@"license_number"];
+     [defaults setValue:newUser.licenseSeries forKey:@"license_series"];
+     [defaults setValue:newUser.licenseIssueDate forKey:@"license_issue_date"];
+     [defaults setValue:newUser.licenseIssue forKey:@"license_issue"];
+
+     */
+
+
+
+    
+    
+    [self getOrderInfo];
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,70 +112,69 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
-}
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+- (void) setRCStyleOfView: (UIView*) view {
     
-    // Configure the cell...
+    view.layer.cornerRadius = 2.f;
+    view.layer.borderWidth = 0.5f;
+    view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    return cell;
+    view.layer.shadowColor = [UIColor blackColor].CGColor;
+    view.layer.shadowOffset = CGSizeMake(2.f, 2.0f);
+    view.layer.shadowRadius = 2.0f;
+    view.layer.shadowOpacity = 2.0f;
+    view.layer.masksToBounds = NO;
+    
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void) myCustomBack {
+    
+    SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
+
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (NSString*) dataFormaterMethod: (NSString*) dataString {
+    
+    NSString* newDate;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *dateFromString = [[NSDate alloc] init];
+    dateFromString = [dateFormatter dateFromString:dataString];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    newDate = [dateFormatter stringFromDate:dateFromString];
+    
+    return newDate;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+#pragma mark - API
+
+- (void) getOrderInfo {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token =  [defaults valueForKey:@"tokenString"];
+    NSLog(@"token %@", token);
+    [[ServerManager sharedManager]  getProfileInfoWithToken:token
+                                                  OnSuccess:^(NSNumber* days, NSNumber* orderCount, NSNumber* penalties, NSNumber* status) {
+                                                      
+                                                      self.ordersCount.text = [NSString stringWithFormat:@"%@", orderCount];
+                                                      self.fines.text = [NSString stringWithFormat:@"%@ руб.", penalties];
+                                                      
+                                                      int arrears = [days integerValue]* [penalties integerValue];
+                                                      self.arrears.text = [NSString stringWithFormat:@"%d руб.", arrears];
+                                                      
+                                                      if ([status integerValue]==1) {
+                                                          self.clientType.text = @"Новый клиент";
+                                                      } else if ([status integerValue] == 2) {
+                                                          self.clientType.text = @"Постоянный клиент";
+                                                      } else if ([status integerValue] == 3) {
+                                                          self.clientType.text = @"VIP клиент";
+                                                      }
+                                                      
+                                                      
+                                                  }
+                                                     onFail:^(NSError *error) {
+                                                         
+                                                     }];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

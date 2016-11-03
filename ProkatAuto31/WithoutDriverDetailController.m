@@ -28,6 +28,9 @@
 
 @property (assign, nonatomic) NSInteger expandedCellIndex;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+
+
 
 
 
@@ -39,6 +42,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
+
     
     self.navigationItem.hidesBackButton = YES; 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
@@ -179,8 +190,12 @@
     
    [[ServerManager sharedManager] getCarWithoutDriverDetailOnSuccess:^(NSArray *thisData) {
        [self.dataArray addObjectsFromArray:thisData];
+       [self.activityIndicatorView stopAnimating];
+
        [self.collectionView reloadData];
    } onFail:^(NSError *error, NSInteger statusCode) {
+       [self.activityIndicatorView stopAnimating];
+
        NSLog(@"Error = %@", error);
    } withCategoryID:self.categoryID];
     
@@ -190,8 +205,12 @@
     
     [[ServerManager sharedManager] getCarWithoutDriverDetailWithTransmissionOnSuccess:^(NSArray *thisData) {
         [self.dataArray addObjectsFromArray:thisData];
+        [self.activityIndicatorView stopAnimating];
+
         [self.collectionView reloadData];
     } onFail:^(NSError *error, NSInteger statusCode) {
+        [self.activityIndicatorView stopAnimating];
+
          NSLog(@"Error = %@", error);
     } withCategoryID:self.transmissionID];
 }

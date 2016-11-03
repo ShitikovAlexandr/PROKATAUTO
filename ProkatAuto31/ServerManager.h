@@ -14,6 +14,8 @@
 
 + (ServerManager*) sharedManager;
 
+
+
 //___________
 
 - (void) getCarWithoutDriverCategoryOnSuccess:(void(^)(NSArray* thisData)) success
@@ -86,6 +88,23 @@
                     onFail:(void(^)(NSError* error)) failure;
 - (void) ordersHistory:(void (^)(NSArray *))success
                 onFail:(void (^)(NSError *))failure;
+
+- (void) getProfileInfoWithToken: (NSString*) tokenString OnSuccess:(void(^)(NSNumber* days, NSNumber* orderCount, NSNumber* penalties, NSNumber* status )) success
+                          onFail:(void(^)(NSError* error)) failure;
+
+- (void) changePasswordWithToken: (NSString*) tokenString
+                     OldPassword: (NSString*) oldPassword
+                     newPassword: (NSString*) password
+                   RetryPassword: (NSString*) retryPassword
+                       OnSuccess:(void(^)(NSString* massage)) success
+                          onFail:(void(^)(NSArray* errorArray)) failure;
+
+- (void) preparePaymentWithOrderId: (NSString*) orderId
+                         AndMethod: (NSString*) payMethod
+                         AndtToken: (NSString*) tokenString
+                         OnSuccess:(void(^)(NSString* urlString)) success
+                         onFail:(void(^)(NSArray* errorArray)) failure;
+
 
 
 @end
