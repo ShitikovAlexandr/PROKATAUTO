@@ -59,6 +59,7 @@
     cell.modelLabel.text = car.name;
     cell.descriptionLabel.attributedText = [self.descriptionsArray objectAtIndex:indexPath.row];
     
+    [self styleRCButton:cell.orderButton];
     [cell.orderButton addTarget:self action:@selector(OrderCar:event:) forControlEvents:UIControlEventTouchUpInside];
     
     return [cell addCollectionViewCellProperty:cell];
@@ -91,6 +92,14 @@
     vc.title = @"Оформить заказ";
     vc.car = [self.dataArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void) styleRCButton: (UIButton*) button {
+    
+    button.layer.cornerRadius = 3.f;
+    button.layer.borderWidth = 1.0f;
+    button.layer.borderColor = [UIColor blackColor].CGColor;
+    button.layer.masksToBounds = YES;
 }
 
 #pragma mark - API

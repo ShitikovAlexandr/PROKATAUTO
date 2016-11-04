@@ -46,6 +46,7 @@
     [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
     self.descriptionLabel.attributedText = description;
     
+    [self styleRCButton:self.sendOrderButton];
     [self.sendOrderButton addTarget:self action:@selector(SendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
     
     self.countryCodeArray = [self dataForPickerCountry];
@@ -66,6 +67,14 @@
     [self.codeField setInputAccessoryView:toolBar];
     
     self.codeField.inputView = self.countryCodePicker;
+}
+
+- (void) styleRCButton: (UIButton*) button {
+    
+    button.layer.cornerRadius = 3.f;
+    button.layer.borderWidth = 1.0f;
+    button.layer.borderColor = [UIColor blackColor].CGColor;
+    button.layer.masksToBounds = YES;
 }
 
 -(void) myCustomBack {

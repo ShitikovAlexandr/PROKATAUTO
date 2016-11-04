@@ -56,6 +56,7 @@
     
     cell.numberLabel.text = [NSString stringWithFormat:@"№%@", order.number];
     [self manageLabelWithStatus:order.status statusLabel:cell.statusLabel];
+    [self manageLabelWithPaymentStatus:order.paymentStatus statusLabel:cell.paymentStatus paid:order.paid];
     cell.carLabel.text = [NSString stringWithFormat:@"%@ %@", order.car.itemFullName, order.car.regNumber];
     NSString *daysText = [NSString stringWithFormat:@"%@", order.days];
     cell.daysLabel.text = [NSString stringWithFormat:@"%@ %@", order.days, [daysText hasSuffix:@"1"] ? @"сутки" : @"суток"];
@@ -68,12 +69,21 @@
     NSString *toDate = [dateFormatter stringFromDate:order.dateOfRentalEnd];
     cell.dateLabel.text = [NSString stringWithFormat:@"с %@ по %@", fromDate, toDate];
     
+    if([order.penaltyStatus isEqualToString:@"none"])
+        cell.penaltyLabel.hidden = TRUE;
+    else
+        cell.penaltyLabel.text = [NSString stringWithFormat:@"штраф %@ рублей", order.penalty];
+    [self manageLabelWithPaymentStatus:order.penaltyStatus statusLabel:cell.penaltyStatusLabel paid:order.penaltyPaid];
+    
     return [cell addCollectionViewCellProperty:cell];
     
 }
 
 - (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.collectionView.frame.size.width - 16, 145);
+    Order *order = [self.dataArray objectAtIndex:indexPath.row];
+    if([order.penaltyStatus isEqualToString:@"none"])
+        return CGSizeMake(self.collectionView.frame.size.width - 16, 145);
+    return CGSizeMake(self.collectionView.frame.size.width - 16, 160);
 }
 
 -(void) manageLabelWithStatus: (NSString *) status
@@ -82,16 +92,59 @@
     if([status isEqualToString:@"created"])
     {
         label.text = @"Новый";
-        label.textColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor grayColor];
+    }else if([status isEqualToString:@"rejected"])
+    {
+        label.text = @"Отказ";
+        label.backgroundColor = [UIColor redColor];
     }else if([status isEqualToString:@"cancel"])
     {
         label.text = @"Отмена";
-        label.textColor = [UIColor redColor];
+        label.backgroundColor = [UIColor redColor];
+    }else if([status isEqualToString:@"reserve"])
+    {
+        label.text = @"Бронь";
+        label.backgroundColor = [UIColor orangeColor];
+    }else if([status isEqualToString:@"onwork"])
+    {
+        label.text = @"Аренда";
+        label.backgroundColor = [UIColor greenColor];
+    }else if([status isEqualToString:@"finished"])
+    {
+        label.text = @"Архив";
+        label.backgroundColor = [UIColor blueColor];
     }
     else
     {
         label.text = @"Ошыбка";
+        label.backgroundColor = [UIColor redColor];
+    }
+}
+
+-(void) manageLabelWithPaymentStatus: (NSString *) status
+                         statusLabel: (UILabel *) label
+                                paid: (NSNumber *) paid
+{
+    if([status isEqualToString:@"empty"])
+    {
+        label.text = @"не оплачено";
         label.textColor = [UIColor redColor];
+    }else if([status isEqualToString:@"partial"])
+    {
+        label.text = [NSString stringWithFormat: @"оплачено %@", paid];
+        label.textColor = [UIColor orangeColor];
+    }else if([status isEqualToString:@"full"])
+    {
+        label.text = @"оплачено";
+        label.textColor = [UIColor greenColor];
+    }else if([status isEqualToString:@"none"])
+    {
+        label.hidden = TRUE;
+    }
+    else
+    {
+        label.text = @"ошыбка";
+        label.backgroundColor = [UIColor redColor];
     }
 }
 

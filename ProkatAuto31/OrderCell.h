@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *paymentStatus;
+@property (weak, nonatomic) IBOutlet UILabel *penaltyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *penaltyStatusLabel;
 
 - (UICollectionViewCell*) addCollectionViewCellProperty: (UICollectionViewCell*) cell;
 
