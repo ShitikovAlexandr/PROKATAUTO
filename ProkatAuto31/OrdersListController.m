@@ -11,6 +11,7 @@
 #import "OrderCell.h"
 #import "Order.h"
 #import "SWRevealViewController.h"
+#import "OrderDetailController.h"
 
 @interface OrdersListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -93,6 +94,18 @@
         label.textColor = [UIColor redColor];
     }
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Order *order = [self.dataArray objectAtIndex:indexPath.row];
+    
+    OrderDetailController *orderDitail = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderDetailController"];
+    orderDitail.order = order;
+    [self.navigationController pushViewController:orderDitail animated:YES];
+    
+    
+}
+
 
 #pragma mark - API
 

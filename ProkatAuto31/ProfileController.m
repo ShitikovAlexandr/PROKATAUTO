@@ -118,7 +118,7 @@
     view.layer.borderWidth = 0.5f;
     view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    view.layer.shadowColor = [UIColor blackColor].CGColor;
+    view.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     view.layer.shadowOffset = CGSizeMake(2.f, 2.0f);
     view.layer.shadowRadius = 2.0f;
     view.layer.shadowOpacity = 2.0f;

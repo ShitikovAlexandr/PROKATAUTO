@@ -12,14 +12,14 @@
 
 - (UICollectionViewCell*) addCollectionViewCellProperty: (OrderCell*) cell {
     
-    cell.layer.borderColor = [UIColor blackColor].CGColor;
+    cell.layer.borderColor = [UIColor lightGrayColor].CGColor;
     cell.layer.cornerRadius = 4.f;
     cell.contentView.layer.cornerRadius = 4.f;
     cell.contentView.layer.borderWidth = 1.0f;
-    cell.contentView.layer.borderColor = [UIColor grayColor].CGColor;
+    cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     cell.contentView.layer.masksToBounds = YES;
     
-    cell.layer.shadowColor = [UIColor blackColor].CGColor;
+    cell.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     cell.layer.shadowOffset = CGSizeMake(2.f, 2.0f);
     cell.layer.shadowRadius = 4.0f;
     cell.layer.shadowOpacity = 2.0f;

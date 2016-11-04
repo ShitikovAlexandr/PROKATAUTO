@@ -41,7 +41,7 @@
     self.alertView.layer.borderWidth = 0.5f;
     self.alertView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    self.alertView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.alertView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     self.alertView.layer.shadowOffset = CGSizeMake(2.f, 2.0f);
     self.alertView.layer.shadowRadius = 2.0f;
     self.alertView.layer.shadowOpacity = 2.0f;

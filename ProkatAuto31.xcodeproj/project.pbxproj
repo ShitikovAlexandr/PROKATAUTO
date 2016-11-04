@@ -109,6 +109,7 @@
 		FA467E1E1DC0D13700B466C3 /* StepFourWithoutdriverController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA467E1D1DC0D13700B466C3 /* StepFourWithoutdriverController.m */; };
 		FA467E211DC0F16B00B466C3 /* RememberPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA467E201DC0F16B00B466C3 /* RememberPasswordController.m */; };
 		FA5D275D1DAD2BBB0012FF57 /* RCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5D275C1DAD2BBB0012FF57 /* RCPickerView.m */; };
+		FA69E4261DCB88A3001B5BAB /* OrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA69E4251DCB88A3001B5BAB /* OrderDetailController.m */; };
 		FA6A6A931DB5079D003BB8D1 /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6A6A921DB5079D003BB8D1 /* ButtonCell.m */; };
 		FA70B44A1DB7B5B80088FFE3 /* RCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = FA70B4491DB7B5B80088FFE3 /* RCTextField.m */; };
 		FA7A56641DA7CAC400CD6975 /* RCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7A56631DA7CAC400CD6975 /* RCViewController.m */; };
@@ -300,6 +301,8 @@
 		FA467E201DC0F16B00B466C3 /* RememberPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RememberPasswordController.m; sourceTree = "<group>"; };
 		FA5D275B1DAD2BBB0012FF57 /* RCPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPickerView.h; sourceTree = "<group>"; };
 		FA5D275C1DAD2BBB0012FF57 /* RCPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPickerView.m; sourceTree = "<group>"; };
+		FA69E4241DCB88A3001B5BAB /* OrderDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailController.h; sourceTree = "<group>"; };
+		FA69E4251DCB88A3001B5BAB /* OrderDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailController.m; sourceTree = "<group>"; };
 		FA6A6A911DB5079D003BB8D1 /* ButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonCell.h; sourceTree = "<group>"; };
 		FA6A6A921DB5079D003BB8D1 /* ButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonCell.m; sourceTree = "<group>"; };
 		FA70B4481DB7B5B80088FFE3 /* RCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTextField.h; sourceTree = "<group>"; };
@@ -608,6 +611,8 @@
 				FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */,
 				FABE7B751DCA111F0043F8F1 /* PaymentController.h */,
 				FABE7B761DCA111F0043F8F1 /* PaymentController.m */,
+				FA69E4241DCB88A3001B5BAB /* OrderDetailController.h */,
+				FA69E4251DCB88A3001B5BAB /* OrderDetailController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -965,6 +970,7 @@
 				633E00931D888A4300436D99 /* WithoutDriverDetailController.m in Sources */,
 				84109E231DA997E600010EA3 /* CarWithDriverCell.m in Sources */,
 				633E006B1D880F7800436D99 /* AFURLSessionManager.m in Sources */,
+				FA69E4261DCB88A3001B5BAB /* OrderDetailController.m in Sources */,
 				FA7E82AC1DA3CF4500F5BFB4 /* StepOneWithoutDriverController.m in Sources */,
 				FA7A56641DA7CAC400CD6975 /* RCViewController.m in Sources */,
 				633E004D1D86F18900436D99 /* CarMainCollectionViewCell.m in Sources */,

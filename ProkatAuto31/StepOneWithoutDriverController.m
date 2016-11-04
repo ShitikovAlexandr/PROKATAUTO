@@ -107,11 +107,11 @@
     NSString *const identifier = @"StepOneCollectionViewCell";
     
     self.cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    self.cell.supplyCarView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.cell.supplyCarView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.cell.supplyCarView.layer.cornerRadius = 2.f;
     self.cell.supplyCarView.layer.borderWidth =2.f;
     
-    self.cell.ReturnCarView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.cell.ReturnCarView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.cell.ReturnCarView.layer.cornerRadius = 2.f;
     self.cell.ReturnCarView.layer.borderWidth =2.f;
     

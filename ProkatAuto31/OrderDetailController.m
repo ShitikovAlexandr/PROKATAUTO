@@ -10,6 +10,7 @@
 
 @interface OrderDetailController ()
 
+
 @end
 
 @implementation OrderDetailController
@@ -17,11 +18,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.title = [NSString stringWithFormat:@"№%@",self.order.number];
+    [self setRCStyleOfView:self.mainInfoView];
+    [self setRCStyleOfView:self.rentalCarView];
+    [self setRCStyleOfView:self.startPlaceView];
+    [self setRCStyleOfView:self.endPlaceView];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.carModel.text = self.order.car.itemFullName;
+    self.timeDay.text = [NSString stringWithFormat:@"%@ суток", self.order.days];
+    
+    NSDateFormatter *dF = [[NSDateFormatter alloc] init];
+    [dF setDateFormat:@"dd.MM.yyyy"];
+    self.rentalDatePeriod.text = [NSString stringWithFormat:@"с %@ по %@", [dF stringFromDate:self.order.dateOfRentalStart], [dF stringFromDate:self.order.dateOfRentalEnd]];
+    self.totalPrice.text = [NSString stringWithFormat:@"%@ рублей", self.order.totalPrice];
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,70 +42,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
-}
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+- (void) setRCStyleOfView: (UIView*) view {
+    view.layer.cornerRadius = 2.f;
+    view.layer.borderWidth = 0.5f;
+    view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    // Configure the cell...
+    view.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    view.layer.shadowOffset = CGSizeMake(2.f, 2.0f);
+    view.layer.shadowRadius = 2.0f;
+    view.layer.shadowOpacity = 2.0f;
+    view.layer.masksToBounds = NO;
+}
+
+- (void) myCustomBack {
     
-    return cell;
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
