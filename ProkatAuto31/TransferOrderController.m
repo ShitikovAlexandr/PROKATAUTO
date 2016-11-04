@@ -1,16 +1,16 @@
 //
-//  OrderCarWithDriverController.m
+//  UITableViewController+TransferOrderController.m
 //  ProkatAuto31
 //
-//  Created by Ivan Bielko on 22.10.16.
+//  Created by Ivan Bielko on 04.11.16.
 //  Copyright © 2016 Asta.Mobi. All rights reserved.
 //
 
-#import "OrderCarWithDriverController.h"
-#import "UIImageView+AFNetworking.h"
+#import "TransferOrderController.h"
 #import "ServerManager.h"
+#import "RCTextField.h"
 
-@interface OrderCarWithDriverController ()
+@interface TransferOrderController ()
 @property (strong, nonatomic) UIPickerView *countryCodePicker;
 @property (strong, nonatomic) NSDictionary *countryCodeArray;
 @property (strong, nonatomic) NSString *capchaKey;
@@ -18,7 +18,7 @@
 @property (strong, nonatomic) NSString *tokenString;
 @end
 
-@implementation OrderCarWithDriverController
+@implementation TransferOrderController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,9 +27,6 @@
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
-    
-    NSURL *url = [NSURL URLWithString:self.car.imageURL];
-    [self.carImageView setImageWithURL:url];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.tokenString = [defaults valueForKey:@"tokenString"];
@@ -41,13 +38,18 @@
         [self hideElements];
     }
     
-    self.titleLabel.text = self.car.name;
-    NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-    [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
+    self.titleLabel.text = self.category.name;
+    NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.category.maimDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    CGRect descriptionRect = [description boundingRectWithSize:CGSizeMake(self.descriptionLabel.frame.size.width, 0)
+                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                       context:nil];
+    self.descriptionLabel.frame = CGRectMake(self.descriptionLabel.frame.origin.x, self.descriptionLabel.frame.origin.y, descriptionRect.size.width, descriptionRect.size.height);
+    [self moveViews];
+    
     self.descriptionLabel.attributedText = description;
     
     [self styleRCButton:self.sendOrderButton];
-    [self.sendOrderButton addTarget:self action:@selector(SendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendOrderButton addTarget:self action:@selector(sendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
     
     self.countryCodeArray = [self dataForPickerCountry];
     self.countryCodePicker = [[UIPickerView alloc] init];
@@ -67,6 +69,21 @@
     [self.codeField setInputAccessoryView:toolBar];
     
     self.codeField.inputView = self.countryCodePicker;
+    
+    self.dateView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.dateView.layer.borderWidth = 1;
+}
+
+-(void)moveViews
+{
+    for(UIView* subview in self.contentView.subviews)
+    {
+        if(subview.frame.origin.y>self.descriptionLabel.frame.origin.y)
+        {
+            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + self.descriptionLabel.frame.size.height - 21, subview.frame.size.width, subview.frame.size.height);
+        }
+    }
+    [self.tableView reloadData];
 }
 
 - (void) styleRCButton: (UIButton*) button {
@@ -88,66 +105,32 @@
 
 -(void) hideElements
 {
-    self.contactDataLabel.hidden = TRUE;
-    self.nameField.hidden = TRUE;
-    self.countryLabel.hidden = TRUE;
-    self.codeField.hidden = TRUE;
-    self.phoneField.hidden = TRUE;
-    self.emailField.hidden = TRUE;
-    self.captchaImageView.hidden = TRUE;
-    self.captchaLabel.hidden = TRUE;
-    self.captchaField.hidden = TRUE;
-    
-    self.orderDescriptionLabel.frame = self.contactDataLabel.frame;
-    self.descriptionField.frame = self.nameField.frame;
-    self.sendOrderButton.frame = CGRectMake(self.sendOrderButton.frame.origin.x, self.descriptionField.frame.origin.y + self.descriptionField.frame.size.height + 10, self.sendOrderButton.frame.size.width, self.sendOrderButton.frame.size.height);
-    [self.tableView reloadData];
+//    self.contactDataLabel.hidden = TRUE;
+//    self.nameField.hidden = TRUE;
+//    self.countryLabel.hidden = TRUE;
+//    self.codeField.hidden = TRUE;
+//    self.phoneField.hidden = TRUE;
+//    self.emailField.hidden = TRUE;
+//    self.captchaImageView.hidden = TRUE;
+//    self.captchaLabel.hidden = TRUE;
+//    self.captchaField.hidden = TRUE;
+//    
+//    self.orderDescriptionLabel.frame = self.contactDataLabel.frame;
+//    self.descriptionField.frame = self.nameField.frame;
+//    self.sendOrderButton.frame = CGRectMake(self.sendOrderButton.frame.origin.x, self.descriptionField.frame.origin.y + self.descriptionField.frame.size.height + 10, self.sendOrderButton.frame.size.width, self.sendOrderButton.frame.size.height);
+//    self.tableView.scrollEnabled = FALSE;
 }
 
-- (IBAction)SendOrder:(id) sender event: (id) event {
-    
-    if([self.tokenString isEqualToString:@""])
-    {
-        [self sendOrderWithCaptcha];
-    }else
-    {
-        [self sendOrderWithToken];
-    }
-
-}
-
--(void) sendOrderWithCaptcha
-{
-    if(![self validateFieldsEmpty])
-        [self showAlert:@"Заполните все поля!"];
-    else if(![self validatePhoneNumber])
-        [self showAlert:@"Введите корректный номер телефона"];
-    else if(![self validateEmail])
-        [self showAlert:@"Введите корректный адрес электронной почты"];
-    else
-    {
-        [[ServerManager sharedManager] orderCarWithDriver:self.car.carId userName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderDescription:self.descriptionField.text andKey:self.capchaKey passwordFromImg:self.captchaField.text OnSuccess:^ {
-            [self showAlert:self.sentMessage];
-        } onFail:^(NSError *error, NSString *errorMessage) {
-            [self showAlert:errorMessage];
-            [self getCapchaImg];
-            self.captchaField.text = @"";
-        }];
-    }
-}
-
--(void) sendOrderWithToken
-{
-    if([self.descriptionField.text isEqualToString:@""])
-        [self showAlert:@"Заполните все поля!"];
-    else
-    {
-        [[ServerManager sharedManager] orderCarWithDriverWithToken:self.tokenString carId:self.car.carId orderDescription:self.descriptionField.text OnSuccess:^ {
-            [self showAlert:self.sentMessage];
-        } onFail:^(NSError *error, NSString *errorMessage) {
-            [self showAlert:errorMessage];
-        }];
-    }
+- (IBAction)sendOrder:(id) sender event: (id) event {
+//    
+//    if([self.tokenString isEqualToString:@""])
+//    {
+//        [self sendOrderWithCaptcha];
+//    }else
+//    {
+//        [self sendOrderWithToken];
+//    }
+//    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -178,6 +161,7 @@
     if([theAlert.message isEqualToString:self.sentMessage])
         [self.navigationController popToRootViewControllerAnimated:TRUE];
 }
+
 - (void)showAlert:(NSString *) message
 {
     UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:nil
@@ -191,28 +175,23 @@
 -(BOOL) validateFieldsEmpty
 {
     NSMutableArray *fieldsArray = [[NSMutableArray alloc] init ];
-    [fieldsArray addObject:[self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-    [fieldsArray addObject:[self.phoneField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-    [fieldsArray addObject:[self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-    [fieldsArray addObject:[self.descriptionField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-    [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+//    [fieldsArray addObject:[self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+//    [fieldsArray addObject:[self.phoneField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+//    [fieldsArray addObject:[self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+//    [fieldsArray addObject:[self.descriptionField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+//    [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     return [fieldsArray indexOfObject:@""] == NSNotFound;
 }
 
--(BOOL) validateEmail
-{
-    BOOL stricterFilter = NO;
-    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
-    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
-    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:self.emailField.text];
-}
-
--(BOOL) validatePhoneNumber
-{
-    return [self.phoneField.text rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location != NSNotFound;
-}
+//-(BOOL) validateEmail
+//{
+//    BOOL stricterFilter = NO;
+//    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+//    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+//    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+//    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+//    return [emailTest evaluateWithObject:self.emailField.text];
+//}
 
 #pragma mark - UIPickerViewDelegate
 
@@ -221,7 +200,6 @@
     return 1;
 }
 
-// returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     
     return [self.countryCodeArray count];
@@ -240,7 +218,7 @@
     NSString *str2 = [NSString stringWithFormat:@"%@", [self.countryCodeArray allKeys][row]];
     
     self.codeField.text = str;
-    self.countryLabel.text = str2;
+    self.countryField.text = str2;
 }
 
 - (void) getCapchaImg {
@@ -524,9 +502,4 @@
     return codes;
     
 }
-
-
-
-
-
 @end

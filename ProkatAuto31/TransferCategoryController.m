@@ -8,6 +8,7 @@
 
 #import "TransferCategoryController.h"
 #import "UIImageView+AFNetworking.h"
+#import "TransferOrderController.h"
 
 @implementation TransferCategoryController : UIViewController
 - (void)viewDidLoad {
@@ -22,7 +23,6 @@
     self.imageView.frame = CGRectMake(15, 15, 100, 100);
     
     NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.category.maimDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-    //[description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
 
     CGRect descriptionRect = [description boundingRectWithSize:CGSizeMake(self.scrollView.frame.size.width - 135, 0)
                                                        options:NSStringDrawingUsesLineFragmentOrigin
@@ -33,6 +33,7 @@
     
     self.orderButton.frame = CGRectMake(self.scrollView.frame.size.width - 130, self.descriptionLabel.bounds.size.height + 30, self.orderButton.bounds.size.width, self.orderButton.bounds.size.height);
     [self styleRCButton:self.orderButton];
+    [self.orderButton addTarget:self action:@selector(orderButtonPressed:event:) forControlEvents:UIControlEventTouchUpInside];
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width, self.orderButton.frame.origin.y + self.orderButton.frame.size.height + 10);
 }
@@ -48,4 +49,11 @@
     button.layer.borderColor = [UIColor blackColor].CGColor;
     button.layer.masksToBounds = YES;
 }
+
+- (IBAction)orderButtonPressed:(id) sender event: (id) event {
+    TransferOrderController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferOrderController"];
+    vc.category = self.category;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 @end
