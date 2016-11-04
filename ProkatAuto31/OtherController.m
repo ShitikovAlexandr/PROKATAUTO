@@ -13,6 +13,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "CarMainCollectionViewCell.h"
 #import "CarsWithDriverListController.h"
+#import "TransferCategoryController.h"
 
 
 @interface OtherController ()
@@ -64,7 +65,11 @@
     
     Category *category = [self.categoryArray objectAtIndex:indexPath.row];
     cell.categoryName.text = category.name;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, category.image]];
+    NSURL *url;
+    if([category.image containsString:@"http"])
+        url = [NSURL URLWithString:category.image];
+    else
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, category.image]];
     [cell.carImageView setImageWithURL:url];
     return [cell addCollectionViewCellProperty:cell];
 
@@ -79,7 +84,11 @@
     Category *category =[self.categoryArray objectAtIndex:indexPath.row];
     if([category.categoryID isEqual:self.transferId])
     {
+        TransferCategoryController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferCategoryController"];
+        vc.category = category;
         
+        vc.title = category.name;
+        [self.navigationController pushViewController:vc animated:YES];
     }else
     {
         CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
