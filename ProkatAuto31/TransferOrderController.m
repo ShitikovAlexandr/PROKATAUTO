@@ -9,6 +9,7 @@
 #import "TransferOrderController.h"
 #import "ServerManager.h"
 #import "RCTextField.h"
+#import "RCDatePicker.h"
 
 @interface TransferOrderController ()
 @property (strong, nonatomic) UIPickerView *countryCodePicker;
@@ -16,6 +17,9 @@
 @property (strong, nonatomic) NSString *capchaKey;
 @property (strong, nonatomic) NSString *sentMessage;
 @property (strong, nonatomic) NSString *tokenString;
+@property (strong, nonatomic) NSDate *startDate;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) NSDateFormatter *timeFormatter;
 @end
 
 @implementation TransferOrderController
@@ -72,6 +76,21 @@
     
     self.dateView.layer.borderColor = [UIColor grayColor].CGColor;
     self.dateView.layer.borderWidth = 1;
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDateFormat:@"dd.MM.yyyy"];
+    
+    self.timeFormatter = [[NSDateFormatter alloc] init];
+    [self.timeFormatter setDateFormat:@"HH:mm"];
+    
+    self.startDate = [[NSDate date] dateByAddingTimeInterval:60*60*24];
+    NSCalendar *calendarReturn = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    NSDateComponents *componentsReturn = [calendarReturn components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:self.startDate];
+    [componentsReturn setHour:12];
+    self.startDate = [calendarReturn dateFromComponents:componentsReturn];
+    
+    self.dateField.text = [self.dateFormatter stringFromDate:self.startDate];
+    self.timeField.text = [self.timeFormatter stringFromDate:self.startDate];
 }
 
 -(void)moveViews
@@ -139,6 +158,44 @@
 
 - (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
     [textField starEditeffect:textField];
+    
+//    RCDatePicker *datePicker = [[RCDatePicker alloc] initWithShadowAndTextField:textField];
+//    [datePicker addTarget:self action:@selector (textFieldDidChange:) forControlEvents:UIControlEventValueChanged];
+//    
+//    
+//    
+//    
+//    if (textField.tag == 5) { // stard date of rental
+//        self.tagTF = 1;
+//        datePicker.minimumDate =  [NSDate date]; //[[NSDate  date] dateByAddingTimeInterval:60*60*24];
+//        textField.text = [NSString stringWithFormat:@"%@", [df stringFromDate:self.order.dateOfRentalStart]];
+//        [datePicker setDate:self.order.dateOfRentalStart animated:YES];
+//        datePicker.datePickerMode = UIDatePickerModeDate;
+//        datePicker.locale =  [NSLocale currentLocale];
+//        
+//        
+//        if ([self.order.dateOfRentalStart timeIntervalSinceNow]< 60) {
+//            self.order.timeOfRentalStart = [NSDate date];
+//            [(UITextField *)[self.view viewWithTag:2] setText: [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalStart]]];
+//        }
+//        
+//    } else if (textField.tag == 6) { // stard time of rental
+//        self.tagTF = 2;
+//        datePicker.locale =  [NSLocale currentLocale];
+//        textField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalStart]];
+//        datePicker.datePickerMode = UIDatePickerModeTime;
+//        
+//        if ([self.order.dateOfRentalStart timeIntervalSinceNow]< 120) {
+//            datePicker.minimumDate = [NSDate date];
+//            self.order.timeOfRentalStart = datePicker.date;
+//            self.cell.timeStartTextField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalStart]];
+//            
+//        } else {
+//            [datePicker setDate:self.order.timeOfRentalStart animated:YES];
+//        }
+//        
+//    }
+    
     return YES;
 }
 
