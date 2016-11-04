@@ -25,6 +25,7 @@
         self.slug = [responseObject objectForKey:@"slug"];
         
         self.categoryID = [responseObject objectForKey:@"id"];
+        self.maimDescription = [responseObject objectForKey:@"content"];
     }
     
     

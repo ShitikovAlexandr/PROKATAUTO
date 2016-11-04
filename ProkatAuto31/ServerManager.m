@@ -899,6 +899,25 @@
     
 }
 
+- (void) getTransferCategoryInfo:(void (^)(Category *))success
+                          onFail:(void (^)(NSError *))failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    [self.sessionManager GET:@"transfer/"
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         Category *category = [[Category alloc] initWithServerResponse:responseObject];
+
+                         if (success) {
+                             success(category);
+                         }
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSLog(@"error orders %@", error);
+                     }];
+}
 
 
 @end

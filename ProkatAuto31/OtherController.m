@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) NSString *baseAddress;
+@property (strong, nonatomic) NSNumber *transferId;
 
 
 @property (strong, nonatomic) NSMutableArray *categoryArray;
@@ -75,13 +76,18 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
     Category *category =[self.categoryArray objectAtIndex:indexPath.row];
-    CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
-    vc.categoryID = category.categoryID;
+    if([category.categoryID isEqual:self.transferId])
+    {
+        
+    }else
+    {
+        CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
+        vc.categoryID = category.categoryID;
     
-    vc.title = category.name;
-    [self.navigationController pushViewController:vc animated:YES];
+        vc.title = category.name;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     
 }
 
@@ -89,19 +95,24 @@
 #pragma mark - API
 
 - (void) getCarCategorieFromAPI {
-    [[ServerManager sharedManager] getCarOtherCategoryOnSuccess:^(NSArray *thisData) {
-        [self.categoryArray addObjectsFromArray:thisData];
-        
-        [[ServerManager sharedManager] getCarOtherCategoryWithPageOnSuccess:^(NSArray *thisData) {
-            [self.categoryArray addObjectsFromArray:thisData];
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-        } onFail:^(NSError *error, NSInteger statusCode) {
-            NSLog(@"error = %@, ", error);
-        }];
+    [[ServerManager sharedManager] getTransferCategoryInfo:^(Category *category)
+     {
+         [self.categoryArray addObject:category];
+         self.transferId = category.categoryID;
+         [[ServerManager sharedManager] getCarOtherCategoryOnSuccess:^(NSArray *thisData) {
+             [self.categoryArray addObjectsFromArray:thisData];
+             [[ServerManager sharedManager] getCarOtherCategoryWithPageOnSuccess:^(NSArray *thisData) {
+                 [self.categoryArray addObjectsFromArray:thisData];
+                 [self.collectionView reloadData];
+             } onFail:^(NSError *error, NSInteger statusCode) {
+                 NSLog(@"error = %@, ", error);
+             }];
          } onFail:^(NSError *error, NSInteger statusCode) {
-        NSLog(@"error = %@, ", error);
-    }];
-   // [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+             NSLog(@"error = %@, ", error);
+         }];
+     } onFail:^(NSError *error) {
+         NSLog(@"error = %@, ", error);
+     }];
 }
 
 

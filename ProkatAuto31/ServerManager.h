@@ -111,6 +111,9 @@
                            OnSuccess: (void(^)()) success
                               onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
+- (void) getTransferCategoryInfo:(void (^)(Category *))success
+                          onFail:(void (^)(NSError *))failure;
+
 
 
 @end
