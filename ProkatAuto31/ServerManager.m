@@ -919,5 +919,64 @@
                      }];
 }
 
+- (void) sendTransferOrderWithCaptchaKey: (NSString*) key
+                         andCaptchaValue: (NSString*) captcha
+                             andUserName: (NSString*) name
+                         userPhoneNumber: (NSString*) phone
+                               userEmail: (NSString*) email
+                            orderComment: (NSString*) comment
+                          pickupLocation: (NSString*) location
+                          pickUpDateTime: (NSString*) dateTime
+                         passengersCount: (NSString*) passengers
+                        destinationPlace: (NSString*) destination
+                                 carName: (NSString*) car
+                               OnSuccess: (void(^)()) success
+                                  onFail: (void(^)(NSError* error, NSString* errorMessage)) failure
+{
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            car, @"car",
+                            name, @"name",
+                            phone, @"phone",
+                            email, @"email",
+                            location, @"pickup_location",
+                            dateTime, @"pickup_datetime",
+                            passengers, @"passengers",
+                            destination, @"destination",
+                            comment, @"comment",
+                            key, @"captcha_key",
+                            captcha, @"captcha_value", nil];
+    
+    
+    [self.sessionManager POST:@"transfer/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          
+                          if(success)
+                              success();
+                          
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          
+                          NSLog(@"error text field *** %@", task.response);
+                          NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                          NSLog(@"Error is %@",ErrorResponse);
+                          
+                          NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
+                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                                       options:kNilOptions
+                                                                                         error:&error];
+                          NSString *errorMessage = [[[jsonResponse allValues] objectAtIndex:0] objectAtIndex:0];
+                          if(failure)
+                              failure(error, errorMessage);
+                      }];
+    
+    
+}
 
 @end

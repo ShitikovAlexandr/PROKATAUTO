@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (strong, nonatomic) NSDateFormatter *timeFormatter;
+@property (nonatomic) NSInteger currentTag;
 @end
 
 @implementation TransferOrderController
@@ -71,6 +72,8 @@
     [toolBar setTintColor:[UIColor grayColor]];
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
     [self.codeField setInputAccessoryView:toolBar];
+    [self.phoneField setInputAccessoryView:toolBar];
+    [self.passagersField setInputAccessoryView:toolBar];
     
     self.codeField.inputView = self.countryCodePicker;
     
@@ -119,7 +122,7 @@
 }
 
 - (void) doneButtonPressed:(id)sender  {
-    [self.phoneField becomeFirstResponder];
+    [self switchNextView];
 }
 
 -(void) hideElements
@@ -141,15 +144,41 @@
 }
 
 - (IBAction)sendOrder:(id) sender event: (id) event {
-//    
-//    if([self.tokenString isEqualToString:@""])
-//    {
-//        [self sendOrderWithCaptcha];
-//    }else
-//    {
-//        [self sendOrderWithToken];
-//    }
-//    
+    
+    if([self.tokenString isEqualToString:@""] || self.tokenString == NULL)
+    {
+        [self sendOrderWithCaptcha];
+    }else
+    {
+        //[self sendOrderWithToken];
+    }
+    
+}
+
+-(void) sendOrderWithCaptcha
+{
+    if(![self validateFieldsEmpty])
+        [self showAlert:@"Заполните все поля!"];
+    else if(![self validatePhoneNumber])
+        [self showAlert:@"Введите корректный номер телефона"];
+    else
+    {
+        [[ServerManager sharedManager] sendTransferOrderWithCaptchaKey:self.capchaKey andCaptchaValue:self.captchaField.text andUserName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderComment:self.commentField.text pickupLocation:self.placeField.text pickUpDateTime:[self makeDateTime] passengersCount:self.passagersField.text destinationPlace:self.destinationField.text carName:self.carField.text OnSuccess:^ {
+            [self showAlert:self.sentMessage];
+        } onFail:^(NSError *error, NSString *errorMessage) {
+            [self showAlert:errorMessage];
+            [self getCapchaImg];
+            self.captchaField.text = @"";
+        }];
+    }
+}
+
+-(NSString*) makeDateTime
+{
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    
+    return [NSString stringWithFormat:@"%@T%@:00Z", [df stringFromDate:self.startDate], self.timeField.text];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -159,58 +188,57 @@
 - (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
     [textField starEditeffect:textField];
     
-//    RCDatePicker *datePicker = [[RCDatePicker alloc] initWithShadowAndTextField:textField];
-//    [datePicker addTarget:self action:@selector (textFieldDidChange:) forControlEvents:UIControlEventValueChanged];
-//    
-//    
-//    
-//    
-//    if (textField.tag == 5) { // stard date of rental
-//        self.tagTF = 1;
-//        datePicker.minimumDate =  [NSDate date]; //[[NSDate  date] dateByAddingTimeInterval:60*60*24];
-//        textField.text = [NSString stringWithFormat:@"%@", [df stringFromDate:self.order.dateOfRentalStart]];
-//        [datePicker setDate:self.order.dateOfRentalStart animated:YES];
-//        datePicker.datePickerMode = UIDatePickerModeDate;
-//        datePicker.locale =  [NSLocale currentLocale];
-//        
-//        
-//        if ([self.order.dateOfRentalStart timeIntervalSinceNow]< 60) {
-//            self.order.timeOfRentalStart = [NSDate date];
-//            [(UITextField *)[self.view viewWithTag:2] setText: [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalStart]]];
-//        }
-//        
-//    } else if (textField.tag == 6) { // stard time of rental
-//        self.tagTF = 2;
-//        datePicker.locale =  [NSLocale currentLocale];
-//        textField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalStart]];
-//        datePicker.datePickerMode = UIDatePickerModeTime;
-//        
-//        if ([self.order.dateOfRentalStart timeIntervalSinceNow]< 120) {
-//            datePicker.minimumDate = [NSDate date];
-//            self.order.timeOfRentalStart = datePicker.date;
-//            self.cell.timeStartTextField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalStart]];
-//            
-//        } else {
-//            [datePicker setDate:self.order.timeOfRentalStart animated:YES];
-//        }
-//        
-//    }
+    self.currentTag = textField.tag;
+    if(self.currentTag == 5 || self.currentTag == 6)
+    {
+        RCDatePicker *datePicker = [[RCDatePicker alloc] initWithShadowAndTextField:textField];
+        [datePicker addTarget:self action:@selector (textFieldDidChange:) forControlEvents:UIControlEventValueChanged];
+        datePicker.locale =  [NSLocale currentLocale];
+        [datePicker setDate:self.startDate animated:YES];
+        
+        if (textField.tag == 5) { // stard date of rental
+            datePicker.minimumDate =  [NSDate date];
+            datePicker.datePickerMode = UIDatePickerModeDate;
+        } else if (textField.tag == 6) { // stard time of rental
+            datePicker.datePickerMode = UIDatePickerModeTime;
+        }
+    }
     
     return YES;
 }
 
+-(void)textFieldDidChange:(UIDatePicker*) datePicker {
+    if (self.currentTag == 5) {
+        self.startDate = datePicker.date;
+        self.dateField.text =[self.dateFormatter stringFromDate:self.startDate];
+    }else if (self.currentTag == 6) {
+        self.timeField.text =[self.timeFormatter stringFromDate:datePicker.date];
+    }
+}
+
 - (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
     [textField EndEditeffect:textField];
+    if (textField.tag == 5 || textField.tag == 6) {
+        [self switchNextView];
+    }
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(RCTextField *)textField {
-    UIView *view = [self.view viewWithTag:textField.tag + 1];
-    if (!view)
-        [textField endEditing:TRUE];
+    [self switchNextView];
+    return YES;
+}
+
+- (void)switchNextView
+{
+    UIView *view = [self.view viewWithTag:self.currentTag + 1];
+    if (!view){
+        UIView *textField = [self.view viewWithTag:self.currentTag];
+        if(textField)
+            [textField endEditing:TRUE];
+    }
     else
         [view becomeFirstResponder];
-    return YES;
 }
 
 - (void)alertView:(UIAlertView *)theAlert clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -232,23 +260,18 @@
 -(BOOL) validateFieldsEmpty
 {
     NSMutableArray *fieldsArray = [[NSMutableArray alloc] init ];
-//    [fieldsArray addObject:[self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-//    [fieldsArray addObject:[self.phoneField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-//    [fieldsArray addObject:[self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-//    [fieldsArray addObject:[self.descriptionField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-//    [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.phoneField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.carField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.placeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     return [fieldsArray indexOfObject:@""] == NSNotFound;
 }
 
-//-(BOOL) validateEmail
-//{
-//    BOOL stricterFilter = NO;
-//    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
-//    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
-//    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
-//    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-//    return [emailTest evaluateWithObject:self.emailField.text];
-//}
+-(BOOL) validatePhoneNumber
+{
+    return [self.phoneField.text rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].location != NSNotFound;
+}
 
 #pragma mark - UIPickerViewDelegate
 
