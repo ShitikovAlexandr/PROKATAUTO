@@ -128,6 +128,14 @@
                                OnSuccess: (void(^)()) success
                                   onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
-
+- (void) sendTransferOrderWithToken: (NSString*) tokenString
+                       orderComment: (NSString*) comment
+                     pickupLocation: (NSString*) location
+                     pickUpDateTime: (NSString*) dateTime
+                    passengersCount: (NSString*) passengers
+                   destinationPlace: (NSString*) destination
+                            carName: (NSString*) car
+                          OnSuccess: (void(^)()) success
+                             onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
 @end

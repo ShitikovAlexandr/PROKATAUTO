@@ -48,8 +48,9 @@
     CGRect descriptionRect = [description boundingRectWithSize:CGSizeMake(self.descriptionLabel.frame.size.width, 0)
                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                        context:nil];
-    self.descriptionLabel.frame = CGRectMake(self.descriptionLabel.frame.origin.x, self.descriptionLabel.frame.origin.y, descriptionRect.size.width, descriptionRect.size.height);
-    [self moveViews];
+    self.descriptionLabel.frame = CGRectMake(self.descriptionLabel.frame.origin.x, self.descriptionLabel.frame.origin.y, descriptionRect.size.width, descriptionRect.size.height + 40);
+    [self moveViews:self.descriptionLabel.frame.size.height-60];
+    [self.tableView reloadData];
     
     self.descriptionLabel.attributedText = description;
     
@@ -96,16 +97,15 @@
     self.timeField.text = [self.timeFormatter stringFromDate:self.startDate];
 }
 
--(void)moveViews
+-(void)moveViews:(float) delta
 {
     for(UIView* subview in self.contentView.subviews)
     {
-        if(subview.frame.origin.y>self.descriptionLabel.frame.origin.y)
+        if(subview.frame.origin.y>self.descriptionLabel.frame.origin.y && !subview.hidden)
         {
-            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + self.descriptionLabel.frame.size.height - 21, subview.frame.size.width, subview.frame.size.height);
+            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
         }
     }
-    [self.tableView reloadData];
 }
 
 - (void) styleRCButton: (UIButton*) button {
@@ -127,20 +127,22 @@
 
 -(void) hideElements
 {
-//    self.contactDataLabel.hidden = TRUE;
-//    self.nameField.hidden = TRUE;
-//    self.countryLabel.hidden = TRUE;
-//    self.codeField.hidden = TRUE;
-//    self.phoneField.hidden = TRUE;
-//    self.emailField.hidden = TRUE;
-//    self.captchaImageView.hidden = TRUE;
-//    self.captchaLabel.hidden = TRUE;
-//    self.captchaField.hidden = TRUE;
-//    
-//    self.orderDescriptionLabel.frame = self.contactDataLabel.frame;
-//    self.descriptionField.frame = self.nameField.frame;
-//    self.sendOrderButton.frame = CGRectMake(self.sendOrderButton.frame.origin.x, self.descriptionField.frame.origin.y + self.descriptionField.frame.size.height + 10, self.sendOrderButton.frame.size.width, self.sendOrderButton.frame.size.height);
-//    self.tableView.scrollEnabled = FALSE;
+    self.contactDataLabel.hidden = TRUE;
+    self.nameField.hidden = TRUE;
+    self.countryField.hidden = TRUE;
+    self.codeField.hidden = TRUE;
+    self.phoneField.hidden = TRUE;
+    self.emailField.hidden = TRUE;
+    self.captchaImageView.hidden = TRUE;
+    self.captchaLabel.hidden = TRUE;
+    self.captchaField.hidden = TRUE;
+    self.captchaField.tag = 0;
+    self.commentField.returnKeyType = UIReturnKeyDone;
+    self.commentField.enablesReturnKeyAutomatically = FALSE;
+    
+    float delta = self.contactDataLabel.frame.origin.y - self.carField.frame.origin.y;
+    [self moveViews:delta];
+    self.sendOrderButton.frame = CGRectMake(self.sendOrderButton.frame.origin.x, self.commentField.frame.origin.y + self.commentField.frame.size.height + 10, self.sendOrderButton.frame.size.width, self.sendOrderButton.frame.size.height);
 }
 
 - (IBAction)sendOrder:(id) sender event: (id) event {
@@ -150,7 +152,7 @@
         [self sendOrderWithCaptcha];
     }else
     {
-        //[self sendOrderWithToken];
+        [self sendOrderWithToken];
     }
     
 }
@@ -169,6 +171,20 @@
             [self showAlert:errorMessage];
             [self getCapchaImg];
             self.captchaField.text = @"";
+        }];
+    }
+}
+
+-(void) sendOrderWithToken
+{
+    if(![self validateFieldsEmptyShort])
+        [self showAlert:@"Заполните все поля!"];
+    else
+    {
+        [[ServerManager sharedManager] sendTransferOrderWithToken:self.tokenString orderComment:self.commentField.text pickupLocation:self.placeField.text pickUpDateTime:[self makeDateTime] passengersCount:self.passagersField.text destinationPlace:self.destinationField.text carName:self.carField.text OnSuccess:^ {
+            [self showAlert:self.sentMessage];
+        } onFail:^(NSError *error, NSString *errorMessage) {
+            [self showAlert:errorMessage];
         }];
     }
 }
@@ -263,6 +279,14 @@
     [fieldsArray addObject:[self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     [fieldsArray addObject:[self.phoneField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.carField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.placeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    return [fieldsArray indexOfObject:@""] == NSNotFound;
+}
+
+-(BOOL) validateFieldsEmptyShort
+{
+    NSMutableArray *fieldsArray = [[NSMutableArray alloc] init ];
     [fieldsArray addObject:[self.carField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     [fieldsArray addObject:[self.placeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     return [fieldsArray indexOfObject:@""] == NSNotFound;
