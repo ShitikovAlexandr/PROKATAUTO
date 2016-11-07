@@ -173,7 +173,7 @@
     NSDate *return12am = [calendarReturn dateFromComponents:components];
     self.order.timeOfRentalEnd = return12am;
     self.cell.timeReturnTextField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalEnd]];
-    
+    self.cell.deposit.text = [NSString stringWithFormat:@"%@", self.car.deposit];
     
     self.cell.startPlase.text = self.order.startPlace.name;
     self.cell.returnPlase.text = self.order.endPlace.name;

@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *optionPrice;
 @property (weak, nonatomic) IBOutlet UIView *priceVew;
 @property (weak, nonatomic) IBOutlet UILabel *priceForDaysOnly;
+@property (weak, nonatomic) IBOutlet UILabel *optionPriceText;
 
 @property (strong, nonatomic) NSString *baseAddress;
 
@@ -68,6 +69,7 @@
     }
     NSString *daysText = [NSString stringWithFormat:@"%d", self.order.rentalPeriodDays];
     self.calculateRental.text = [NSString stringWithFormat:@"%d x %d %@", range, self.order.rentalPeriodDays ,[daysText hasSuffix:@"1"] ? @"сутки" : @"суток"];
+    self.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];//self.order.car.deposit;
     
     
     
@@ -79,55 +81,19 @@
     }
     
     self.optionPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice];
-    self.totalPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice + [self.order.totalPrice integerValue]];
+    self.totalPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice + [self.order.totalPrice integerValue] + [self.order.car.deposit integerValue]];
     
-    if ([self.order.selectOptionArray count] == 0) {
+    if ([self.optionPrice.text integerValue]<1) {
+        CGRect rect = self.priceVew.frame;
+        rect.size.height = self.priceVew.frame.size.height - 25.f;
+        self.priceVew.frame = rect;
+        [self.optionPrice removeFromSuperview];
+        [self.optionPriceText removeFromSuperview];
+        
     }
     
     
     
-    
-/*
- cell.carName.text = [NSString stringWithFormat:@"%@ %@ %@", self.order.car.itemFullName, self.order.car.itemEngine, self.order.car.itemTransmissionName];
- NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, self.order.car.imageURL]];
- [cell.carImage setImageWithURL:url];
- 
- NSDateFormatter *df = [[NSDateFormatter alloc] init];
- [df setDateFormat:@"yyyy-MM-dd'T'HH:mm"];
- 
- NSDateFormatter *screenDate = [[NSDateFormatter alloc] init];
- [screenDate setDateFormat:@"dd.MM.yyyy"];
- 
- NSDate *startRental = [df dateFromString:self.order.startDateOfRentalString];
- NSDate *endRental = [df dateFromString:self.order.endDateOfRentalString];
- NSLog(@"Date of start rental %@", startRental);
- NSLog(@"Date of end rental %@", endRental);
- 
- cell.rentalStartDate.text = [screenDate stringFromDate:startRental];
- cell.rentalEndDate.text = [screenDate stringFromDate:endRental];
- 
- 
- NSLog(@"rentalPeriod %f", [endRental timeIntervalSinceDate:startRental]);
- NSInteger rentalPeriod = (NSInteger)([endRental timeIntervalSinceDate:startRental]/60/60);
- NSInteger rentalPeriodDay = (NSInteger)rentalPeriod/24;
- if (rentalPeriod % 24 > 0) {
- rentalPeriodDay = rentalPeriodDay+1;
- }
- NSInteger range;
- NSInteger dayPrice;
- if (rentalPeriodDay < 4) {
- range =  [self.order.car.priceRange1 integerValue];
- } else if (rentalPeriodDay >= 4 && rentalPeriodDay < 7) {
- range =  [self.order.car.priceRange2 integerValue];
- } else {
- range =  [self.order.car.priceRange3 integerValue];
- 
- }
- dayPrice = rentalPeriodDay * range;
-
- 
- 
- */
     }
 
 - (void)didReceiveMemoryWarning {

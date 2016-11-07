@@ -120,6 +120,7 @@
         self.order.totalPrice = [NSNumber numberWithInteger:dayPrice];
         cell.rentalPrice.text = [NSString stringWithFormat:@"%@", self.order.totalPrice];
         cell.rentalPriceCalculation.text = [NSString stringWithFormat:@"%ld x %ld суток", (long)range, (long)rentalPeriodDay];
+        cell.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];
         
         
         
