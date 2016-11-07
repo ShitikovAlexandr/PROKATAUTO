@@ -111,6 +111,13 @@
                            OnSuccess: (void(^)()) success
                               onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
+- (void) orderDitailOptionsWithToken: (NSString*) tokenString andOrderId: (NSNumber*) orderId OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount)) success
+                       onFail:(void(^)(NSArray* errorArray)) failure;
 
+
+- (void) deleteOrdrWithPK: (NSString*) keyPK
+            andAccesToken: (NSString*) tokenString
+                OnSuccess:(void(^)(NSString* responce)) success
+                   onFail:(void(^)(NSError* error)) failure;
 
 @end

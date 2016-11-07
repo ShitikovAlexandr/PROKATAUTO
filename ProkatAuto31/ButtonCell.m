@@ -17,8 +17,6 @@
     self.buttonNext.layer.borderColor = [UIColor blackColor].CGColor;
     self.buttonNext.layer.masksToBounds = YES;
     
-    
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

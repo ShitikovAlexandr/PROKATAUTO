@@ -104,6 +104,9 @@
 		FA2015981DAE65BB0091D953 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2015971DAE65BB0091D953 /* Place.m */; };
 		FA2506EB1DBBF3DA00EF507A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2506EA1DBBF3DA00EF507A /* User.m */; };
 		FA2ED0331DC69DE2007A646C /* SidePageIdController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2ED0321DC69DE2007A646C /* SidePageIdController.m */; };
+		FA3E7D091DCC8F3C005EED75 /* OrderDetailMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3E7D081DCC8F3C005EED75 /* OrderDetailMainCell.m */; };
+		FA3E7D271DCCACD9005EED75 /* OrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3E7D261DCCACD9005EED75 /* OrderDetail.m */; };
+		FA3E7D2A1DCCC93E005EED75 /* OrderDitailOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3E7D291DCCC93E005EED75 /* OrderDitailOptionsCell.m */; };
 		FA464BD01DC340A3000EDF79 /* SideMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FA464BCF1DC340A3000EDF79 /* SideMenuItem.m */; };
 		FA467E1B1DC0A35000B466C3 /* AuthorizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA467E1A1DC0A35000B466C3 /* AuthorizationController.m */; };
 		FA467E1E1DC0D13700B466C3 /* StepFourWithoutdriverController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA467E1D1DC0D13700B466C3 /* StepFourWithoutdriverController.m */; };
@@ -291,6 +294,12 @@
 		FA2506EA1DBBF3DA00EF507A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		FA2ED0311DC69DE2007A646C /* SidePageIdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidePageIdController.h; sourceTree = "<group>"; };
 		FA2ED0321DC69DE2007A646C /* SidePageIdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidePageIdController.m; sourceTree = "<group>"; };
+		FA3E7D071DCC8F3C005EED75 /* OrderDetailMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailMainCell.h; sourceTree = "<group>"; };
+		FA3E7D081DCC8F3C005EED75 /* OrderDetailMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailMainCell.m; sourceTree = "<group>"; };
+		FA3E7D251DCCACD9005EED75 /* OrderDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetail.h; sourceTree = "<group>"; };
+		FA3E7D261DCCACD9005EED75 /* OrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetail.m; sourceTree = "<group>"; };
+		FA3E7D281DCCC93E005EED75 /* OrderDitailOptionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDitailOptionsCell.h; sourceTree = "<group>"; };
+		FA3E7D291DCCC93E005EED75 /* OrderDitailOptionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDitailOptionsCell.m; sourceTree = "<group>"; };
 		FA464BCE1DC340A3000EDF79 /* SideMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuItem.h; sourceTree = "<group>"; };
 		FA464BCF1DC340A3000EDF79 /* SideMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuItem.m; sourceTree = "<group>"; };
 		FA467E191DC0A35000B466C3 /* AuthorizationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizationController.h; sourceTree = "<group>"; };
@@ -660,6 +669,12 @@
 				FA464BCF1DC340A3000EDF79 /* SideMenuItem.m */,
 				8435724C1DC33D38009CFFC0 /* OrderCell.h */,
 				8435724D1DC33D38009CFFC0 /* OrderCell.m */,
+				FA3E7D071DCC8F3C005EED75 /* OrderDetailMainCell.h */,
+				FA3E7D081DCC8F3C005EED75 /* OrderDetailMainCell.m */,
+				FA3E7D251DCCACD9005EED75 /* OrderDetail.h */,
+				FA3E7D261DCCACD9005EED75 /* OrderDetail.m */,
+				FA3E7D281DCCC93E005EED75 /* OrderDitailOptionsCell.h */,
+				FA3E7D291DCCC93E005EED75 /* OrderDitailOptionsCell.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -969,6 +984,7 @@
 				633E00881D880F8000436D99 /* UIRefreshControl+AFNetworking.m in Sources */,
 				633E00931D888A4300436D99 /* WithoutDriverDetailController.m in Sources */,
 				84109E231DA997E600010EA3 /* CarWithDriverCell.m in Sources */,
+				FA3E7D091DCC8F3C005EED75 /* OrderDetailMainCell.m in Sources */,
 				633E006B1D880F7800436D99 /* AFURLSessionManager.m in Sources */,
 				FA69E4261DCB88A3001B5BAB /* OrderDetailController.m in Sources */,
 				FA7E82AC1DA3CF4500F5BFB4 /* StepOneWithoutDriverController.m in Sources */,
@@ -981,6 +997,8 @@
 				633E00991D8A96EA00436D99 /* Category.m in Sources */,
 				8486453C1DB7FF7900D6D813 /* CarWithDriver.m in Sources */,
 				633E00821D880F8000436D99 /* AFImageDownloader.m in Sources */,
+				FA3E7D271DCCACD9005EED75 /* OrderDetail.m in Sources */,
+				FA3E7D2A1DCCC93E005EED75 /* OrderDitailOptionsCell.m in Sources */,
 				FA2015981DAE65BB0091D953 /* Place.m in Sources */,
 				633E00471D86DE0B00436D99 /* CarWithDriverController.m in Sources */,
 				FA467E1B1DC0A35000B466C3 /* AuthorizationController.m in Sources */,

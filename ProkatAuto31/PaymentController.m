@@ -23,8 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.orderId = @"436";
-    self.fullPrice = @"1600";
+    //self.orderId = @"436";
+    //self.fullPrice = @"1600";
     
     self.title = @"Оплата";
     
@@ -71,7 +71,7 @@
     NSString *token =  [defaults valueForKey:@"tokenString"];
 
     [[ServerManager sharedManager] preparePaymentWithOrderId:self.orderId
-                                                   AndMethod:@"full"
+                                                   AndMethod:self.fullPrice
                                                    AndtToken:token
                                                    OnSuccess:^(NSString *urlString) {
                                                        

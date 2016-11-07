@@ -29,6 +29,7 @@
  
  @"address"
  @"fakt_address"
+ @"status"
 
   exemple:
  
@@ -366,6 +367,8 @@ extern NSString *baseAddress;
                                                             [defaults setValue:newUser.licenseSeries forKey:@"license_series"];
                                                             [defaults setValue:newUser.licenseIssueDate forKey:@"license_issue_date"];
                                                             [defaults setValue:newUser.licenseIssue forKey:@"license_issue"];
+                                                            
+                                                            [defaults setValue:newUser.status forKey: @"status"];
                                                             
                                                             [defaults setValue:newUser.address forKey:@"address"];
                                                             [defaults setValue:newUser.faktAddress forKey:@"fakt_address"];

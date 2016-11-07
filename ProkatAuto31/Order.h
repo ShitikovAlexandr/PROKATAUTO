@@ -39,6 +39,8 @@
 @property (strong, nonatomic) NSNumber *penalty;
 @property (strong, nonatomic) NSNumber *penaltyPaid;
 
+@property (assign, nonatomic) NSInteger rentalPeriodDays;
+
 - (id) initWithServerResponse: (NSDictionary*) responseObject;
 
 @end

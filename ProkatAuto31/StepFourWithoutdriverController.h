@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Order.h"
 
 @interface StepFourWithoutdriverController : UITableViewController
+
+@property (strong,nonatomic) Order *order;
 
 @end

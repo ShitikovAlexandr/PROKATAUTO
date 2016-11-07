@@ -17,6 +17,7 @@
 #import "CarWithDriver.h"
 #import "SideMenuItem.h"
 #import "Order.h"
+#import "OrderDetail.h"
 
 
 @interface ServerManager ()
@@ -898,6 +899,83 @@
     
     
 }
+
+- (void) orderDitailOptionsWithToken: (NSString*) tokenString
+                          andOrderId: (NSNumber*) orderId
+                           OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount)) success
+                              onFail:(void(^)(NSArray* errorArray)) failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    [self.sessionManager GET:[NSString stringWithFormat:@"orders/%@/", orderId]
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSLog(@"responseObject orderr detail %@", [responseObject objectForKey:@"equipment"]);
+                         //daily_amount цена за день
+                         //total_amount общая цена к оплате
+                         // amount цена авто за все деи без опций
+                         NSString *dailyAmount = [responseObject objectForKey:@"daily_amount"];
+                         NSString *totalAmount = [responseObject objectForKey:@"total_amount"];
+                         NSString *amount = [responseObject objectForKey:@"amount"];
+                         NSArray *dicArray = [responseObject objectForKey:@"equipment"];
+                         NSMutableArray *dataArray = [NSMutableArray array];
+                         for(NSDictionary* dic in dicArray) {
+                             OrderDetail *item = [[OrderDetail alloc] initWithServerResponse:dic];
+                             [dataArray addObject:item];
+                         }
+                         NSArray *dicArrayPlace = [responseObject objectForKey:@"services"];
+                         NSMutableArray *dataArrayPlace = [NSMutableArray array];
+                         for(NSDictionary* dic in dicArrayPlace) {
+                             Place *item = [[Place alloc] initWithServerResponse:dic];
+                             [dataArrayPlace addObject:item];
+                         }
+
+                         
+                         
+                         if (success) {
+                             success(dataArray, dataArrayPlace,dailyAmount,totalAmount,amount);
+                         }
+      
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                         NSLog(@"error %@", ErrorResponse);
+                     }];
+}
+
+- (void) deleteOrdrWithPK:(NSString *)keyPK
+            andAccesToken:(NSString *)tokenString
+                OnSuccess:(void (^)(NSString *))success
+                   onFail:(void (^)(NSError*))failure {
+    
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+
+    
+    
+    [self.sessionManager DELETE:[NSString stringWithFormat:@"orders/%@/", keyPK]
+                     parameters:nil
+                        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            NSLog(@"responseObject DELETE %@", responseObject);
+                            if (success) {
+                                NSString *str;
+                                success(str);
+                            }
+                        }
+                        failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            NSLog(@"error DELETE %@", error);
+                            if (failure) {
+                                failure(error);
+                            }
+
+                        }];
+}
+
 
 
 

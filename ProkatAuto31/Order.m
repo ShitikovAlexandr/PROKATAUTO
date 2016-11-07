@@ -37,6 +37,10 @@
         self.penaltyStatus = [responseObject objectForKey:@"penalty_status"];
         self.penalty = [responseObject objectForKey:@"penalty"];
         self.penaltyPaid = [responseObject objectForKey:@"penalty_paid"];
+        NSLog(@"equipment ++++++ > %@", [[responseObject objectForKey:@"equipment"] allObjects]);
+        self.selectOptionArray = [NSMutableArray array];
+
+        
     }
     
     
