@@ -75,16 +75,17 @@
     for (Option *opt in self.order.selectOptionArray) {
         optionTotalPrice = optionTotalPrice + [opt.optionPrice integerValue] * [opt.selectedAmount integerValue];
         NSLog(@"optionPrice - %d, %d", [opt.optionPrice integerValue], [opt.selectedAmount integerValue]);
-    }
-    /*
-    if ([self.order.selectOptionArray count] == 0) {
-        CGSize recSize = CGSizeMake(self.priceVew.frame.size.width, self.priceVew.frame.size.height - 50);
-        self.priceVew.frame.size = recSize;
+        
     }
     
     self.optionPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice];
     self.totalPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice + [self.order.totalPrice integerValue]];
-    */
+    
+    if ([self.order.selectOptionArray count] == 0) {
+    }
+    
+    
+    
     
 /*
  cell.carName.text = [NSString stringWithFormat:@"%@ %@ %@", self.order.car.itemFullName, self.order.car.itemEngine, self.order.car.itemTransmissionName];
