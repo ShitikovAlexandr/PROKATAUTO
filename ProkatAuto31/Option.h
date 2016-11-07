@@ -21,6 +21,8 @@
 @property (strong, nonatomic) NSString *optionImage;
 @property (strong, nonatomic) NSNumber *optionAvaliableAmount;
 @property (strong, nonatomic) NSString *optionWeight;
+@property (strong, nonatomic) NSString *selectedAmount;
+
 
 - (id) initWithServerResponse: (NSDictionary*) responseObject;
 

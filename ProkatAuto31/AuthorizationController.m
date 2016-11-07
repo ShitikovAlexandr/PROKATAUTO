@@ -182,6 +182,9 @@ return YES;
                                             
                                             [defaults setValue:newUser.address forKey:@"address"];
                                             [defaults setValue:newUser.faktAddress forKey:@"fakt_address"];
+                                            
+                                            [defaults setValue:newUser.status forKey: @"status"];
+
 
 
                                             

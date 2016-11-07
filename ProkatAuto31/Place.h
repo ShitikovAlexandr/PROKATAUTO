@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *descriptionPlace;
 @property (strong, nonatomic) NSString *image;
 @property (strong, nonatomic) NSString *serviceType;
+@property (strong, nonatomic) NSString *price;
 
 
 - (id) initWithServerResponse: (NSDictionary*) responseObject;

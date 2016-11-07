@@ -52,17 +52,49 @@
         }
       
 
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *status =  [defaults valueForKey:@"status"];
         
         self.deposit = [responseObject objectForKey:@"deposit"];
         
-        NSDictionary *range1Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:0];
-        self.priceRange1 = [range1Dic objectForKey:@"price"];
+      
+        if ([status integerValue] == 2) {
+            // @"Постоянный клиент"; stable_client_price
+            NSDictionary *range1Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:0];
+            self.priceRange1 = [range1Dic objectForKey:@"stable_client_price"];
+            
+            NSDictionary *range2Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:1];
+            self.priceRange2 = [range2Dic objectForKey:@"stable_client_price"];
+            
+            NSDictionary *range3Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:2];
+            self.priceRange3 = [range3Dic objectForKey:@"stable_client_price"];
+            
+        } else if ([status integerValue] == 3) {
+            //@"VIP клиент"; vip_client_price
+            NSDictionary *range1Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:0];
+            self.priceRange1 = [range1Dic objectForKey:@"vip_client_price"];
+            
+            NSDictionary *range2Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:1];
+            self.priceRange2 = [range2Dic objectForKey:@"vip_client_price"];
+            
+            NSDictionary *range3Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:2];
+            self.priceRange3 = [range3Dic objectForKey:@"vip_client_price"];
+            
+        } else {
+            
+            NSDictionary *range1Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:0];
+            self.priceRange1 = [range1Dic objectForKey:@"price"];
+            
+            NSDictionary *range2Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:1];
+            self.priceRange2 = [range2Dic objectForKey:@"price"];
+            
+            NSDictionary *range3Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:2];
+            self.priceRange3 = [range3Dic objectForKey:@"price"];
+            
+        }
+
         
-        NSDictionary *range2Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:1];
-        self.priceRange2 = [range2Dic objectForKey:@"price"];
-        
-        NSDictionary *range3Dic = [[responseObject objectForKey:@"car_prices"] objectAtIndex:2];
-        self.priceRange3 = [range3Dic objectForKey:@"price"];
+       
         
         
         

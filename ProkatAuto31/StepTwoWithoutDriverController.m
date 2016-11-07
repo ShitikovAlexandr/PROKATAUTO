@@ -38,6 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.baseAddress = @"http://83.220.170.187";
+    
+    self.order.selectOptionArray = [NSMutableArray array];
 
     
     self.optionsArray = [NSMutableArray array];
@@ -99,6 +101,7 @@
         NSLog(@"rentalPeriod %f", [endRental timeIntervalSinceDate:startRental]);
         NSInteger rentalPeriod = (NSInteger)([endRental timeIntervalSinceDate:startRental]/60/60);
         NSInteger rentalPeriodDay = (NSInteger)rentalPeriod/24;
+        self.order.rentalPeriodDays = rentalPeriodDay;
         if (rentalPeriod % 24 > 0) {
             rentalPeriodDay = rentalPeriodDay+1;
         }
@@ -126,8 +129,7 @@
         cell.placeStart.text = self.order.startPlace.name;
         cell.placeend.text = self.order.endPlace.name;
         
-        
-
+      
 
         return cell;
         
@@ -139,6 +141,7 @@
             
             [cell.buttonNext addTarget:self action:@selector(registerOrLoginAlert) forControlEvents:UIControlEventTouchDown];
             
+            
             return cell;
         } else {
         
@@ -147,7 +150,13 @@
         
         Option *option = [self.optionsArray objectAtIndex:indexPath.row];
         cell.nameOption.text = [NSString stringWithFormat:@"%@",option.optionName]; //option.optionName;
-        cell.priceOption.text = [NSString stringWithFormat:@"%@", option.optionPrice];
+        cell.optionCount.text = @"1";
+        
+            if ([option.optionPrice integerValue] <1) {
+                cell.priceOption.text = @"Бесплатно";
+            } else {
+                cell.priceOption.text = [NSString stringWithFormat:@"%d руб. в сутки", [option.optionPrice integerValue]];
+            }
             
             if ([option.optionAvaliableAmount intValue] >1) {
                 NSLog(@"option name %@", option.optionAvaliableAmount);
@@ -227,8 +236,20 @@
 
     
     if ([token length] > 6) {
+        [self.order.selectOptionArray removeAllObjects];
+        for (NSInteger i = 0; i <[self.optionsArray count]; i++) {
+            StepTwoOptionsCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            if (cell.switchOption.isOn) {
+                Option *option = [self.optionsArray objectAtIndex:i];
+                option.selectedAmount = cell.optionCount.text;
+                NSLog(@"selectedAmount %@", cell.optionCount.text);
+                [self.order.selectOptionArray addObject:option];
+            }
+        }
+        
         
         StepFourWithoutdriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
+        vc.order = self.order;
         [self.navigationController pushViewController:vc animated:YES];
 
     } else {

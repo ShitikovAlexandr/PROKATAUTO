@@ -138,4 +138,9 @@
                           OnSuccess: (void(^)()) success
                              onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
+- (void) deleteOrdrWithPK: (NSString*) keyPK
+            andAccesToken: (NSString*) tokenString
+                OnSuccess:(void(^)(NSString* responce)) success
+                   onFail:(void(^)(NSError* error)) failure;
+
 @end

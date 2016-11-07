@@ -86,7 +86,7 @@
     return CGSizeMake(self.collectionView.frame.size.width - 16, 160);
 }
 
--(void) manageLabelWithStatus: (NSString *) status
+- (void) manageLabelWithStatus: (NSString *) status
                   statusLabel: (UILabel *) label
 {
     if([status isEqualToString:@"created"])

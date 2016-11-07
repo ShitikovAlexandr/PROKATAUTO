@@ -97,7 +97,7 @@
     cell.fuel.text = car.itemFuelName;
     
     cell.deposit.text = [NSString stringWithFormat:@"%@", car.deposit];
-    cell.priceFrom.text = [NSString stringWithFormat:@"от %@ руб.", car.minimumPrice];
+    cell.priceFrom.text = [NSString stringWithFormat:@"от %@ руб.", car.priceRange3]; //car.minimumPrice
     cell.priceRange1.text = [NSString stringWithFormat:@"%@", car.priceRange1];
     cell.priceRange2.text = [NSString stringWithFormat:@"%@", car.priceRange2];
     cell.priceRange3.text = [NSString stringWithFormat:@"%@", car.priceRange3];

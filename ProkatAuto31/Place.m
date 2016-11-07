@@ -22,6 +22,10 @@
         self.descriptionPlace = [responseObject objectForKey:@"description"];
         self.image = [responseObject objectForKey:@"image"];
         self.serviceType = [responseObject objectForKey:@"service_type"];
+        
+        if ([responseObject objectForKey:@"price"]) {
+            self.price = [responseObject objectForKey:@"price"];
+        }
     }
     
     return self;
