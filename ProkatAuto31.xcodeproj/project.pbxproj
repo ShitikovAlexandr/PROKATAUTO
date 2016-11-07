@@ -90,6 +90,8 @@
 		63F4B8681D82C842006B391D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63F4B8661D82C842006B391D /* Main.storyboard */; };
 		63F4B86A1D82C842006B391D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F4B8691D82C842006B391D /* Assets.xcassets */; };
 		63F4B86D1D82C842006B391D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63F4B86B1D82C842006B391D /* LaunchScreen.storyboard */; };
+		840EA2961DCCC38B006157A4 /* TransferCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840EA2951DCCC38B006157A4 /* TransferCategoryController.m */; };
+		840EA2991DCD0EB0006157A4 /* TransferOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840EA2981DCD0EB0006157A4 /* TransferOrderController.m */; };
 		84109E201DA93F6800010EA3 /* CarsWithDriverListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84109E1F1DA93F6800010EA3 /* CarsWithDriverListController.m */; };
 		84109E231DA997E600010EA3 /* CarWithDriverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84109E221DA997E600010EA3 /* CarWithDriverCell.m */; };
 		8435724E1DC33D38009CFFC0 /* OrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8435724D1DC33D38009CFFC0 /* OrderCell.m */; };
@@ -268,6 +270,10 @@
 		63F4B8691D82C842006B391D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63F4B86C1D82C842006B391D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63F4B86E1D82C842006B391D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		840EA2941DCCC38B006157A4 /* TransferCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferCategoryController.h; sourceTree = "<group>"; };
+		840EA2951DCCC38B006157A4 /* TransferCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferCategoryController.m; sourceTree = "<group>"; };
+		840EA2971DCD0EB0006157A4 /* TransferOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferOrderController.h; sourceTree = "<group>"; };
+		840EA2981DCD0EB0006157A4 /* TransferOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferOrderController.m; sourceTree = "<group>"; };
 		84109E1E1DA93F6800010EA3 /* CarsWithDriverListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsWithDriverListController.h; sourceTree = "<group>"; };
 		84109E1F1DA93F6800010EA3 /* CarsWithDriverListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsWithDriverListController.m; sourceTree = "<group>"; };
 		84109E211DA997E600010EA3 /* CarWithDriverCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarWithDriverCell.h; sourceTree = "<group>"; };
@@ -603,6 +609,7 @@
 		636AB1FB1D84106800D33413 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				840EA2931DCCC2EB006157A4 /* TransferControllers */,
 				FA464BCD1DC33BE0000EDF79 /* SideMenu */,
 				848645411DC1FB7800D6D813 /* OrdersControllers */,
 				84109E1D1DA93F3200010EA3 /* CarsWithDriverControllers */,
@@ -734,6 +741,17 @@
 				63F4B85E1D82C842006B391D /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		840EA2931DCCC2EB006157A4 /* TransferControllers */ = {
+			isa = PBXGroup;
+			children = (
+				840EA2941DCCC38B006157A4 /* TransferCategoryController.h */,
+				840EA2951DCCC38B006157A4 /* TransferCategoryController.m */,
+				840EA2971DCD0EB0006157A4 /* TransferOrderController.h */,
+				840EA2981DCD0EB0006157A4 /* TransferOrderController.m */,
+			);
+			name = TransferControllers;
 			sourceTree = "<group>";
 		};
 		84109E1D1DA93F3200010EA3 /* CarsWithDriverControllers */ = {
@@ -996,6 +1014,7 @@
 				633E00871D880F8000436D99 /* UIProgressView+AFNetworking.m in Sources */,
 				633E00991D8A96EA00436D99 /* Category.m in Sources */,
 				8486453C1DB7FF7900D6D813 /* CarWithDriver.m in Sources */,
+				840EA2991DCD0EB0006157A4 /* TransferOrderController.m in Sources */,
 				633E00821D880F8000436D99 /* AFImageDownloader.m in Sources */,
 				FA3E7D271DCCACD9005EED75 /* OrderDetail.m in Sources */,
 				FA3E7D2A1DCCC93E005EED75 /* OrderDitailOptionsCell.m in Sources */,
@@ -1038,6 +1057,7 @@
 				FA06A3D91DA8F50900E4DB5F /* RCDatePicker.m in Sources */,
 				FAC2E4661DAED28D0045A3C4 /* StepTwoWithoutDriverController.m in Sources */,
 				633E00671D880F7800436D99 /* AFNetworkReachabilityManager.m in Sources */,
+				840EA2961DCCC38B006157A4 /* TransferCategoryController.m in Sources */,
 				FA70B44A1DB7B5B80088FFE3 /* RCTextField.m in Sources */,
 				633E00891D880F8000436D99 /* UIWebView+AFNetworking.m in Sources */,
 				FABE7B741DC9E6120043F8F1 /* ChangePasswordController.m in Sources */,

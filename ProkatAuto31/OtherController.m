@@ -13,12 +13,14 @@
 #import "UIImageView+AFNetworking.h"
 #import "CarMainCollectionViewCell.h"
 #import "CarsWithDriverListController.h"
+#import "TransferCategoryController.h"
 
 
 @interface OtherController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) NSString *baseAddress;
+@property (strong, nonatomic) NSNumber *transferId;
 
 
 @property (strong, nonatomic) NSMutableArray *categoryArray;
@@ -63,7 +65,11 @@
     
     Category *category = [self.categoryArray objectAtIndex:indexPath.row];
     cell.categoryName.text = category.name;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, category.image]];
+    NSURL *url;
+    if([category.image containsString:@"http"])
+        url = [NSURL URLWithString:category.image];
+    else
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, category.image]];
     [cell.carImageView setImageWithURL:url];
     return [cell addCollectionViewCellProperty:cell];
 
@@ -75,13 +81,22 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
     Category *category =[self.categoryArray objectAtIndex:indexPath.row];
-    CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
-    vc.categoryID = category.categoryID;
+    if([category.categoryID isEqual:self.transferId])
+    {
+        TransferCategoryController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferCategoryController"];
+        vc.category = category;
+        
+        vc.title = category.name;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
+        vc.categoryID = category.categoryID;
     
-    vc.title = category.name;
-    [self.navigationController pushViewController:vc animated:YES];
+        vc.title = category.name;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     
 }
 
@@ -89,19 +104,24 @@
 #pragma mark - API
 
 - (void) getCarCategorieFromAPI {
-    [[ServerManager sharedManager] getCarOtherCategoryOnSuccess:^(NSArray *thisData) {
-        [self.categoryArray addObjectsFromArray:thisData];
-        
-        [[ServerManager sharedManager] getCarOtherCategoryWithPageOnSuccess:^(NSArray *thisData) {
-            [self.categoryArray addObjectsFromArray:thisData];
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-        } onFail:^(NSError *error, NSInteger statusCode) {
-            NSLog(@"error = %@, ", error);
-        }];
+    [[ServerManager sharedManager] getTransferCategoryInfo:^(Category *category)
+     {
+         [self.categoryArray addObject:category];
+         self.transferId = category.categoryID;
+         [[ServerManager sharedManager] getCarOtherCategoryOnSuccess:^(NSArray *thisData) {
+             [self.categoryArray addObjectsFromArray:thisData];
+             [[ServerManager sharedManager] getCarOtherCategoryWithPageOnSuccess:^(NSArray *thisData) {
+                 [self.categoryArray addObjectsFromArray:thisData];
+                 [self.collectionView reloadData];
+             } onFail:^(NSError *error, NSInteger statusCode) {
+                 NSLog(@"error = %@, ", error);
+             }];
          } onFail:^(NSError *error, NSInteger statusCode) {
-        NSLog(@"error = %@, ", error);
-    }];
-   // [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+             NSLog(@"error = %@, ", error);
+         }];
+     } onFail:^(NSError *error) {
+         NSLog(@"error = %@, ", error);
+     }];
 }
 
 

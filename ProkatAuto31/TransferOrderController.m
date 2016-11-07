@@ -1,24 +1,29 @@
 //
-//  OrderCarWithDriverController.m
+//  UITableViewController+TransferOrderController.m
 //  ProkatAuto31
 //
-//  Created by Ivan Bielko on 22.10.16.
+//  Created by Ivan Bielko on 04.11.16.
 //  Copyright © 2016 Asta.Mobi. All rights reserved.
 //
 
-#import "OrderCarWithDriverController.h"
-#import "UIImageView+AFNetworking.h"
+#import "TransferOrderController.h"
 #import "ServerManager.h"
+#import "RCTextField.h"
+#import "RCDatePicker.h"
 
-@interface OrderCarWithDriverController ()
+@interface TransferOrderController ()
 @property (strong, nonatomic) UIPickerView *countryCodePicker;
 @property (strong, nonatomic) NSDictionary *countryCodeArray;
 @property (strong, nonatomic) NSString *capchaKey;
 @property (strong, nonatomic) NSString *sentMessage;
 @property (strong, nonatomic) NSString *tokenString;
+@property (strong, nonatomic) NSDate *startDate;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) NSDateFormatter *timeFormatter;
+@property (nonatomic) NSInteger currentTag;
 @end
 
-@implementation OrderCarWithDriverController
+@implementation TransferOrderController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,9 +32,6 @@
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
-    
-    NSURL *url = [NSURL URLWithString:self.car.imageURL];
-    [self.carImageView setImageWithURL:url];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.tokenString = [defaults valueForKey:@"tokenString"];
@@ -41,13 +43,19 @@
         [self hideElements];
     }
     
-    self.titleLabel.text = self.car.name;
-    NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-    [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
+    self.titleLabel.text = self.category.name;
+    NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.category.maimDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    CGRect descriptionRect = [description boundingRectWithSize:CGSizeMake(self.descriptionLabel.frame.size.width, 0)
+                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                       context:nil];
+    self.descriptionLabel.frame = CGRectMake(self.descriptionLabel.frame.origin.x, self.descriptionLabel.frame.origin.y, descriptionRect.size.width, descriptionRect.size.height + 40);
+    [self moveViews:self.descriptionLabel.frame.size.height-60];
+    [self.tableView reloadData];
+    
     self.descriptionLabel.attributedText = description;
     
     [self styleRCButton:self.sendOrderButton];
-    [self.sendOrderButton addTarget:self action:@selector(SendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendOrderButton addTarget:self action:@selector(sendOrder:event:) forControlEvents:UIControlEventTouchUpInside];
     
     self.countryCodeArray = [self dataForPickerCountry];
     self.countryCodePicker = [[UIPickerView alloc] init];
@@ -65,8 +73,39 @@
     [toolBar setTintColor:[UIColor grayColor]];
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
     [self.codeField setInputAccessoryView:toolBar];
+    [self.phoneField setInputAccessoryView:toolBar];
+    [self.passagersField setInputAccessoryView:toolBar];
     
     self.codeField.inputView = self.countryCodePicker;
+    
+    self.dateView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.dateView.layer.borderWidth = 1;
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDateFormat:@"dd.MM.yyyy"];
+    
+    self.timeFormatter = [[NSDateFormatter alloc] init];
+    [self.timeFormatter setDateFormat:@"HH:mm"];
+    
+    self.startDate = [[NSDate date] dateByAddingTimeInterval:60*60*24];
+    NSCalendar *calendarReturn = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    NSDateComponents *componentsReturn = [calendarReturn components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:self.startDate];
+    [componentsReturn setHour:12];
+    self.startDate = [calendarReturn dateFromComponents:componentsReturn];
+    
+    self.dateField.text = [self.dateFormatter stringFromDate:self.startDate];
+    self.timeField.text = [self.timeFormatter stringFromDate:self.startDate];
+}
+
+-(void)moveViews:(float) delta
+{
+    for(UIView* subview in self.contentView.subviews)
+    {
+        if(subview.frame.origin.y>self.descriptionLabel.frame.origin.y && !subview.hidden)
+        {
+            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
+        }
+    }
 }
 
 - (void) styleRCButton: (UIButton*) button {
@@ -83,37 +122,39 @@
 }
 
 - (void) doneButtonPressed:(id)sender  {
-    [self.phoneField becomeFirstResponder];
+    [self switchNextView];
 }
 
 -(void) hideElements
 {
     self.contactDataLabel.hidden = TRUE;
     self.nameField.hidden = TRUE;
-    self.countryLabel.hidden = TRUE;
+    self.countryField.hidden = TRUE;
     self.codeField.hidden = TRUE;
     self.phoneField.hidden = TRUE;
     self.emailField.hidden = TRUE;
     self.captchaImageView.hidden = TRUE;
     self.captchaLabel.hidden = TRUE;
     self.captchaField.hidden = TRUE;
+    self.captchaField.tag = 0;
+    self.commentField.returnKeyType = UIReturnKeyDone;
+    self.commentField.enablesReturnKeyAutomatically = FALSE;
     
-    self.orderDescriptionLabel.frame = self.contactDataLabel.frame;
-    self.descriptionField.frame = self.nameField.frame;
-    self.sendOrderButton.frame = CGRectMake(self.sendOrderButton.frame.origin.x, self.descriptionField.frame.origin.y + self.descriptionField.frame.size.height + 10, self.sendOrderButton.frame.size.width, self.sendOrderButton.frame.size.height);
-    [self.tableView reloadData];
+    float delta = self.contactDataLabel.frame.origin.y - self.carField.frame.origin.y;
+    [self moveViews:delta];
+    self.sendOrderButton.frame = CGRectMake(self.sendOrderButton.frame.origin.x, self.commentField.frame.origin.y + self.commentField.frame.size.height + 10, self.sendOrderButton.frame.size.width, self.sendOrderButton.frame.size.height);
 }
 
-- (IBAction)SendOrder:(id) sender event: (id) event {
+- (IBAction)sendOrder:(id) sender event: (id) event {
     
-    if([self.tokenString isEqualToString:@""])
+    if([self.tokenString isEqualToString:@""] || self.tokenString == NULL)
     {
         [self sendOrderWithCaptcha];
     }else
     {
         [self sendOrderWithToken];
     }
-
+    
 }
 
 -(void) sendOrderWithCaptcha
@@ -122,11 +163,9 @@
         [self showAlert:@"Заполните все поля!"];
     else if(![self validatePhoneNumber])
         [self showAlert:@"Введите корректный номер телефона"];
-    else if(![self validateEmail])
-        [self showAlert:@"Введите корректный адрес электронной почты"];
     else
     {
-        [[ServerManager sharedManager] orderCarWithDriver:self.car.carId userName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderDescription:self.descriptionField.text andKey:self.capchaKey passwordFromImg:self.captchaField.text OnSuccess:^ {
+        [[ServerManager sharedManager] sendTransferOrderWithCaptchaKey:self.capchaKey andCaptchaValue:self.captchaField.text andUserName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderComment:self.commentField.text pickupLocation:self.placeField.text pickUpDateTime:[self makeDateTime] passengersCount:self.passagersField.text destinationPlace:self.destinationField.text carName:self.carField.text OnSuccess:^ {
             [self showAlert:self.sentMessage];
         } onFail:^(NSError *error, NSString *errorMessage) {
             [self showAlert:errorMessage];
@@ -138,16 +177,24 @@
 
 -(void) sendOrderWithToken
 {
-    if([self.descriptionField.text isEqualToString:@""])
+    if(![self validateFieldsEmptyShort])
         [self showAlert:@"Заполните все поля!"];
     else
     {
-        [[ServerManager sharedManager] orderCarWithDriverWithToken:self.tokenString carId:self.car.carId orderDescription:self.descriptionField.text OnSuccess:^ {
+        [[ServerManager sharedManager] sendTransferOrderWithToken:self.tokenString orderComment:self.commentField.text pickupLocation:self.placeField.text pickUpDateTime:[self makeDateTime] passengersCount:self.passagersField.text destinationPlace:self.destinationField.text carName:self.carField.text OnSuccess:^ {
             [self showAlert:self.sentMessage];
         } onFail:^(NSError *error, NSString *errorMessage) {
             [self showAlert:errorMessage];
         }];
     }
+}
+
+-(NSString*) makeDateTime
+{
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    
+    return [NSString stringWithFormat:@"%@T%@:00Z", [df stringFromDate:self.startDate], self.timeField.text];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -156,21 +203,58 @@
 
 - (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
     [textField starEditeffect:textField];
+    
+    self.currentTag = textField.tag;
+    if(self.currentTag == 5 || self.currentTag == 6)
+    {
+        RCDatePicker *datePicker = [[RCDatePicker alloc] initWithShadowAndTextField:textField];
+        [datePicker addTarget:self action:@selector (textFieldDidChange:) forControlEvents:UIControlEventValueChanged];
+        datePicker.locale =  [NSLocale currentLocale];
+        [datePicker setDate:self.startDate animated:YES];
+        
+        if (textField.tag == 5) { // stard date of rental
+            datePicker.minimumDate =  [NSDate date];
+            datePicker.datePickerMode = UIDatePickerModeDate;
+        } else if (textField.tag == 6) { // stard time of rental
+            datePicker.datePickerMode = UIDatePickerModeTime;
+        }
+    }
+    
     return YES;
+}
+
+-(void)textFieldDidChange:(UIDatePicker*) datePicker {
+    if (self.currentTag == 5) {
+        self.startDate = datePicker.date;
+        self.dateField.text =[self.dateFormatter stringFromDate:self.startDate];
+    }else if (self.currentTag == 6) {
+        self.timeField.text =[self.timeFormatter stringFromDate:datePicker.date];
+    }
 }
 
 - (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
     [textField EndEditeffect:textField];
+    if (textField.tag == 5 || textField.tag == 6) {
+        [self switchNextView];
+    }
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(RCTextField *)textField {
-    UIView *view = [self.view viewWithTag:textField.tag + 1];
-    if (!view)
-        [textField endEditing:TRUE];
+    [self switchNextView];
+    return YES;
+}
+
+- (void)switchNextView
+{
+    UIView *view = [self.view viewWithTag:self.currentTag + 1];
+    if (!view){
+        UIView *textField = [self.view viewWithTag:self.currentTag];
+        if(textField)
+            [textField endEditing:TRUE];
+    }
     else
         [view becomeFirstResponder];
-    return YES;
 }
 
 - (void)alertView:(UIAlertView *)theAlert clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -178,6 +262,7 @@
     if([theAlert.message isEqualToString:self.sentMessage])
         [self.navigationController popToRootViewControllerAnimated:TRUE];
 }
+
 - (void)showAlert:(NSString *) message
 {
     UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:nil
@@ -193,20 +278,18 @@
     NSMutableArray *fieldsArray = [[NSMutableArray alloc] init ];
     [fieldsArray addObject:[self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     [fieldsArray addObject:[self.phoneField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-    [fieldsArray addObject:[self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-    [fieldsArray addObject:[self.descriptionField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     [fieldsArray addObject:[self.captchaField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.carField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.placeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     return [fieldsArray indexOfObject:@""] == NSNotFound;
 }
 
--(BOOL) validateEmail
+-(BOOL) validateFieldsEmptyShort
 {
-    BOOL stricterFilter = NO;
-    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
-    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
-    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:self.emailField.text];
+    NSMutableArray *fieldsArray = [[NSMutableArray alloc] init ];
+    [fieldsArray addObject:[self.carField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    [fieldsArray addObject:[self.placeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    return [fieldsArray indexOfObject:@""] == NSNotFound;
 }
 
 -(BOOL) validatePhoneNumber
@@ -221,7 +304,6 @@
     return 1;
 }
 
-// returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     
     return [self.countryCodeArray count];
@@ -240,7 +322,7 @@
     NSString *str2 = [NSString stringWithFormat:@"%@", [self.countryCodeArray allKeys][row]];
     
     self.codeField.text = str;
-    self.countryLabel.text = str2;
+    self.countryField.text = str2;
 }
 
 - (void) getCapchaImg {
@@ -524,9 +606,4 @@
     return codes;
     
 }
-
-
-
-
-
 @end

@@ -113,8 +113,32 @@
 
 - (void) orderDitailOptionsWithToken: (NSString*) tokenString andOrderId: (NSNumber*) orderId OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount)) success
                        onFail:(void(^)(NSArray* errorArray)) failure;
+- (void) getTransferCategoryInfo:(void (^)(Category *))success
+                          onFail:(void (^)(NSError *))failure;
 
+- (void) sendTransferOrderWithCaptchaKey: (NSString*) key
+                         andCaptchaValue: (NSString*) captcha
+                             andUserName: (NSString*) name
+                         userPhoneNumber: (NSString*) phone
+                               userEmail: (NSString*) email
+                            orderComment: (NSString*) comment
+                          pickupLocation: (NSString*) location
+                          pickUpDateTime: (NSString*) dateTime
+                         passengersCount: (NSString*) passengers
+                        destinationPlace: (NSString*) destination
+                                 carName: (NSString*) car
+                               OnSuccess: (void(^)()) success
+                                  onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
+- (void) sendTransferOrderWithToken: (NSString*) tokenString
+                       orderComment: (NSString*) comment
+                     pickupLocation: (NSString*) location
+                     pickUpDateTime: (NSString*) dateTime
+                    passengersCount: (NSString*) passengers
+                   destinationPlace: (NSString*) destination
+                            carName: (NSString*) car
+                          OnSuccess: (void(^)()) success
+                             onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 - (void) deleteOrdrWithPK: (NSString*) keyPK
             andAccesToken: (NSString*) tokenString
                 OnSuccess:(void(^)(NSString* responce)) success
