@@ -900,17 +900,91 @@
     
 }
 
+- (void) orderDitailOptionsWithToken: (NSString*) tokenString
+                          andOrderId: (NSNumber*) orderId
+                           OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount)) success
+                              onFail:(void(^)(NSArray* errorArray)) failure {
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    [self.sessionManager GET:[NSString stringWithFormat:@"orders/%@/", orderId]
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSLog(@"responseObject orderr detail %@", [responseObject objectForKey:@"equipment"]);
+                         //daily_amount цена за день
+                         //total_amount общая цена к оплате
+                         // amount цена авто за все деи без опций
+                         NSString *dailyAmount = [responseObject objectForKey:@"daily_amount"];
+                         NSString *totalAmount = [responseObject objectForKey:@"total_amount"];
+                         NSString *amount = [responseObject objectForKey:@"amount"];
+                         NSArray *dicArray = [responseObject objectForKey:@"equipment"];
+                         NSMutableArray *dataArray = [NSMutableArray array];
+                         for(NSDictionary* dic in dicArray) {
+                             OrderDetail *item = [[OrderDetail alloc] initWithServerResponse:dic];
+                             [dataArray addObject:item];
+                         }
+                         NSArray *dicArrayPlace = [responseObject objectForKey:@"services"];
+                         NSMutableArray *dataArrayPlace = [NSMutableArray array];
+                         for(NSDictionary* dic in dicArrayPlace) {
+                             Place *item = [[Place alloc] initWithServerResponse:dic];
+                             [dataArrayPlace addObject:item];
+                         }
+
+                         
+                         
+                         if (success) {
+                             success(dataArray, dataArrayPlace,dailyAmount,totalAmount,amount);
+                         }
+      
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                         NSLog(@"error %@", ErrorResponse);
+                     }];
+}
+
+- (void) deleteOrdrWithPK:(NSString *)keyPK
+            andAccesToken:(NSString *)tokenString
+                OnSuccess:(void (^)(NSString *))success
+                   onFail:(void (^)(NSError*))failure {
+    
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+
+    
+    
+    [self.sessionManager DELETE:[NSString stringWithFormat:@"orders/%@/", keyPK]
+                     parameters:nil
+                        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            NSLog(@"responseObject DELETE %@", responseObject);
+                            if (success) {
+                                NSString *str;
+                                success(str);
+                            }
+                        }
+                        failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            NSLog(@"error DELETE %@", error);
+                            if (failure) {
+                                failure(error);
+                            }
+
+                        }];
+}
+
 - (void) getTransferCategoryInfo:(void (^)(Category *))success
                           onFail:(void (^)(NSError *))failure {
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    
     [self.sessionManager GET:@"transfer/"
                   parameters:nil
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          Category *category = [[Category alloc] initWithServerResponse:responseObject];
-
                          if (success) {
                              success(category);
                          }
@@ -918,27 +992,22 @@
                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                          NSLog(@"error orders %@", error);
                      }];
-}
-
-- (void) sendTransferOrderWithCaptchaKey: (NSString*) key
-                         andCaptchaValue: (NSString*) captcha
-                             andUserName: (NSString*) name
-                         userPhoneNumber: (NSString*) phone
-                               userEmail: (NSString*) email
-                            orderComment: (NSString*) comment
-                          pickupLocation: (NSString*) location
-                          pickUpDateTime: (NSString*) dateTime
-                         passengersCount: (NSString*) passengers
-                        destinationPlace: (NSString*) destination
-                                 carName: (NSString*) car
-                               OnSuccess: (void(^)()) success
-                                  onFail: (void(^)(NSError* error, NSString* errorMessage)) failure
-{
+} - (void) sendTransferOrderWithCaptchaKey: (NSString*) key
+                           andCaptchaValue: (NSString*) captcha
+                               andUserName: (NSString*) name
+                           userPhoneNumber: (NSString*) phone
+                                 userEmail: (NSString*) email
+                              orderComment: (NSString*) comment
+                            pickupLocation: (NSString*) location
+                            pickUpDateTime: (NSString*) dateTime
+                           passengersCount: (NSString*) passengers
+                          destinationPlace: (NSString*) destination
+                                   carName: (NSString*) car
+                                 OnSuccess: (void(^)()) success
+                                    onFail: (void(^)(NSError* error, NSString* errorMessage)) failure {
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    
-    
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
                             car, @"car",
                             name, @"name",
@@ -951,33 +1020,23 @@
                             comment, @"comment",
                             key, @"captcha_key",
                             captcha, @"captcha_value", nil];
-    
-    
     [self.sessionManager POST:@"transfer/"
                    parameters:params
                      progress:nil
                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                          
                           if(success)
                               success();
-                          
                       }
                       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                          
                           NSLog(@"error text field *** %@", task.response);
                           NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
                           NSLog(@"Error is %@",ErrorResponse);
-                          
                           NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
-                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                                       options:kNilOptions
-                                                                                         error:&error];
+                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data                                                                                        options:kNilOptions                                                                                          error:&error];
                           NSString *errorMessage = [[[jsonResponse allValues] objectAtIndex:0] objectAtIndex:0];
                           if(failure)
                               failure(error, errorMessage);
                       }];
-    
-    
 }
 
 - (void) sendTransferOrderWithToken: (NSString*) tokenString
@@ -988,13 +1047,10 @@
                    destinationPlace: (NSString*) destination
                             carName: (NSString*) car
                           OnSuccess: (void(^)()) success
-                             onFail: (void(^)(NSError* error, NSString* errorMessage)) failure
-{
+                             onFail: (void(^)(NSError* error, NSString* errorMessage)) failure {
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    
-    
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
                             car, @"car",
                             location, @"pickup_location",
@@ -1002,35 +1058,25 @@
                             passengers, @"passengers",
                             destination, @"destination",
                             comment, @"comment", nil];
-    
     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
-    
-    
     [self.sessionManager POST:@"transfer/"
                    parameters:params
                      progress:nil
                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                          
                           if(success)
                               success();
-                          
                       }
                       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                          
                           NSLog(@"error text field *** %@", task.response);
                           NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
                           NSLog(@"Error is %@",ErrorResponse);
-                          
                           NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
-                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                                       options:kNilOptions
-                                                                                         error:&error];
+                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data                                                                                        options:kNilOptions                                                                                          error:&error];
                           NSString *errorMessage = [[[jsonResponse allValues] objectAtIndex:0] objectAtIndex:0];
                           if(failure)
                               failure(error, errorMessage);
                       }];
-    
-    
 }
+
 
 @end
