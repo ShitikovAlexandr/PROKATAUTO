@@ -49,7 +49,7 @@
         
         NSURL *url = [NSURL URLWithString:@"http://83.220.170.187/api/v1/public/"];
         self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:url];
-        NSString *currentLanguage =  [[NSLocale preferredLanguages] objectAtIndex:0];
+        NSString *currentLanguage =  [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
         if([currentLanguage isEqualToString:@"ru"] || [currentLanguage isEqualToString:@"uk"] || [currentLanguage isEqualToString:@"be"])
         {
             self.language = @"ru";

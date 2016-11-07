@@ -89,7 +89,6 @@
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint: currentTouchPosition];
     
     OrderCarWithDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderCarWithDriverController"];
-    vc.title = @"Оформить заказ";
     vc.car = [self.dataArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
