@@ -119,13 +119,13 @@
         
         self.order.totalPrice = [NSNumber numberWithInteger:dayPrice];
         cell.rentalPrice.text = [NSString stringWithFormat:@"%@", self.order.totalPrice];
-        cell.rentalPriceCalculation.text = [NSString stringWithFormat:@"%ld x %ld суток", (long)range, (long)rentalPeriodDay];
+        cell.rentalPriceCalculation.text = [NSString stringWithFormat:NSLocalizedString(@"%ld x %ld days", nil), (long)range, (long)rentalPeriodDay];
         cell.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];
         
         
         
         
-        cell.rentalDayPeriod.text = [NSString stringWithFormat:@"%ld суток", (long)rentalPeriodDay];
+        cell.rentalDayPeriod.text = [NSString stringWithFormat:NSLocalizedString(@"%ld days", nil), (long)rentalPeriodDay];
         
         cell.placeStart.text = self.order.startPlace.name;
         cell.placeend.text = self.order.endPlace.name;
@@ -154,9 +154,9 @@
         cell.optionCount.text = @"1";
         
             if ([option.optionPrice integerValue] <1) {
-                cell.priceOption.text = @"Бесплатно";
+                cell.priceOption.text = NSLocalizedString(@"Free", nil);
             } else {
-                cell.priceOption.text = [NSString stringWithFormat:@"%d руб. в сутки", [option.optionPrice integerValue]];
+                cell.priceOption.text = [NSString stringWithFormat:NSLocalizedString(@"%d rubles per day", nil), [option.optionPrice integerValue]];
             }
             
             if ([option.optionAvaliableAmount intValue] >1) {
@@ -201,7 +201,7 @@
     
     self.alert = nil;
     self.alert = [UIAlertController alertControllerWithTitle:
-                  @"Количество" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                  NSLocalizedString(@"Count", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     self.alert.view.transform = CGAffineTransformIdentity;
     self.alert.view.transform = CGAffineTransformScale( self.alert.view.transform, 0.8, 0.8);
     

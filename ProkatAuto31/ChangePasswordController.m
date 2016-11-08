@@ -106,7 +106,7 @@
                                                newPassword:self.passwordNewText
                                              RetryPassword:self.passwordNewConfirmText
                                                  OnSuccess:^(NSString *massage) {
-                                                        [self passwordChangeTextFieldInput:@"Пароль изменен успешно!"];
+                                                        [self passwordChangeTextFieldInput:NSLocalizedString(@"The password has been changed succesfully", nil)];
                                                  }
                                                     onFail:^(NSArray* errorArray) {
                                                         
@@ -114,7 +114,7 @@
                                                             NSString* newString = [[[errorArray objectAtIndex:0]objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
                                                             [self ErrorTextFieldInput:[NSString stringWithFormat:@"%@",newString]];
                                                         } else {
-                                                            [self passwordChangeTextFieldInput:@"Пароль изменен успешно!"];
+                                                            [self passwordChangeTextFieldInput:NSLocalizedString(@"The password has been changed succesfully", nil)];
 
                                                         }
 

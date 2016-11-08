@@ -204,7 +204,7 @@
                                                          andPhone:phone
                                                         OnSuccess:^(NSString *data) {
                                                             
-                                                            [self ErrorTextFieldInput:@"Новый пароль отправлен в СМС"];
+                                                            [self ErrorTextFieldInput:NSLocalizedString(@"New password has been sent to the SMS", nil)];
                                                         }
                                                            onFail:^(NSError *error, NSInteger statusCode, NSArray* dataArray) {
                                                                

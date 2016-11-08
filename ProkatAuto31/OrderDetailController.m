@@ -70,32 +70,32 @@
         OrderDetailMainCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
         cell.carModel.text = self.order.car.itemFullName;
         NSString *daysText = [NSString stringWithFormat:@"%@", self.order.days];
-        cell.timeDay.text = [NSString stringWithFormat:@"%@ %@", self.order.days, [daysText hasSuffix:@"1"] ? @"сутки" : @"суток"];
+        cell.timeDay.text = [NSString stringWithFormat:@"%@ %@", self.order.days, [daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
         
         [self manageLabelWithStatus:self.order.status statusLabel:cell.orderStatus];
         [self manageLabelWithPaymentStatus:self.order.paymentStatus statusLabel:cell.statusPay paid:self.order.paid];
         
-        cell.mathCountRental.text = [NSString stringWithFormat:@"%ld рублей/сутки х %@", (long)[self.dailyAmount integerValue], self.order.days];
+        cell.mathCountRental.text = [NSString stringWithFormat:NSLocalizedString(@"%ld rubles/day х %@", nil), (long)[self.dailyAmount integerValue], self.order.days];
         cell.mathCountTotal.text = [NSString stringWithFormat:@"%ld", (long)[self.amount integerValue]];
         
         
         NSDateFormatter *dF = [[NSDateFormatter alloc] init];
         [dF setDateFormat:@"dd.MM.yyyy"];
-        cell.rentalDatePeriod.text = [NSString stringWithFormat:@"с %@ по %@", [dF stringFromDate:self.order.dateOfRentalStart], [dF stringFromDate:self.order.dateOfRentalEnd]];
-        cell.totalPrice.text = [NSString stringWithFormat:@"%d рублей", [self.order.totalPrice integerValue]];
+        cell.rentalDatePeriod.text = [NSString stringWithFormat:NSLocalizedString(@"from %@ to %@", nil), [dF stringFromDate:self.order.dateOfRentalStart], [dF stringFromDate:self.order.dateOfRentalEnd]];
+        cell.totalPrice.text = [NSString stringWithFormat:NSLocalizedString(@"%d rubles", nil), [self.order.totalPrice integerValue]];
         
         for (Place* place in self.placeArray) {
             if ([place.serviceType isEqualToString:@"1"]) {
                 cell.starrtPlace.text = place.name;
                 if ([place.price isEqualToString:@"0.00"]) {
-                    cell.priceStartPlace.text = @"бесплатно";
+                    cell.priceStartPlace.text = NSLocalizedString(@"free", nil);
                 } else {
                     cell.priceStartPlace.text = [NSString stringWithFormat:@"%ld",(long)[place.price integerValue]];
                 }
             } else {
                 cell.endPlace.text = place.name;
                 if ([place.price isEqualToString:@"0.00"]) {
-                    cell.endPlacePrice.text = @"бесплатно";
+                    cell.endPlacePrice.text = NSLocalizedString(@"free", nil);
                 } else {
                     cell.endPlacePrice.text = [NSString stringWithFormat:@"%ld",(long)[place.price integerValue]];
                 }
@@ -139,7 +139,7 @@
             optionPrice.textAlignment = cell.optionTotalPrice.textAlignment;
             
             if ([opt.price isEqualToString:@"0.00"]) {
-                optionPrice.text = @"бесплатно";
+                optionPrice.text = NSLocalizedString(@"free", nil);
             } else {
                 optionPrice.text = [NSString stringWithFormat:@"%d",[opt.price integerValue]*[opt.amount integerValue]];
             }
@@ -187,37 +187,37 @@
     
     if([status isEqualToString:@"created"])
     {
-        label.text = @"Новый";
+        label.text = NSLocalizedString(@"New", nil);
         
         label.textColor = [UIColor grayColor];
         label.layer.borderColor = [UIColor grayColor].CGColor;
     }else if([status isEqualToString:@"rejected"])
     {
-        label.text = @"Отказ";
+        label.text = NSLocalizedString(@"Rejected", nil);
         label.textColor = [UIColor redColor];
         label.layer.borderColor = [UIColor redColor].CGColor;
     }else if([status isEqualToString:@"cancel"])
     {
-        label.text = @"Отмена";
+        label.text = NSLocalizedString(@"Cancel", nil);
         label.textColor = [UIColor redColor];
         label.layer.borderColor = [UIColor redColor].CGColor;
     }else if([status isEqualToString:@"reserve"])
     {
-        label.text = @"Бронь";
+        label.text = NSLocalizedString(@"Reservation", nil);
         
         label.textColor = [UIColor orangeColor];
         label.layer.borderColor = [UIColor orangeColor].CGColor;
         
     }else if([status isEqualToString:@"onwork"])
     {
-        label.text = @"Аренда";
+        label.text = NSLocalizedString(@"Book a car", nil);
         label.backgroundColor = [UIColor greenColor];
         
         label.textColor = [UIColor greenColor];
         label.layer.borderColor = [UIColor greenColor].CGColor;
     }else if([status isEqualToString:@"finished"])
     {
-        label.text = @"Архив";
+        label.text = NSLocalizedString(@"Archive", nil);
         
         label.textColor = [UIColor blueColor];
         label.layer.borderColor = [UIColor blueColor].CGColor;
@@ -225,7 +225,7 @@
     }
     else
     {
-        label.text = @"Ошыбка";
+        label.text = NSLocalizedString(@"Error", nil);
         
         label.textColor = [UIColor redColor];
         label.layer.borderColor = [UIColor redColor].CGColor;
@@ -240,15 +240,15 @@
     
     if([status isEqualToString:@"empty"])
     {
-        label.text = @"не оплачено";
+        label.text = NSLocalizedString(@"not paid", nil);
         label.textColor = [UIColor redColor];
     }else if([status isEqualToString:@"partial"])
     {
-        label.text = [NSString stringWithFormat: @"оплачено %@", paid];
+        label.text = [NSString stringWithFormat: NSLocalizedString(@"paid %@", nil), paid];
         label.textColor = [UIColor orangeColor];
     }else if([status isEqualToString:@"full"])
     {
-        label.text = @"оплачено";
+        label.text = NSLocalizedString(@"paid", nil);
         label.textColor = [UIColor greenColor];
     }else if([status isEqualToString:@"none"])
     {
@@ -256,7 +256,7 @@
     }
     else
     {
-        label.text = @"ошыбка";
+        label.text = NSLocalizedString(@"Error", nil);
         label.backgroundColor = [UIColor redColor];
     }
 }
@@ -273,13 +273,13 @@
     NSNumber *avans =  [defaults valueForKey:@"minimal_payment"];
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:
-                                @"" message:@"Для Вашего удобства Вы можете сделать предоплату или оплатить заказ полностью.\nВ сумме заказа не включен залог, его необходимо оплатить перед подписанием договора аренды.  В случае полной предоплаты мы предоставим Вам любую еденицу дополнительного оборудования бесплатно." preferredStyle:UIAlertControllerStyleActionSheet];
+                                @"" message:NSLocalizedString(@"For your convenience You can make an advance payment or pay the full order.\nDeposit isn\'t included to the order price, it has to be included before you sign a rental contract.\nIn case of fully advance payment we will give You any unit of additional equipment for free.", nil) preferredStyle:UIAlertControllerStyleActionSheet];
     NSArray *viewArray = [[[[[[[[[[[[alert view] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews];
     UILabel *alertMessage = viewArray[1];
     alertMessage.textAlignment = NSTextAlignmentLeft;
     
     
-    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Сделать предоплату %d руб.", [avans integerValue] ] style:UIAlertActionStyleDestructive
+    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Make a prepay %d rubles", nil), [avans integerValue] ] style:UIAlertActionStyleDestructive
                                                  handler:^(UIAlertAction * _Nonnull action) {
                                                      
                                                      PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
@@ -291,7 +291,7 @@
                                                      
                                                  }];
     
-    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Оплатить заказ %d руб.", [self.totalAmount integerValue] ] style:UIAlertActionStyleDestructive
+    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Pay order %d rubles", nil), [self.totalAmount integerValue] ] style:UIAlertActionStyleDestructive
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
@@ -304,7 +304,7 @@
                                                         
                                                     }];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Оплатить позже" style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Pay later", nil) style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction * _Nonnull action) {}];
     
     [alert addAction:partPay];
@@ -321,7 +321,7 @@
 - (void) deleteOrder {
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:
-                                @"" message:@"Вы действительно хотите отменить заказ?" preferredStyle:UIAlertControllerStyleAlert];
+                                @"" message:NSLocalizedString(@"Do you want to cancel the order?", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *delete = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
                                                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -346,7 +346,7 @@
                                                    
                                                    }];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отмена" style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel
                     
                                                    handler:^(UIAlertAction * _Nonnull action) {}];
     [alert addAction:cancel];

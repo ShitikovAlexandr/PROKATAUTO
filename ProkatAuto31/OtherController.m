@@ -66,7 +66,7 @@
     Category *category = [self.categoryArray objectAtIndex:indexPath.row];
     cell.categoryName.text = category.name;
     NSURL *url;
-    if([category.image containsString:@"http"])
+    if([category.image hasPrefix:@"http"])
         url = [NSURL URLWithString:category.image];
     else
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, category.image]];

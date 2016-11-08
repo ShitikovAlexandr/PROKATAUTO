@@ -52,23 +52,23 @@
         SideMenuItem *profile = [[SideMenuItem alloc] init];
         profile.itemId = @99;
         profile.image = @"ic_person.png";
-        profile.title = @"Мой профиль";
+        profile.title = NSLocalizedString(@"My profile", nil);
         [self.objectsInSlideBar addObject:profile];
         SideMenuItem *changePassword = [[SideMenuItem alloc] init];
         changePassword.itemId = @88;
-        changePassword.title = @"Сменить пароль";
+        changePassword.title = NSLocalizedString(@"Change password", nil);
         changePassword.image = @"ic_lock_open.png";
         [self.objectsInSlideBar addObject:changePassword];
         SideMenuItem *orders = [[SideMenuItem alloc]  init];
         orders.itemId = @77;
-        orders.title = @"Мои заказы";
+        orders.title = NSLocalizedString(@"My orders", nil);
         orders.image = @"ic_inbox.png";
         [self.objectsInSlideBar addObject:orders];
-        self.exit.title = @"Выход";
+        self.exit.title = NSLocalizedString(@"Logout", nil);
         [self.tableView reloadData];
     } else {
-        self.exit.title = @"Вход";
-        self.clienHellow.text = @"уважаемый Клиент.";
+        self.exit.title = NSLocalizedString(@"Login", nil);
+        self.clienHellow.text = NSLocalizedString(@"dear customer.", nil);
     }
     
     
@@ -158,19 +158,19 @@
 - (void) alertExit {
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:
-                  @"Выход" message:@"Вы действительно хотите выйти?" preferredStyle:UIAlertControllerStyleAlert];
+                  NSLocalizedString(@"Logout", nil) message:NSLocalizedString(@"Do you want to exit?", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Да" style:UIAlertActionStyleDestructive
                                                   handler:^(UIAlertAction * _Nonnull action) {
                                                       
                                                       NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                                      NSString *tokenString = @"";
+                                                      NSString *tokenString = NSLocalizedString(@"Yes", nil);
                                                       [defaults setValue:tokenString forKey:@"tokenString"];
-                                                      self.exit.title = @"Вход";
+                                                      self.exit.title = NSLocalizedString(@"Login", nil);
                                                       SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
                                                       [self presentViewController:vc animated:YES completion:nil];
 
                                                                                                       }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет" style:UIAlertActionStyleDefault
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle: NSLocalizedString(@"No", nil) style:UIAlertActionStyleDefault
                                                  handler:^(UIAlertAction * _Nonnull action) {}];
     
     [alert addAction:exit];

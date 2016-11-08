@@ -92,12 +92,12 @@
     
     cell.carName.text = [NSString stringWithFormat:@"%@", car.itemFullName];
     cell.transmission.text = car.itemTransmissionName;
-    cell.engine.text = [NSString stringWithFormat:@"%@ л.", car.itemEngine];
-    cell.power.text =  [NSString stringWithFormat:@"%@ л.с.",car.itemPower];
+    cell.engine.text = [NSString stringWithFormat:NSLocalizedString(@"%@ ltr.", nil), car.itemEngine];
+    cell.power.text =  [NSString stringWithFormat:NSLocalizedString(@"%@ HP", nil), car.itemPower];
     cell.fuel.text = car.itemFuelName;
     
     cell.deposit.text = [NSString stringWithFormat:@"%@", car.deposit];
-    cell.priceFrom.text = [NSString stringWithFormat:@"от %@ руб.", car.priceRange3]; //car.minimumPrice
+    cell.priceFrom.text = [NSString stringWithFormat:NSLocalizedString(@"from %@ rubles", nil), car.priceRange3]; //car.minimumPrice
     cell.priceRange1.text = [NSString stringWithFormat:@"%@", car.priceRange1];
     cell.priceRange2.text = [NSString stringWithFormat:@"%@", car.priceRange2];
     cell.priceRange3.text = [NSString stringWithFormat:@"%@", car.priceRange3];
@@ -112,10 +112,10 @@
     [cell.InfoButton addTarget:self action:@selector(infoClickEvent:event:) forControlEvents:UIControlEventTouchUpInside];
     if (self.expandedCellIndex == indexPath.item) {
         cell.InfoButton.selected =YES;
-        [cell.InfoButton setTitle:@"Скрыть характеристики" forState:UIControlStateNormal];
+        [cell.InfoButton setTitle:NSLocalizedString(@"Hide specifications", nil) forState:UIControlStateNormal];
     } else {
         cell.InfoButton.selected =NO;
-        [cell.InfoButton setTitle:@"Показать характеристики" forState:UIControlStateNormal];
+        [cell.InfoButton setTitle:NSLocalizedString(@"Show specifications", nil) forState:UIControlStateNormal];
 
     }
     

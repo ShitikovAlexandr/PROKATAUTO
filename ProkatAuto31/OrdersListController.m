@@ -57,20 +57,20 @@
     [self manageLabelWithPaymentStatus:order.paymentStatus statusLabel:cell.paymentStatus paid:order.paid];
     cell.carLabel.text = [NSString stringWithFormat:@"%@ %@", order.car.itemFullName, order.car.regNumber];
     NSString *daysText = [NSString stringWithFormat:@"%@", order.days];
-    cell.daysLabel.text = [NSString stringWithFormat:@"%@ %@", order.days, [daysText hasSuffix:@"1"] ? @"сутки" : @"суток"];
+    cell.daysLabel.text = [NSString stringWithFormat:@"%@ %@", order.days, [daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
     
-    cell.priceLabel.text = [NSString stringWithFormat:@"%@ рублей", order.totalPrice];
+    cell.priceLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), order.totalPrice];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd.MM.yy"];
     NSString *fromDate = [dateFormatter stringFromDate:order.dateOfRentalStart];
     NSString *toDate = [dateFormatter stringFromDate:order.dateOfRentalEnd];
-    cell.dateLabel.text = [NSString stringWithFormat:@"с %@ по %@", fromDate, toDate];
+    cell.dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"from %@ to %@", nil), fromDate, toDate];
     
     if([order.penaltyStatus isEqualToString:@"none"])
         cell.penaltyLabel.hidden = TRUE;
     else
-        cell.penaltyLabel.text = [NSString stringWithFormat:@"штраф %@ рублей", order.penalty];
+        cell.penaltyLabel.text = [NSString stringWithFormat:NSLocalizedString(@"penalty %@ rubles", nil), order.penalty];
     [self manageLabelWithPaymentStatus:order.penaltyStatus statusLabel:cell.penaltyStatusLabel paid:order.penaltyPaid];
     
     return [cell addCollectionViewCellProperty:cell];
@@ -89,32 +89,32 @@
 {
     if([status isEqualToString:@"created"])
     {
-        label.text = @"Новый";
+        label.text = NSLocalizedString(@"New", nil);
         label.backgroundColor = [UIColor grayColor];
     }else if([status isEqualToString:@"rejected"])
     {
-        label.text = @"Отказ";
+        label.text = NSLocalizedString(@"Rejected", nil);
         label.backgroundColor = [UIColor redColor];
     }else if([status isEqualToString:@"cancel"])
     {
-        label.text = @"Отмена";
+        label.text = NSLocalizedString(@"Cancel", nil);
         label.backgroundColor = [UIColor redColor];
     }else if([status isEqualToString:@"reserve"])
     {
-        label.text = @"Бронь";
+        label.text = NSLocalizedString(@"Reservation", nil);
         label.backgroundColor = [UIColor orangeColor];
     }else if([status isEqualToString:@"onwork"])
     {
-        label.text = @"Аренда";
+        label.text = NSLocalizedString(@"Book a car", nil);
         label.backgroundColor = [UIColor greenColor];
     }else if([status isEqualToString:@"finished"])
     {
-        label.text = @"Архив";
+        label.text = NSLocalizedString(@"Archive", nil);
         label.backgroundColor = [UIColor blueColor];
     }
     else
     {
-        label.text = @"Ошыбка";
+        label.text = NSLocalizedString(@"Error", nil);
         label.backgroundColor = [UIColor redColor];
     }
 }
@@ -125,15 +125,15 @@
 {
     if([status isEqualToString:@"empty"])
     {
-        label.text = @"не оплачено";
+        label.text = NSLocalizedString(@"not paid", nil);
         label.textColor = [UIColor redColor];
     }else if([status isEqualToString:@"partial"])
     {
-        label.text = [NSString stringWithFormat: @"оплачено %@", paid];
+        label.text = [NSString stringWithFormat: NSLocalizedString(@"paid %@", nil), paid];
         label.textColor = [UIColor orangeColor];
     }else if([status isEqualToString:@"full"])
     {
-        label.text = @"оплачено";
+        label.text = NSLocalizedString(@"paid", nil);
         label.textColor = [UIColor greenColor];
     }else if([status isEqualToString:@"none"])
     {
@@ -141,7 +141,7 @@
     }
     else
     {
-        label.text = @"ошыбка";
+        label.text = NSLocalizedString(@"Error", nil);
         label.backgroundColor = [UIColor redColor];
     }
 }
