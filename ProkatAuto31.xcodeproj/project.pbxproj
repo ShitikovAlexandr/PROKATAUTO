@@ -274,6 +274,12 @@
 		840EA2951DCCC38B006157A4 /* TransferCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferCategoryController.m; sourceTree = "<group>"; };
 		840EA2971DCD0EB0006157A4 /* TransferOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferOrderController.h; sourceTree = "<group>"; };
 		840EA2981DCD0EB0006157A4 /* TransferOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferOrderController.m; sourceTree = "<group>"; };
+		840EA2A81DD22B8E006157A4 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Main.strings; sourceTree = "<group>"; };
+		840EA2A91DD22B8F006157A4 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		840EA2AA1DD232E5006157A4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		840EA2AB1DD232E6006157A4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		840EA2AC1DD23302006157A4 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/Main.strings; sourceTree = "<group>"; };
+		840EA2AD1DD23302006157A4 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		84109E1E1DA93F6800010EA3 /* CarsWithDriverListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsWithDriverListController.h; sourceTree = "<group>"; };
 		84109E1F1DA93F6800010EA3 /* CarsWithDriverListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsWithDriverListController.m; sourceTree = "<group>"; };
 		84109E211DA997E600010EA3 /* CarWithDriverCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarWithDriverCell.h; sourceTree = "<group>"; };
@@ -1076,6 +1082,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				63F4B8671D82C842006B391D /* Base */,
+				840EA2A81DD22B8E006157A4 /* uk */,
+				840EA2AA1DD232E5006157A4 /* ru */,
+				840EA2AC1DD23302006157A4 /* be */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1084,6 +1093,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				63F4B86C1D82C842006B391D /* Base */,
+				840EA2A91DD22B8F006157A4 /* uk */,
+				840EA2AB1DD232E6006157A4 /* ru */,
+				840EA2AD1DD23302006157A4 /* be */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
