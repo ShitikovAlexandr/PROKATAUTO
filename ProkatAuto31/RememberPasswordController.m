@@ -33,8 +33,6 @@
     
     [self getCapchaImg];
     
-    self.title = @"Восстановление пароля";
-    
     // Do any additional setup after loading the view.
     [self styleRCButton:self.getNewPasswordButton];
     self.alertView.layer.cornerRadius = 2.f;

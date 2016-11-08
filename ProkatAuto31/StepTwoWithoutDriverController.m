@@ -258,7 +258,6 @@
         AuthorizationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AuthorizationController"];
         vc.StepBack = true;
         StepFourWithoutdriverController *nVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
-        nVC.title = @"Шаг 4:Подтверждение заказа";
         vc.nextController = nVC;
         
         [self.navigationController pushViewController:vc animated:YES];

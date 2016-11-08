@@ -26,8 +26,6 @@
     //self.orderId = @"436";
     //self.fullPrice = @"1600";
     
-    self.title = @"Оплата";
-    
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     

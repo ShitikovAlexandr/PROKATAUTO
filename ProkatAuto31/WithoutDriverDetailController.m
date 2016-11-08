@@ -171,7 +171,6 @@
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint: currentTouchPosition];
     
     StepOneWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepOneWithoutDriverController"];
-    vc.title = @"Шаг 1: Вабор периода аренды авто";
     vc.car = [self.dataArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 

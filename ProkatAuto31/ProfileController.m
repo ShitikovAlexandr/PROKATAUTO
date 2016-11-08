@@ -52,8 +52,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Мой профиль";
-    
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     

@@ -25,8 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Смена пароля";
-    
     self.alertView.layer.cornerRadius = 2.f;
     self.alertView.layer.borderWidth = 0.5f;
     self.alertView.layer.borderColor = [UIColor lightGrayColor].CGColor;

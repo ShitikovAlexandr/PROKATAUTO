@@ -33,8 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Авторизация";
-    
     [self styleRCButton:self.RegisterButton];
     [self styleRCButton:self.EnterButton];
     
@@ -222,7 +220,6 @@ return YES;
 
 - (void) regAction {
     RegistrationController *nVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistrationController"];
-    nVC.title = @"Регистрация";
     [self.navigationController pushViewController:nVC animated:YES];
 }
 

@@ -438,7 +438,7 @@
                                                    StepTwoWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepTwoWithoutDriverController"];
                                                    self.order.car = self.car;
                                                    vc.order = self.order;
-                                                   vc.title = @"Шаг 2: Выбор дополнительного оборудования";
+
                                                    [self.navigationController pushViewController:vc animated:YES];
                                                   
                                                }

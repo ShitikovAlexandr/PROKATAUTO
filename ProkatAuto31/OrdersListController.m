@@ -26,8 +26,6 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
-    self.title = @"Список заказов";
-    
     self.dataArray = [NSMutableArray array];
     
     [self getOrdersFromAPI];
