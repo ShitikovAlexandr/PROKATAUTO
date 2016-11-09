@@ -163,7 +163,7 @@
             if ([option.optionPrice integerValue] <1) {
                 cell.priceOption.text = @"Бесплатно";
             } else {
-                cell.priceOption.text = [NSString stringWithFormat:@"%d руб. в сутки", [option.optionPrice integerValue]];
+                cell.priceOption.text = [NSString stringWithFormat:@"%ld руб. в сутки", (long)[option.optionPrice integerValue]];
             }
             
             if ([option.optionAvaliableAmount intValue] >1) {
@@ -266,6 +266,7 @@
         vc.StepBack = true;
         StepFourWithoutdriverController *nVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
         nVC.title = @"Шаг 4:Подтверждение заказа";
+        nVC.order = self.order;
         vc.nextController = nVC;
         
         [self.navigationController pushViewController:vc animated:YES];
