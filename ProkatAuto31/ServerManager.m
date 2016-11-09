@@ -381,6 +381,10 @@
                       }
                       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                            NSLog(@"Errorcars/check/ //////////////: %@", error);
+                          NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo
+                                                     [AFNetworkingOperationFailingURLResponseDataErrorKey]
+                                                                          encoding:NSUTF8StringEncoding];
+                          NSLog(@"Error is %@",ErrorResponse);
                           if (failure) {
                               failure(error, 7);
                               NSLog(@"Resualt _________chack error %@", error);
@@ -786,7 +790,8 @@
                          NSLog(@"data with token %@", responseObject);
                          NSNumber *days = [responseObject objectForKey:@"days"];
                          NSNumber *orderCount = [responseObject objectForKey:@"order_count"];
-                         NSNumber *penalties = [responseObject objectForKey:@"penalties"];                          NSNumber *status = [responseObject objectForKey:@"status"];
+                         NSNumber *penalties = [responseObject objectForKey:@"penalties"];
+                         NSNumber *status = [responseObject objectForKey:@"status"];
                          if (success) {
                              success(days, orderCount,penalties,status);
                          }
@@ -1114,6 +1119,95 @@
                               failure(error, errorMessage);
                       }];
 }
+
+- (void) publicOrderWithCarId: (NSString*) carId
+                     dateFrom:(NSString*) dateFrom
+                       dateTo: (NSString*) dateTo
+               giveCarService: (NSString*) give
+                returnService: (NSString*) returnService
+                      options:(NSArray*) options
+                    withToken: (NSString*) tokenString
+                    OnSuccess:(void(^)(NSString* resualtString)) success
+                       onFail:(void(^)(NSString* errorArray, NSString *openedOrders, NSString *detail)) failure {
+    
+     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys: carId, @"car",
+                            dateFrom, @"date_from",
+                            dateTo, @"date_to",
+                            give, @"give_car_service",
+                            returnService, @"return_car_service",
+                            options, @"options", nil];
+    
+    [self.sessionManager POST:@"orders/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          NSLog(@"responseObject post order %@", responseObject);
+                          
+                          NSNumber *resultId =  [responseObject objectForKey:@"id"];
+                          NSString *resultIDstr = [resultId stringValue];
+                          if (success) {
+                              success(resultIDstr);
+                          }
+                          
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          NSLog(@"error post order %@", error);
+                          
+                          
+                          
+                          NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                          NSLog(@"Error is %@",ErrorResponse);
+                          NSData *data = [ErrorResponse dataUsingEncoding:NSUTF8StringEncoding];
+                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data                                                                                        options:kNilOptions                                                                                          error:&error];
+                          NSLog(@"NSDictionary order %@", jsonResponse);
+                          NSString *errorMessage;
+                          NSString *openedOrders;
+                          NSString *detail;
+                          if ([jsonResponse objectForKey:@"opened_orders"]) {
+                              openedOrders = [jsonResponse objectForKey:@"detail"];
+                          }
+                              errorMessage = [[[jsonResponse allValues] objectAtIndex:0] objectAtIndex:0];
+                          
+                          if (failure) {
+                              failure (errorMessage, openedOrders, detail);
+                          }
+                      }];
+}
+
+- (void) validatePhoneWithCode:(NSString *)code
+                     withToken:(NSString *)tokrnString
+                     OnSuccess:(void (^)(NSString *))success
+                        onFail:(void (^)(NSString *))failure {
+    
+    [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokrnString] forHTTPHeaderField:@"Authorization"];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:code, @"code", nil];
+    
+    [self.sessionManager POST:@"auth/validate-phone/"
+                   parameters:params
+                     progress:nil
+                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          NSLog(@"responseObject %@", responseObject);
+                      }
+                      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          NSLog(@"error %@", error);
+
+                      }];
+
+    
+    
+    
+    
+}
+    
+    
 
 
 @end

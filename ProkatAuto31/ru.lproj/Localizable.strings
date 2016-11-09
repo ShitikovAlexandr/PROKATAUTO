@@ -39,8 +39,7 @@
 "paid %@" = "оплачено %@";
 "paid" = "оплачено";
 "%@ rubles" = "%@ руб";
-"The car is reserved" = "Авто занято";
-"List of available cars" = "Список свободных авто";
+"The car is reserved. Do you want go to the list of available cars?" = "Данная машина забронирована. Перейти в список свободных авто?";
 "%ld x %ld days" = "%ld x %ld суток";
 "%ld days" = "%ld суток";
 "Free" = "Бесплатно";

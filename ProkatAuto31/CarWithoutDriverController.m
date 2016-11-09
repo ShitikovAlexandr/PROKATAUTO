@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSString *baseAddress;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
+@property (weak, nonatomic) IBOutlet UIButton *CallButton;
 
 
 @end
@@ -43,6 +44,7 @@
     [self.view addSubview:self.activityIndicatorView];
     [self.activityIndicatorView startAnimating];
     
+    [self.CallButton addTarget:self action:@selector(CallAction) forControlEvents:(UIControlEventTouchDown)];
        
     self.baseAddress = @"http://83.220.170.187";
 
@@ -214,6 +216,11 @@
     }];
     
     
+}
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
 }
 
 

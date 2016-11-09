@@ -44,6 +44,7 @@
 #import "RCDatePicker.h"
 #import "Person.h"
 #import "User.h"
+#import "SMSController.h"
 
 @interface RegistrationController ()
 @property (strong, nonatomic) UIAlertController *alert;
@@ -262,6 +263,7 @@ extern NSString *baseAddress;
             self.person.passportSeries = [NSString stringWithFormat:@"%@", textField.text];
         } else if (textField.tag == 9) {
             self.person.passportNumber = [NSString stringWithFormat:@"%@", textField.text];
+        } else if (textField.tag == 11) {
             self.person.driverLicense = [NSString stringWithFormat:@"%@", textField.text];
         } else if (textField.tag == 12) {
             self.person.driverLicenseNumber = [NSString stringWithFormat:@"%@", textField.text];
@@ -331,6 +333,7 @@ extern NSString *baseAddress;
 #pragma mark - API
 
 - (IBAction) sendRegisterForm {
+    [self remoofFirstRespons ];
     [self.activityIndicatorView startAnimating];
 
     
@@ -343,6 +346,9 @@ extern NSString *baseAddress;
                                                   PasswordFromImg:self.passwordFromImage.text
                                                         OnSuccess:^(NSString* token, id user) {
                                                             [self.activityIndicatorView stopAnimating];
+                                                            
+                                                            
+                                                           
 
                                                             // save data
                                                             
@@ -374,7 +380,8 @@ extern NSString *baseAddress;
                                                             [defaults setValue:newUser.faktAddress forKey:@"fakt_address"];
 
 
-
+                                                            SMSController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SMSController"];
+                                                            [self.navigationController pushViewController:vc animated:YES];
                                                             
 
                                                         }
@@ -383,7 +390,7 @@ extern NSString *baseAddress;
 
                                                                //[self getCapchaImg];
                                                                if (dictsArray) {
-                                                                  NSString* newString = [[[dictsArray objectAtIndex:0]objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+                                                                  NSString* newString = [[dictsArray objectAtIndex:0]stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
                                                                    [self ErrorTextFieldInput:[NSString stringWithFormat:@"%@",newString]];
                                                                    self.passwordFromImage.text = @"";
                                                                    [self getCapchaImg];
@@ -520,6 +527,36 @@ extern NSString *baseAddress;
     button.layer.borderWidth = 1.0f;
     button.layer.borderColor = [UIColor blackColor].CGColor;
     button.layer.masksToBounds = YES;
+}
+
+- (void) remoofFirstRespons {
+    
+     [self.surnameTextField resignFirstResponder];
+     [self.nameTextField resignFirstResponder];
+     [self.middleNameTextField resignFirstResponder];
+     [self.emailTextField resignFirstResponder];
+     [self.countryCodeTextField resignFirstResponder];
+     [self.phoneNumberTextField resignFirstResponder];
+     [self.dateOfBirthTextField resignFirstResponder];
+     
+     // passport info
+     [self.passportSeriesTextField resignFirstResponder];
+     [self.passportNumberTextField resignFirstResponder];
+     [self.dateOfPassport resignFirstResponder];
+     
+     // Driver's license info
+     [self.driverLicenseTextField resignFirstResponder];
+     [self.driverLicenseNumber resignFirstResponder];
+     [self.drivelLicenseDate resignFirstResponder];
+     
+     // password
+     
+     [self.firstPassword resignFirstResponder];
+     [self.secondPassword resignFirstResponder];
+     [self.switcherLicenseArg resignFirstResponder];
+     [self.imageWithPassword resignFirstResponder];
+     [self.passwordFromImage resignFirstResponder];
+    
 }
 
 

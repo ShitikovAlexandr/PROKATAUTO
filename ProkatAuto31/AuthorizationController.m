@@ -145,6 +145,17 @@ return YES;
 }
 
 - (void) enterAction {
+    /*
+     @property (weak, nonatomic) IBOutlet RCTextField *PhoneNumber;
+     @property (weak, nonatomic) IBOutlet RCTextField *password;
+     
+     */
+    [self.PhoneNumber resignFirstResponder];
+    [self.password resignFirstResponder];
+
+    
+    
+    
      NSString *currentPhoneNumber = [NSString stringWithFormat:@"%@%@", [self.countryCodeText stringByReplacingOccurrencesOfString:@"+" withString:@""], self.phone];
     
     [self authorizationWithLogin:currentPhoneNumber andPassword:self.passwordInput];

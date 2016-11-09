@@ -15,6 +15,7 @@
 #import "ServerManager.h"
 #import "Place.h"
 #import "StepTwoWithoutDriverController.h"
+#import "WithoutDriverDetailController.h"
 
 
 
@@ -72,10 +73,18 @@
   
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
+    
+    
     
     
     self.order = [[Order alloc] init];
     self.baseAddress = @"http://83.220.170.187";
+}
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -504,11 +513,24 @@
     
     self.alert = nil;
     self.alert = [UIAlertController alertControllerWithTitle:
-                  NSLocalizedString(@"The car is reserved", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                  @"" message:NSLocalizedString(@"The car is reserved. Do you want go to the list of available cars?", nil) preferredStyle:UIAlertControllerStyleAlert];
     
-            UIAlertAction *topic = [UIAlertAction actionWithTitle:NSLocalizedString(@"List of available cars", nil) style:UIAlertActionStyleDefault
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"No", nil) style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action) {}];
-            [self.alert addAction:topic];
+    
+            UIAlertAction *topic = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil) style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * _Nonnull action) {
+                                                  
+                                                      WithoutDriverDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WithoutDriverDetailController"];
+                                                      //vc.categoryID = category.categoryID;
+
+                                                      [self.navigationController pushViewController:vc animated:YES];
+
+                                                  
+                                                  }];
+    [self.alert addAction:topic];
+    [self.alert addAction:cancel];
+
     
     
     

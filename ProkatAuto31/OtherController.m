@@ -25,6 +25,9 @@
 
 @property (strong, nonatomic) NSMutableArray *categoryArray;
 
+@property (weak, nonatomic) IBOutlet UIButton *CallButton;
+
+
 @end
 
 @implementation OtherController
@@ -33,6 +36,8 @@
     [super viewDidLoad];
 
     self.baseAddress = @"http://83.220.170.187";
+    
+    [self.CallButton addTarget:self action:@selector(CallAction) forControlEvents:(UIControlEventTouchDown)];
 
     self.categoryArray = [NSMutableArray array];
     [self getCarCategorieFromAPI];
@@ -124,5 +129,9 @@
      }];
 }
 
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
+}
 
 @end
