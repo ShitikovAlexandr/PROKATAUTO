@@ -175,13 +175,13 @@
     NSNumber *avans =  [defaults valueForKey:@"minimal_payment"];
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:
-                                @"" message:@"Для Вашего удобства Вы можете сделать предоплату или оплатить заказ полностью.\nВ сумме заказа не включен залог, его необходимо оплатить перед подписанием договора аренды.  В случае полной предоплаты мы предоставим Вам любую еденицу дополнительного оборудования бесплатно." preferredStyle:UIAlertControllerStyleActionSheet];
+                                @"" message:NSLocalizedString(@"For your convenience You can make an advance payment or pay the full order.\nDeposit isn\'t included to the order price, it has to be included before you sign a rental contract.\nIn case of fully advance payment we will give You any unit of additional equipment for free.", nil) preferredStyle:UIAlertControllerStyleActionSheet];
     NSArray *viewArray = [[[[[[[[[[[[alert view] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews];
     UILabel *alertMessage = viewArray[1];
     alertMessage.textAlignment = NSTextAlignmentLeft;
     
     
-    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Сделать предоплату %ld руб.", (long)[avans integerValue] ] style:UIAlertActionStyleDestructive
+    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat: NSLocalizedString(@"Make a prepay %d rubles", nil), (long)[avans integerValue] ] style:UIAlertActionStyleDestructive
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
@@ -194,7 +194,7 @@
                                                     }];
     int totlPrice =[self.priceForDaysOnly.text integerValue] + self.optionPriceInt;
     
-    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Оплатить заказ %d руб.",totlPrice ] style:UIAlertActionStyleDestructive
+    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat: NSLocalizedString(@"Pay order %d rubles", nil),totlPrice ] style:UIAlertActionStyleDestructive
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
@@ -207,7 +207,7 @@
                                                         
                                                     }];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Оплатить позже" style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle: NSLocalizedString(@"Pay later", nil) style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction * _Nonnull action) {}];
     
     [alert addAction:partPay];
@@ -226,9 +226,9 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:
                                 @"" message:masege preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отмена" style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Pay later", nil) style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction * _Nonnull action) {}];
-    UIAlertAction *goToOrders = [UIAlertAction actionWithTitle:@"Перейти" style:UIAlertActionStyleDefault
+    UIAlertAction *goToOrders = [UIAlertAction actionWithTitle:NSLocalizedString(@"Go", nil) style:UIAlertActionStyleDefault
                                                                                                                                                  handler:^(UIAlertAction * _Nonnull action) {
                                                                                                                                                      OrdersListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
                                                                                                                                                      UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
