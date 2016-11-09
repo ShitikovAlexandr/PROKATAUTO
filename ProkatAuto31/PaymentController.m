@@ -22,6 +22,8 @@
 @implementation PaymentController
 
 - (void)viewDidLoad {
+    
+    
     [super viewDidLoad];
     
     //self.orderId = @"436";
@@ -41,6 +43,9 @@
     
     self.wkWebV = [[WKWebView alloc] initWithFrame:self.webConteiner.frame configuration:wkWebConfig];
     self.wkWebV.navigationDelegate = self;
+    self.wkWebV.UIDelegate = self;
+    [self.view addSubview:self.wkWebV];
+
     
     [self payOrder];
     
@@ -68,90 +73,12 @@
 
 #pragma mark - WKNavigationDelegate
 
-
-
-/*! @abstract Decides whether to allow or cancel a navigation after its
- response is known.
- @param webView The web view invoking the delegate method.
- @param navigationResponse Descriptive information about the navigation
- response.
- @param decisionHandler The decision handler to call to allow or cancel the
- navigation. The argument is one of the constants of the enumerated type WKNavigationResponsePolicy.
- @discussion If you do not implement this method, the web view will allow the response, if the web view can show it.
- */
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    
-}
-
-/*! @abstract Invoked when a main frame navigation starts.
- @param webView The web view invoking the delegate method.
- @param navigation The navigation.
- */
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
-    
-}
-
-/*! @abstract Invoked when a server redirect is received for the main
- frame.
- @param webView The web view invoking the delegate method.
- @param navigation The navigation.
- */
-- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
-    
-}
-
-/*! @abstract Invoked when an error occurs while starting to load data for
- the main frame.
- @param webView The web view invoking the delegate method.
- @param navigation The navigation.
- @param error The error that occurred.
- */
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
-    
-}
-
-/*! @abstract Invoked when content starts arriving for the main frame.
- @param webView The web view invoking the delegate method.
- @param navigation The navigation.
- */
-- (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
-    
-}
-
-/*! @abstract Invoked when a main frame navigation completes.
- @param webView The web view invoking the delegate method.
- @param navigation The navigation.
- */
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
+    NSLog(@"didFinishNavigation %@", webView.URL);
     
 }
 
-/*! @abstract Invoked when an error occurs during a committed main frame
- navigation.
- @param webView The web view invoking the delegate method.
- @param navigation The navigation.
- @param error The error that occurred.
- */
-- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
-    
-}
-
-/*! @abstract Invoked when the web view needs to respond to an authentication challenge.
- @param webView The web view that received the authentication challenge.
- @param challenge The authentication challenge.
- @param completionHandler The completion handler you must invoke to respond to the challenge. The
- disposition argument is one of the constants of the enumerated type
- NSURLSessionAuthChallengeDisposition. When disposition is NSURLSessionAuthChallengeUseCredential,
- the credential argument is the credential to use, or nil to indicate continuing without a
- credential.
- @discussion If you do not implement this method, the web view will respond to the authentication challenge with the NSURLSessionAuthChallengeRejectProtectionSpace disposition.
- */
-- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
-    
-    NSURLCredential * credential = [[NSURLCredential alloc] initWithTrust:[challenge protectionSpace].serverTrust];
-    completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
-}
-
+// http://83.220.170.187/api/v1/public/payments/payment-success/05e9086c-1a97-42d1-b5ff-485496b6c7e8/?orderId=624b4c50-2d3c-4123-b9b0-8bd8198e0072
 
 
 

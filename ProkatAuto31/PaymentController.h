@@ -10,7 +10,7 @@
 #import <WebKit/WebKit.h>
 
 
-@interface PaymentController : UIViewController <WKNavigationDelegate, UIWebViewDelegate>
+@interface PaymentController : UIViewController <WKNavigationDelegate, WKUIDelegate, UIWebViewDelegate>
 
 @property (strong, nonatomic) NSString *orderId;
 @property (strong, nonatomic) NSString *fullPrice;

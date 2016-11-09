@@ -99,6 +99,7 @@
 		FA05C6081DC250C500F79B05 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA05C6061DC250C500F79B05 /* Crashlytics.framework */; };
 		FA06A3C51DA8D8B000E4DB5F /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3C41DA8D8B000E4DB5F /* Order.m */; };
 		FA06A3D91DA8F50900E4DB5F /* RCDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */; };
+		FA10378F1DD36E0C00C11EC3 /* car.png in Resources */ = {isa = PBXBuildFile; fileRef = FA10378E1DD36E0C00C11EC3 /* car.png */; };
 		FA13E9C71DC7A14200E4A549 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA13E9C61DC7A14200E4A549 /* ProfileController.m */; };
 		FA1A37F61DD308BB00F94133 /* SMSController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A37F51DD308BB00F94133 /* SMSController.m */; };
 		FA1A37F81DD3386F00F94133 /* fab.png in Resources */ = {isa = PBXBuildFile; fileRef = FA1A37F71DD3386F00F94133 /* fab.png */; };
@@ -300,6 +301,7 @@
 		FA06A3C41DA8D8B000E4DB5F /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		FA06A3D71DA8F50800E4DB5F /* RCDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDatePicker.h; sourceTree = "<group>"; };
 		FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDatePicker.m; sourceTree = "<group>"; };
+		FA10378E1DD36E0C00C11EC3 /* car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car.png; sourceTree = "<group>"; };
 		FA13E9C51DC7A14200E4A549 /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileController.h; sourceTree = "<group>"; };
 		FA13E9C61DC7A14200E4A549 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileController.m; sourceTree = "<group>"; };
 		FA1A37F41DD308BB00F94133 /* SMSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSController.h; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD301E21DC739AD001FE7DC /* logo2.png */,
+				FA10378E1DD36E0C00C11EC3 /* car.png */,
 				FA7E82A81DA3C0FA00F5BFB4 /* Back-25.png */,
 				FA1A37F71DD3386F00F94133 /* fab.png */,
 				FA1A37F91DD3389700F94133 /* ic_phone.png */,
@@ -964,6 +967,7 @@
 				FA88FD891DAB8A0A0039CF33 /* ic_menu.png in Resources */,
 				6306F5381D90136200915F22 /* ic_inbox_3x.png in Resources */,
 				FA88FD881DAB8A0A0039CF33 /* ic_menu_3x.png in Resources */,
+				FA10378F1DD36E0C00C11EC3 /* car.png in Resources */,
 				840EA2B01DD238F6006157A4 /* Localizable.strings in Resources */,
 				6359CEA31D927B5000E76AD4 /* offroadWithDriver.png in Resources */,
 				FA7E82A51DA3B85F00F5BFB4 /* navBack.png in Resources */,
