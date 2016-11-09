@@ -126,11 +126,13 @@
         
         self.order.totalPrice = [NSNumber numberWithInteger:dayPrice];
         cell.rentalPrice.text = [NSString stringWithFormat:@"%@", self.order.totalPrice];
+        cell.rentalPriceCalculation.text = [NSString stringWithFormat:NSLocalizedString(@"%ld x %ld days", nil), (long)range, (long)rentalPeriodDay];
         cell.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];
         
         
         
         
+        cell.rentalDayPeriod.text = [NSString stringWithFormat:NSLocalizedString(@"%ld days", nil), (long)rentalPeriodDay];
         
         cell.placeStart.text = self.order.startPlace.name;
         cell.placeend.text = self.order.endPlace.name;
@@ -159,7 +161,13 @@
         cell.optionCount.text = @"1";
         
             if ([option.optionPrice integerValue] <1) {
+                cell.priceOption.text = NSLocalizedString(@"Free", nil);
             } else {
+<<<<<<< HEAD
+                cell.priceOption.text = [NSString stringWithFormat:@"%ld руб. в сутки", (long)[option.optionPrice integerValue]];
+=======
+                cell.priceOption.text = [NSString stringWithFormat:NSLocalizedString(@"%d rubles per day", nil), [option.optionPrice integerValue]];
+>>>>>>> 4cd04fa1e8253e3bfb190e8b1ccbb85fcabfeb89
             }
             
             if ([option.optionAvaliableAmount intValue] >1) {
@@ -261,7 +269,11 @@
         AuthorizationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AuthorizationController"];
         vc.StepBack = true;
         StepFourWithoutdriverController *nVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StepFourWithoutdriverController"];
+<<<<<<< HEAD
+        nVC.title = @"Шаг 4:Подтверждение заказа";
         nVC.order = self.order;
+=======
+>>>>>>> 4cd04fa1e8253e3bfb190e8b1ccbb85fcabfeb89
         vc.nextController = nVC;
         
         [self.navigationController pushViewController:vc animated:YES];

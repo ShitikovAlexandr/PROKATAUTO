@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.sentMessage = @"Спасибо за Ваш заказ! Наши сотрудники свяжутся с Вами в ближайшее время.";
+    self.sentMessage = NSLocalizedString(@"Thank you for your order! Our staff will contact you shortly.", nil);
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
@@ -126,11 +126,11 @@
 -(void) sendOrderWithCaptcha
 {
     if(![self validateFieldsEmpty])
-        [self showAlert:@"Заполните все поля!"];
+        [self showAlert:NSLocalizedString(@"Fill in all fields!!!", nil)];
     else if(![self validatePhoneNumber])
-        [self showAlert:@"Введите корректный номер телефона"];
+        [self showAlert:NSLocalizedString(@"Please, input correct phone number", nil)];
     else if(![self validateEmail])
-        [self showAlert:@"Введите корректный адрес электронной почты"];
+        [self showAlert:NSLocalizedString(@"Please, input correct email", nil)];
     else
     {
         [[ServerManager sharedManager] orderCarWithDriver:self.car.carId userName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderDescription:self.descriptionField.text andKey:self.capchaKey passwordFromImg:self.captchaField.text OnSuccess:^ {
@@ -146,7 +146,7 @@
 -(void) sendOrderWithToken
 {
     if([self.descriptionField.text isEqualToString:@""])
-        [self showAlert:@"Заполните все поля!"];
+        [self showAlert:NSLocalizedString(@"Fill in all fields!!!", nil)];
     else
     {
         [[ServerManager sharedManager] orderCarWithDriverWithToken:self.tokenString carId:self.car.carId orderDescription:self.descriptionField.text OnSuccess:^ {

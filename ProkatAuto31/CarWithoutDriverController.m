@@ -82,7 +82,7 @@
         
         HeaderInSectionView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
         
-            headerView.headerText.text = @"Коробка передач";
+            headerView.headerText.text = NSLocalizedString(@"Transmision", nil);
         
         reusableview = headerView;
         
@@ -171,16 +171,16 @@
 - (NSMutableArray*) creatinCategoriesOfTransmission {
     
     Category *automaticTransmission = [[Category alloc] init];
-    automaticTransmission.name = @"Авто с АКПП";
+    automaticTransmission.name = NSLocalizedString(@"Car with AT", nil);
     automaticTransmission.image = @"akpp120x90.jpg";
     automaticTransmission.categoryID = @2;
-    automaticTransmission.maimDescription = @"Автомобили с автоматической коробкой передач";
+    automaticTransmission.maimDescription = NSLocalizedString(@"Cars with automatic transmission", nil);
     
     Category *manualTransmission = [[Category alloc] init];
-    manualTransmission.name = @"Авто с МКПП";
+    manualTransmission.name = NSLocalizedString(@"Car with MT", nil);
     manualTransmission.image = @"mkpp120x90.jpg";
     manualTransmission.categoryID = @1;
-    manualTransmission.maimDescription = @"Автомобили с механической (ручной) коробкой передач";
+    manualTransmission.maimDescription = NSLocalizedString(@"Vehicles with manual gearbox", nil);
     
     return [NSMutableArray arrayWithObjects:manualTransmission, automaticTransmission, nil];
     

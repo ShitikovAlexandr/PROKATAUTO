@@ -33,8 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Авторизация";
-    
     [self styleRCButton:self.RegisterButton];
     [self styleRCButton:self.EnterButton];
     
@@ -220,8 +218,8 @@ return YES;
 
 - (void) RCAlertController {
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Ошибка"
-                                                                   message:@"Неверный телефон или пароль" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                                   message:NSLocalizedString(@"Wrong phone number or password!!!", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButtlon = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive
                                                       handler:^(UIAlertAction * _Nonnull action) {
                                                           
@@ -233,7 +231,6 @@ return YES;
 
 - (void) regAction {
     RegistrationController *nVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistrationController"];
-    nVC.title = @"Регистрация";
     [self.navigationController pushViewController:nVC animated:YES];
 }
 

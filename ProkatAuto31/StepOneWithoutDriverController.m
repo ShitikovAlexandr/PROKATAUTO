@@ -70,11 +70,7 @@
     UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     [toolBar setTintColor:[UIColor grayColor]];
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
-
-    
-    
-    
-    
+  
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
@@ -127,10 +123,10 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, self.car.imageURL]];
     [self.cell.carImage setImageWithURL:url];
     self.cell.fullName.text = [NSString stringWithFormat:@"%@ %@ %@", self.car.itemFullName, self.car.itemEngine, self.car.itemTransmissionName]; //self.car.itemFullName;
-    self.cell.priceRange1.text = [NSString stringWithFormat:@"%@ руб", self.car.priceRange1];
-    self.cell.priceRange2.text = [NSString stringWithFormat:@"%@ руб", self.car.priceRange2];
-    self.cell.priceRange3.text = [NSString stringWithFormat:@"%@ руб", self.car.priceRange3];
-    self.cell.deposit.text = [NSString stringWithFormat:@"%@ руб", self.car.deposit];
+    self.cell.priceRange1.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.priceRange1];
+    self.cell.priceRange2.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.priceRange2];
+    self.cell.priceRange3.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.priceRange3];
+    self.cell.deposit.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.deposit];
   
     self.cell.timeStartTextField = [self setShadowToTextField:self.cell.timeStartTextField];
     self.cell.dateStartTextField = [self setShadowToTextField:self.cell.dateStartTextField];
@@ -159,9 +155,6 @@
     
     NSDateFormatter *tf = [[NSDateFormatter alloc] init];
     [tf setDateFormat:@"HH:mm"];
-    
-    
-    
 
     
     self.order.dateOfRentalStart = [[NSDate  date] dateByAddingTimeInterval:60*60*24];
@@ -447,7 +440,7 @@
                                                    StepTwoWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepTwoWithoutDriverController"];
                                                    self.order.car = self.car;
                                                    vc.order = self.order;
-                                                   //vc.title = @"Шаг 2: Выбор дополнительного оборудования";
+
                                                    [self.navigationController pushViewController:vc animated:YES];
                                                   
                                                }
@@ -520,17 +513,17 @@
     
     self.alert = nil;
     self.alert = [UIAlertController alertControllerWithTitle:
-                  @"" message:@"Данная машина забронирована. Перейти в список свободных авто?" preferredStyle:UIAlertControllerStyleAlert];
+                  @"" message:NSLocalizedString(@"The car is reserved. Do you want go to the list of available cars?", nil) preferredStyle:UIAlertControllerStyleAlert];
     
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет" style:UIAlertActionStyleDefault
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"No", nil) style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action) {}];
     
-            UIAlertAction *topic = [UIAlertAction actionWithTitle:@"Да" style:UIAlertActionStyleDefault
+            UIAlertAction *topic = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil) style:UIAlertActionStyleDefault
                                                   handler:^(UIAlertAction * _Nonnull action) {
                                                   
                                                       WithoutDriverDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WithoutDriverDetailController"];
                                                       //vc.categoryID = category.categoryID;
-                                                      vc.title = @"Свободные авто";
+
                                                       [self.navigationController pushViewController:vc animated:YES];
 
                                                   

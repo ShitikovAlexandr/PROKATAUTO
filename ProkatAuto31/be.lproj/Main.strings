@@ -1,0 +1,729 @@
+
+/* Class = "UILabel"; text = "KIA Rio 1.4 АКПП"; ObjectID = "085-n6-Wkg"; */
+"085-n6-Wkg.text" = "KIA Rio 1.4 АКПП";
+
+/* Class = "UILabel"; text = "Driver license"; ObjectID = "0P6-a0-abO"; */
+"0P6-a0-abO.text" = "Водителькое удостовирение";
+
+/* Class = "UINavigationItem"; title = "Password recovery"; ObjectID = "1Kk-bT-TxK"; */
+"1Kk-bT-TxK.title" = "Востановление пароля";
+
+/* Class = "UILabel"; text = "penalty"; ObjectID = "1RT-Zt-WC5"; */
+"1RT-Zt-WC5.text" = "штраф";
+
+/* Class = "UILabel"; text = "KIA Rio 1.4 АКПП"; ObjectID = "1gg-fI-FJT"; */
+"1gg-fI-FJT.text" = "KIA Rio 1.4 АКПП";
+
+/* Class = "UITextField"; placeholder = "Date of issue"; ObjectID = "1jP-Jh-hmK"; */
+"1jP-Jh-hmK.placeholder" = "Дата выдачи";
+
+/* Class = "UILabel"; text = "0 000 рублей/сутки Х 0"; ObjectID = "1sM-tm-crI"; */
+"1sM-tm-crI.text" = "0 000 рублей/сутки Х 0";
+
+/* Class = "UITextField"; placeholder = "Passengers"; ObjectID = "2NR-u5-YiG"; */
+"2NR-u5-YiG.placeholder" = "Количество пассажиров";
+
+/* Class = "UILabel"; text = "Transfer"; ObjectID = "2XT-iX-EKp"; */
+"2XT-iX-EKp.text" = "Трансфер";
+
+/* Class = "UILabel"; text = "от 1,800 руб."; ObjectID = "2a0-1B-eZh"; */
+"2a0-1B-eZh.text" = "от 1,800 руб.";
+
+/* Class = "UIButton"; normalTitle = "CANCEL ORDER"; ObjectID = "2ej-hc-DSZ"; */
+"2ej-hc-DSZ.normalTitle" = "ОТМЕНИТЬ ЗАКАЗ";
+
+/* Class = "UILabel"; text = "Drop-off location:"; ObjectID = "2hz-Md-hKn"; */
+"2hz-Md-hKn.text" = "Возврат авто:";
+
+/* Class = "UILabel"; text = "Deposit, rubles:"; ObjectID = "2vf-6K-MDb"; */
+"2vf-6K-MDb.text" = "Залог, руб.:";
+
+/* Class = "UILabel"; text = "Engine capacity:"; ObjectID = "33P-a1-Jo5"; */
+"33P-a1-Jo5.text" = "Объем двигателя:";
+
+/* Class = "UILabel"; text = "Pick-up car:"; ObjectID = "3VB-Au-IKj"; */
+"3VB-Au-IKj.text" = "Подача авто:";
+
+/* Class = "UILabel"; text = "Driver license"; ObjectID = "4LE-as-vwp"; */
+"4LE-as-vwp.text" = "Водительское удостоверение";
+
+/* Class = "UILabel"; text = "0 руб."; ObjectID = "4MA-lC-nSa"; */
+"4MA-lC-nSa.text" = "0 руб.";
+
+/* Class = "UITextField"; placeholder = "Confirm password"; ObjectID = "4U5-m5-FKT"; */
+"4U5-m5-FKT.placeholder" = "Повторите пароль";
+
+/* Class = "UILabel"; text = "*** **********"; ObjectID = "4nC-Bb-0zt"; */
+"4nC-Bb-0zt.text" = "*** **********";
+
+/* Class = "UILabel"; text = "2,000 руб"; ObjectID = "4x9-Yo-QEj"; */
+"4x9-Yo-QEj.text" = "2,000 руб";
+
+/* Class = "UILabel"; text = "Подача авто, наш офис"; ObjectID = "52M-In-Dsh"; */
+"52M-In-Dsh.text" = "Подача авто, наш офис";
+
+/* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "5BM-4M-E68"; */
+"5BM-4M-E68.placeholder" = "Телефон";
+
+/* Class = "UILabel"; text = "11 400"; ObjectID = "5Wa-Ga-BZc"; */
+"5Wa-Ga-BZc.text" = "11 400";
+
+/* Class = "UILabel"; text = "Russia"; ObjectID = "5Zf-0L-A5V"; */
+"5Zf-0L-A5V.text" = "Russia";
+
+/* Class = "UILabel"; text = "penalty status"; ObjectID = "5bQ-oT-8by"; */
+"5bQ-oT-8by.text" = "статус штрафа";
+
+/* Class = "UIButton"; normalTitle = "Send order"; ObjectID = "5nZ-tT-qAG"; */
+"5nZ-tT-qAG.normalTitle" = "Отправить заказ";
+
+/* Class = "UIButton"; normalTitle = "Book a car"; ObjectID = "5tz-bL-SBr"; */
+"5tz-bL-SBr.normalTitle" = "Забронировать";
+
+/* Class = "UIButton"; normalTitle = "Book a car"; ObjectID = "617-l2-zSE"; */
+"617-l2-zSE.normalTitle" = "Арендовать";
+
+/* Class = "UILabel"; text = "20.10.2016"; ObjectID = "6CT-CS-nEF"; */
+"6CT-CS-nEF.text" = "20.10.2016";
+
+/* Class = "UITextField"; placeholder = "Number"; ObjectID = "6EC-n4-eTt"; */
+"6EC-n4-eTt.placeholder" = "Номер";
+
+/* Class = "UINavigationItem"; title = "Registration"; ObjectID = "6aX-ve-DxF"; */
+"6aX-ve-DxF.title" = "Регистрация";
+
+/* Class = "UILabel"; text = "ХХ ХХХХХХ"; ObjectID = "6ar-YR-I2T"; */
+"6ar-YR-I2T.text" = "ХХ ХХХХХХ";
+
+/* Class = "UIButton"; normalTitle = "info"; ObjectID = "6w2-Hk-V0q"; */
+"6w2-Hk-V0q.normalTitle" = "инфо";
+
+/* Class = "UITextField"; placeholder = "Date of birth"; ObjectID = "7EI-pE-hlc"; */
+"7EI-pE-hlc.placeholder" = "Дата рождения";
+
+/* Class = "UIButton"; normalTitle = "Change password"; ObjectID = "7s5-RC-vWs"; */
+"7s5-RC-vWs.normalTitle" = "Сменить пароль";
+
+/* Class = "UILabel"; text = "Phone number"; ObjectID = "8QY-MH-PHp"; */
+"8QY-MH-PHp.text" = "Номер телефона";
+
+/* Class = "UINavigationItem"; title = "My orders"; ObjectID = "8SU-6t-2qp"; */
+"8SU-6t-2qp.title" = "Список заказов";
+
+/* Class = "UILabel"; text = "тип клиента"; ObjectID = "8qS-KL-PU3"; */
+"8qS-KL-PU3.text" = "тип клиента";
+
+/* Class = "UILabel"; text = "Pick-up time"; ObjectID = "8u9-qf-X1d"; */
+"8u9-qf-X1d.text" = "Время подачи авто";
+
+/* Class = "UILabel"; text = "Auto with out driver"; ObjectID = "8xi-tM-SkU"; */
+"8xi-tM-SkU.text" = "Авто без водителя";
+
+/* Class = "UILabel"; text = "Pick-up location:"; ObjectID = "90W-cY-V5x"; */
+"90W-cY-V5x.text" = "Подача авто:";
+
+/* Class = "UINavigationItem"; title = "Step 4: Order confirmation"; ObjectID = "99Y-qC-MjR"; */
+"99Y-qC-MjR.title" = "Шаг 4: Подтверждение заказа";
+
+/* Class = "UILabel"; text = "Hello,"; ObjectID = "9HE-Dn-9wM"; */
+"9HE-Dn-9wM.text" = "Здавствуйте,";
+
+/* Class = "UILabel"; text = "Transmission:"; ObjectID = "9xl-cE-Eg5"; */
+"9xl-cE-Eg5.text" = "КПП:";
+
+/* Class = "UILabel"; text = "статус оплаты"; ObjectID = "A2g-eS-Uz7"; */
+"A2g-eS-Uz7.text" = "статус оплаты";
+
+/* Class = "UILabel"; text = "15 000"; ObjectID = "ASM-Ob-itZ"; */
+"ASM-Ob-itZ.text" = "15 000";
+
+/* Class = "UITextField"; placeholder = "What kind of car you need"; ObjectID = "ASq-IM-vaW"; */
+"ASq-IM-vaW.placeholder" = "Какое Вам необходимо авто";
+
+/* Class = "UILabel"; text = "Series, number"; ObjectID = "AYc-u0-qEg"; */
+"AYc-u0-qEg.text" = "Серия, номер";
+
+/* Class = "UILabel"; text = "Car without driver"; ObjectID = "Abj-kQ-E49"; */
+"Abj-kQ-E49.text" = "Машина без водителя";
+
+/* Class = "UILabel"; text = "from 4 to 6 days:"; ObjectID = "Aia-fh-BZw"; */
+"Aia-fh-BZw.text" = "от 4 до 6 суток:";
+
+/* Class = "UILabel"; text = "xx.xx.xxxx"; ObjectID = "Akl-M7-JAy"; */
+"Akl-M7-JAy.text" = "xx.xx.xxxx";
+
+/* Class = "UILabel"; text = "Date of issue"; ObjectID = "B5e-4l-iyj"; */
+"B5e-4l-iyj.text" = "Выданное";
+
+/* Class = "UILabel"; text = "Drop-off car"; ObjectID = "BLf-ru-urF"; */
+"BLf-ru-urF.text" = "Возврат авто";
+
+/* Class = "UILabel"; text = "Возврат авто, наш офис"; ObjectID = "BNg-qx-g4M"; */
+"BNg-qx-g4M.text" = "Возврат авто, наш офис";
+
+/* Class = "UILabel"; text = "Russia"; ObjectID = "Bby-tI-Nuc"; */
+"Bby-tI-Nuc.text" = "Russia";
+
+/* Class = "UILabel"; text = "Drop-off car:"; ObjectID = "CRJ-lT-TAu"; */
+"CRJ-lT-TAu.text" = "Возврат авто:";
+
+/* Class = "UILabel"; text = "Rent rate, rubles:"; ObjectID = "CVs-JS-PHq"; */
+"CVs-JS-PHq.text" = "Соимость аренды, руб.: ";
+
+/* Class = "UILabel"; text = "14.10.2016"; ObjectID = "Cvo-yh-uZE"; */
+"Cvo-yh-uZE.text" = "14.10.2016";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "DAZ-TE-77W"; */
+"DAZ-TE-77W.placeholder" = "Емейл";
+
+/* Class = "UILabel"; text = "from 7 and more days:"; ObjectID = "Dds-z5-Biw"; */
+"Dds-z5-Biw.text" = "от 7 и более суток:";
+
+/* Class = "UITextField"; placeholder = "Surname"; ObjectID = "DhV-BW-a1L"; */
+"DhV-BW-a1L.placeholder" = "Фамилия";
+
+/* Class = "UILabel"; text = "Pick-up date:"; ObjectID = "Dl6-2c-HPg"; */
+"Dl6-2c-HPg.text" = "Начало аренды:";
+
+/* Class = "UILabel"; text = "Drop-off location:"; ObjectID = "E1P-U1-tMg"; */
+"E1P-U1-tMg.text" = "Возврат авто:";
+
+/* Class = "UILabel"; text = "Passport"; ObjectID = "EAa-wh-EKY"; */
+"EAa-wh-EKY.text" = "Паспорт";
+
+/* Class = "UILabel"; text = "from 1 to 3 days:"; ObjectID = "EJN-7c-Rvq"; */
+"EJN-7c-Rvq.text" = "от 1 до 3 суток:";
+
+/* Class = "UILabel"; text = "Password"; ObjectID = "FP0-a8-3j8"; */
+"FP0-a8-3j8.text" = "Пароль";
+
+/* Class = "UILabel"; text = "Car model"; ObjectID = "G5x-FB-Jbx"; */
+"G5x-FB-Jbx.text" = "Модель";
+
+/* Class = "UILabel"; text = "Series, number"; ObjectID = "GKR-4d-A5b"; */
+"GKR-4d-A5b.text" = "Серия, номер";
+
+/* Class = "UILabel"; text = "Transfer"; ObjectID = "Gd7-1k-ZNb"; */
+"Gd7-1k-ZNb.text" = "Трансфер";
+
+/* Class = "UILabel"; text = "0 000"; ObjectID = "H4v-dm-gkB"; */
+"H4v-dm-gkB.text" = "0 000";
+
+/* Class = "UILabel"; text = "title"; ObjectID = "Hx0-RS-zT7"; */
+"Hx0-RS-zT7.text" = "имя";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "I5J-3I-Omg"; */
+"I5J-3I-Omg.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Registration"; ObjectID = "IVH-3X-zF8"; */
+"IVH-3X-zF8.normalTitle" = "Регистрация";
+
+/* Class = "UILabel"; text = "Description:"; ObjectID = "Ifp-CE-zwb"; */
+"Ifp-CE-zwb.text" = "Описание:";
+
+/* Class = "UILabel"; text = "___"; ObjectID = "JGO-v5-ayc"; */
+"JGO-v5-ayc.text" = "___";
+
+/* Class = "UILabel"; text = "107 л.с."; ObjectID = "JLt-hm-fYr"; */
+"JLt-hm-fYr.text" = "107 л.с.";
+
+/* Class = "UITextField"; placeholder = "Phone"; ObjectID = "JQy-2r-nbZ"; */
+"JQy-2r-nbZ.placeholder" = "Телефон";
+
+/* Class = "UILabel"; text = "1 800 руб"; ObjectID = "Jeq-47-t3R"; */
+"Jeq-47-t3R.text" = "1 800 руб";
+
+/* Class = "UILabel"; text = "ХХ ХХХХХХ"; ObjectID = "JhN-7q-qfJ"; */
+"JhN-7q-qfJ.text" = "ХХ ХХХХХХ";
+
+/* Class = "UITextField"; placeholder = "+7"; ObjectID = "K7q-Ne-pQu"; */
+"K7q-Ne-pQu.placeholder" = "+7";
+
+/* Class = "UILabel"; text = "Date of birth"; ObjectID = "KPP-ir-hrT"; */
+"KPP-ir-hrT.text" = "Дата рождения";
+
+/* Class = "UILabel"; text = " ****** ******"; ObjectID = "KPj-Dh-BfY"; */
+"KPj-Dh-BfY.text" = " ****** ******";
+
+/* Class = "UILabel"; text = "Pick-up time"; ObjectID = "KdD-Rp-KYu"; */
+"KdD-Rp-KYu.text" = "Время подачи авто";
+
+/* Class = "UITextField"; placeholder = "Old password"; ObjectID = "Kgv-bO-xbU"; */
+"Kgv-bO-xbU.placeholder" = "Старый пароль";
+
+/* Class = "UILabel"; text = "Подача авто, наш офис"; ObjectID = "Ko0-e4-jmi"; */
+"Ko0-e4-jmi.text" = "Подача авто, наш офис";
+
+/* Class = "UILabel"; text = "Pick-up location"; ObjectID = "KtT-Yz-IZ8"; */
+"KtT-Yz-IZ8.text" = "Место подачи авто";
+
+/* Class = "UITextField"; placeholder = "Series"; ObjectID = "LRP-sw-BZO"; */
+"LRP-sw-BZO.placeholder" = "Серия";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "LVn-EX-lxU"; */
+"LVn-EX-lxU.placeholder" = "Емейл";
+
+/* Class = "UILabel"; text = " Детское кресло"; ObjectID = "Lfz-ZN-Zwa"; */
+"Lfz-ZN-Zwa.text" = " Детское кресло";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Lrw-up-q2Z"; */
+"Lrw-up-q2Z.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "Lyc-Tm-DVk"; */
+"Lyc-Tm-DVk.placeholder" = "Телефон";
+
+/* Class = "UITabBarItem"; title = "ADDITIONAL"; ObjectID = "N0S-F5-Eb9"; */
+"N0S-F5-Eb9.title" = "ПРОЧЕЕ";
+
+/* Class = "UILabel"; text = "The number of orders"; ObjectID = "NNf-pL-iPh"; */
+"NNf-pL-iPh.text" = "Количество заказов";
+
+/* Class = "UILabel"; text = "Passport data"; ObjectID = "O6y-yB-kQH"; */
+"O6y-yB-kQH.text" = "Паспорт";
+
+/* Class = "UILabel"; text = "Car color:"; ObjectID = "OyV-SX-n8P"; */
+"OyV-SX-n8P.text" = "Цвет авто:";
+
+/* Class = "UITextField"; placeholder = "+7"; ObjectID = "PHI-Wj-vtk"; */
+"PHI-Wj-vtk.placeholder" = "+7";
+
+/* Class = "UITextField"; placeholder = "Confirm new password"; ObjectID = "PJh-qx-WH7"; */
+"PJh-qx-WH7.placeholder" = "Подтвердите новый пароль";
+
+/* Class = "UILabel"; text = "Contact data:"; ObjectID = "PPC-iU-fzY"; */
+"PPC-iU-fzY.text" = "Контактные данные:";
+
+/* Class = "UINavigationItem"; title = "My orders"; ObjectID = "PPq-Tv-D3j"; */
+"PPq-Tv-D3j.title" = "Список заказов";
+
+/* Class = "UILabel"; text = "с хх.хх.хххх по хх.хх.хххх"; ObjectID = "Pqp-QK-C5Z"; */
+"Pqp-QK-C5Z.text" = "с хх.хх.хххх по хх.хх.хххх";
+
+/* Class = "UIButton"; normalTitle = "PAY ORDER"; ObjectID = "Q4o-hd-RJ5"; */
+"Q4o-hd-RJ5.normalTitle" = "ОПЛАТИТЬ ЗАКАЗ";
+
+/* Class = "UINavigationItem"; title = "My profile"; ObjectID = "QDt-io-DYg"; */
+"QDt-io-DYg.title" = "Мой профиль";
+
+/* Class = "UILabel"; text = "1.4 л"; ObjectID = "QDv-fB-G5U"; */
+"QDv-fB-G5U.text" = "1.4 л";
+
+/* Class = "UILabel"; text = "Pick-up car"; ObjectID = "QM4-cz-ops"; */
+"QM4-cz-ops.text" = "Подача авто";
+
+/* Class = "UILabel"; text = "Enter the text from the image:"; ObjectID = "Qak-jA-7Ce"; */
+"Qak-jA-7Ce.text" = "Введите текст с картинки:";
+
+/* Class = "UILabel"; text = "car and number"; ObjectID = "QuP-u6-mly"; */
+"QuP-u6-mly.text" = "машина и номер";
+
+/* Class = "UILabel"; text = "Enter the text from the image:"; ObjectID = "RBY-CC-Zg8"; */
+"RBY-CC-Zg8.text" = "Введите текст с картинки:";
+
+/* Class = "UITextField"; placeholder = "Your name"; ObjectID = "RQs-kE-gH0"; */
+"RQs-kE-gH0.placeholder" = "Ваше имя";
+
+/* Class = "UILabel"; text = "Drop-off location"; ObjectID = "RaX-JM-Igp"; */
+"RaX-JM-Igp.text" = "Место возврата авто";
+
+/* Class = "UILabel"; text = "Drop-off time"; ObjectID = "Red-1U-CJB"; */
+"Red-1U-CJB.text" = "Время возврата авто";
+
+/* Class = "UIButton"; normalTitle = "Password recovery"; ObjectID = "Rft-VW-m4F"; */
+"Rft-VW-m4F.normalTitle" = "Забыли пароль?";
+
+/* Class = "UILabel"; text = "Rent range:"; ObjectID = "RsR-0P-yI3"; */
+"RsR-0P-yI3.text" = "Срок арренды:";
+
+/* Class = "UILabel"; text = "6 суток"; ObjectID = "Rut-aE-5OH"; */
+"Rut-aE-5OH.text" = "6 суток";
+
+/* Class = "UITextField"; placeholder = "Middle name"; ObjectID = "SkG-As-rBG"; */
+"SkG-As-rBG.placeholder" = "Отчество";
+
+/* Class = "UILabel"; text = "description"; ObjectID = "TIx-r0-vly"; */
+"TIx-r0-vly.text" = "описание";
+
+/* Class = "UILabel"; text = "0 000"; ObjectID = "TRV-Uy-pcR"; */
+"TRV-Uy-pcR.text" = "0 000";
+
+/* Class = "UILabel"; text = "price"; ObjectID = "UJ1-qA-GtG"; */
+"UJ1-qA-GtG.text" = "цена";
+
+/* Class = "UILabel"; text = "Trading address"; ObjectID = "URy-Bw-jq9"; */
+"URy-Bw-jq9.text" = "Факт. адрес";
+
+/* Class = "UINavigationItem"; title = "Step 2: Select additional"; ObjectID = "UsE-Gz-Agc"; */
+"UsE-Gz-Agc.title" = "Шаг 2: Выбор дополнительного";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "UuO-HB-uSw"; */
+"UuO-HB-uSw.normalTitle" = "Войти";
+
+/* Class = "UITextField"; placeholder = "Date of issue"; ObjectID = "V0g-zJ-tWI"; */
+"V0g-zJ-tWI.placeholder" = "Дата выдачи";
+
+/* Class = "UILabel"; text = "description"; ObjectID = "VI2-xK-K94"; */
+"VI2-xK-K94.text" = "описание";
+
+/* Class = "UILabel"; text = "description"; ObjectID = "VtD-fO-5Lr"; */
+"VtD-fO-5Lr.text" = "описание";
+
+/* Class = "UILabel"; text = "15 000"; ObjectID = "WnN-tN-2fu"; */
+"WnN-tN-2fu.text" = "15 000";
+
+/* Class = "UINavigationItem"; title = "Payment"; ObjectID = "X4Q-sd-lX9"; */
+"X4Q-sd-lX9.title" = "Оплата";
+
+/* Class = "UILabel"; text = "ФИО"; ObjectID = "XSz-Tl-NwA"; */
+"XSz-Tl-NwA.text" = "ФИО";
+
+/* Class = "UITextField"; placeholder = "Additional information"; ObjectID = "Y2p-Z9-aLD"; */
+"Y2p-Z9-aLD.placeholder" = "Дополнительная информация";
+
+/* Class = "UILabel"; text = "Car Model"; ObjectID = "YGx-Yx-QSM"; */
+"YGx-Yx-QSM.text" = "Модель";
+
+/* Class = "UILabel"; text = "Pick-up location:"; ObjectID = "YLd-aL-jRs"; */
+"YLd-aL-jRs.text" = "Подача авто:";
+
+/* Class = "UILabel"; text = "14.10.2016"; ObjectID = "YWb-IT-lMv"; */
+"YWb-IT-lMv.text" = "14.10.2016";
+
+/* Class = "UITabBarItem"; title = "AUTO WITH OUT DRIVER"; ObjectID = "Ydj-nj-pBe"; */
+"Ydj-nj-pBe.title" = "АВТО БЕЗ ВОДИТЕЛЯ";
+
+/* Class = "UILabel"; text = "Drop-off date:"; ObjectID = "YrB-jS-5Jx"; */
+"YrB-jS-5Jx.text" = "Окончание аренды:";
+
+/* Class = "UILabel"; text = "KIA Rio 1.4 АКПП"; ObjectID = "ZBA-iJ-djI"; */
+"ZBA-iJ-djI.text" = "KIA Rio 1.4 АКПП";
+
+/* Class = "UINavigationItem"; title = "Create order"; ObjectID = "ZCR-sr-SPX"; */
+"ZCR-sr-SPX.title" = "Оформить заказ";
+
+/* Class = "UILabel"; text = "Подача авто, наш офис"; ObjectID = "ZQQ-gR-eu7"; */
+"ZQQ-gR-eu7.text" = "Подача авто, наш офис";
+
+/* Class = "UILabel"; text = "Rental rent per day"; ObjectID = "Zle-bC-e7o"; */
+"Zle-bC-e7o.text" = "Стоимость аренды в сутки, руб.:";
+
+/* Class = "UILabel"; text = "date from to"; ObjectID = "ZqN-aN-XDL"; */
+"ZqN-aN-XDL.text" = "дата с по";
+
+/* Class = "UITextField"; placeholder = "Pick-up place"; ObjectID = "Zvt-Cr-ABz"; */
+"Zvt-Cr-ABz.placeholder" = "Место подачи";
+
+/* Class = "UITextField"; placeholder = "Number"; ObjectID = "ZwT-9j-K2i"; */
+"ZwT-9j-K2i.placeholder" = "Номер";
+
+/* Class = "UILabel"; text = "Бензин АИ-92"; ObjectID = "aHY-Mp-puJ"; */
+"aHY-Mp-puJ.text" = "Бензин АИ-92";
+
+/* Class = "UILabel"; text = "Full name"; ObjectID = "aKY-br-UNi"; */
+"aKY-br-UNi.text" = "Имя";
+
+/* Class = "UILabel"; text = "Белый"; ObjectID = "abq-iD-4xL"; */
+"abq-iD-4xL.text" = "Белый";
+
+/* Class = "UILabel"; text = "The cost of additional equipment, rubles:"; ObjectID = "ae3-uk-9V6"; */
+"ae3-uk-9V6.text" = "Стоимость доп. оборудования, руб:";
+
+/* Class = "UILabel"; text = "х суток"; ObjectID = "ag4-uG-Vsd"; */
+"ag4-uG-Vsd.text" = "х суток";
+
+/* Class = "UILabel"; text = "Personal information"; ObjectID = "aix-OA-OQM"; */
+"aix-OA-OQM.text" = "Основная информация";
+
+/* Class = "UILabel"; text = "xx.xx.xxxx"; ObjectID = "azb-rA-IWN"; */
+"azb-rA-IWN.text" = "xx.xx.xxxx";
+
+/* Class = "UILabel"; text = "Deposite, rubles:"; ObjectID = "bbb-YL-mmR"; */
+"bbb-YL-mmR.text" = "Залог, руб.:";
+
+/* Class = "UILabel"; text = "Rent range:"; ObjectID = "bpt-uP-kwL"; */
+"bpt-uP-kwL.text" = "Аренда авто:";
+
+/* Class = "UILabel"; text = "Enter the text from the image:"; ObjectID = "cDJ-s2-IzU"; */
+"cDJ-s2-IzU.text" = "Введите текст с картинки:";
+
+/* Class = "UILabel"; text = "Drop-off date:"; ObjectID = "cf0-V8-VvK"; */
+"cf0-V8-VvK.text" = "Окончание аренды:";
+
+/* Class = "UITextField"; placeholder = "First name"; ObjectID = "cnp-2L-V2P"; */
+"cnp-2L-V2P.placeholder" = "Имя";
+
+/* Class = "UILabel"; text = "Возврат авто, наш офис"; ObjectID = "dIp-mu-Zp8"; */
+"dIp-mu-Zp8.text" = "Возврат авто, наш офис";
+
+/* Class = "UILabel"; text = "6 суток"; ObjectID = "deG-sj-EHH"; */
+"deG-sj-EHH.text" = "6 суток";
+
+/* Class = "UILabel"; text = "Pick-up car:"; ObjectID = "drv-qo-ofU"; */
+"drv-qo-ofU.text" = "Подача авто:";
+
+/* Class = "UILabel"; text = "Optional equipment:"; ObjectID = "e3e-c5-KAC"; */
+"e3e-c5-KAC.text" = "Дополнительное оборудование:";
+
+/* Class = "UILabel"; text = "from 7 and more days:"; ObjectID = "efo-y4-d1P"; */
+"efo-y4-d1P.text" = "от 7 и более суток";
+
+/* Class = "UILabel"; text = "Description:"; ObjectID = "ejq-JR-qqc"; */
+"ejq-JR-qqc.text" = "Описание:";
+
+/* Class = "UILabel"; text = "from 1 to 3 days:"; ObjectID = "fY1-uj-jC1"; */
+"fY1-uj-jC1.text" = "от 1 до 3 суток";
+
+/* Class = "UILabel"; text = "0 000"; ObjectID = "fYQ-yV-89m"; */
+"fYQ-yV-89m.text" = "0 000";
+
+/* Class = "UILabel"; text = "days"; ObjectID = "fiq-cq-X4t"; */
+"fiq-cq-X4t.text" = "суток";
+
+/* Class = "UILabel"; text = "1 900 руб"; ObjectID = "foY-Nc-tgs"; */
+"foY-Nc-tgs.text" = "1 900 руб";
+
+/* Class = "UINavigationItem"; title = "Step 1: Select the rental period"; ObjectID = "g5W-qB-dX9"; */
+"g5W-qB-dX9.title" = "Шаг 1: Выбор периода аренды";
+
+/* Class = "UILabel"; text = "number"; ObjectID = "gIH-R5-JYD"; */
+"gIH-R5-JYD.text" = "номер";
+
+/* Class = "UILabel"; text = "15 000"; ObjectID = "gMH-DW-J5q"; */
+"gMH-DW-J5q.text" = "15 000";
+
+/* Class = "UILabel"; text = "1 900 руб x 6 суток"; ObjectID = "gNQ-ju-eWg"; */
+"gNQ-ju-eWg.text" = "1 900 руб x 6 суток";
+
+/* Class = "UILabel"; text = "1"; ObjectID = "gj3-Zr-gUt"; */
+"gj3-Zr-gUt.text" = "1";
+
+/* Class = "UILabel"; text = "payment status"; ObjectID = "hH8-4f-wpR"; */
+"hH8-4f-wpR.text" = "статус платежа";
+
+/* Class = "UITextField"; placeholder = "New password"; ObjectID = "hHy-wV-kmX"; */
+"hHy-wV-kmX.placeholder" = "Новый пароль";
+
+/* Class = "UINavigationItem"; title = "Change password"; ObjectID = "hvE-8f-fgL"; */
+"hvE-8f-fgL.title" = "Смена пароля";
+
+/* Class = "UIButton"; normalTitle = "Registration"; ObjectID = "idE-Wj-M3P"; */
+"idE-Wj-M3P.normalTitle" = "Регистрация";
+
+/* Class = "UITextField"; placeholder = "Series"; ObjectID = "jFC-AD-qIC"; */
+"jFC-AD-qIC.placeholder" = "Серия";
+
+/* Class = "UILabel"; text = "KIA Rio 1.4 АКПП"; ObjectID = "jVV-Al-uFJ"; */
+"jVV-Al-uFJ.text" = "KIA Rio 1.4 АКПП";
+
+/* Class = "UILabel"; text = "1 900 руб x 6 суток"; ObjectID = "kLq-AR-sr0"; */
+"kLq-AR-sr0.text" = "1 900 руб x 6 суток";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "ko4-kI-pXd"; */
+"ko4-kI-pXd.text" = "Статус";
+
+/* Class = "UILabel"; text = "*** **********"; ObjectID = "l4c-W2-JAL"; */
+"l4c-W2-JAL.text" = "*** **********";
+
+/* Class = "UILabel"; text = "15,000 руб"; ObjectID = "laS-H7-Op6"; */
+"laS-H7-Op6.text" = "15,000 руб";
+
+/* Class = "UILabel"; text = "Pick-up date"; ObjectID = "lq8-Tq-Woy"; */
+"lq8-Tq-Woy.text" = "Дата подачи авто";
+
+/* Class = "UILabel"; text = "Contact data:"; ObjectID = "lta-Lo-psL"; */
+"lta-Lo-psL.text" = "Контактные данные:";
+
+/* Class = "UIButton"; normalTitle = "Confirm purchase"; ObjectID = "mBP-4H-A7t"; */
+"mBP-4H-A7t.normalTitle" = "Подтвердить заказ";
+
+/* Class = "UIButton"; normalTitle = "I give my consent to the processing of personal data"; ObjectID = "mww-Xj-Rxo"; */
+"mww-Xj-Rxo.normalTitle" = "Я даю согласие на обработку персональных данных";
+
+/* Class = "UITextField"; placeholder = "Your name"; ObjectID = "n62-Fq-BPY"; */
+"n62-Fq-BPY.placeholder" = "Ваше имя";
+
+/* Class = "UILabel"; text = "Registration"; ObjectID = "n6i-gx-lcU"; */
+"n6i-gx-lcU.text" = "Регистрация";
+
+/* Class = "UILabel"; text = "Date of issue"; ObjectID = "nDJ-6a-i12"; */
+"nDJ-6a-i12.text" = "Выданный";
+
+/* Class = "UINavigationItem"; title = "PROKATAUTO31"; ObjectID = "nDv-7p-WxD"; */
+"nDv-7p-WxD.title" = "ПРОКАТАВТО31";
+
+/* Class = "UILabel"; text = "Debt"; ObjectID = "nEv-aQ-mhs"; */
+"nEv-aQ-mhs.text" = "Задолженность";
+
+/* Class = "UIButton"; normalTitle = "Send order"; ObjectID = "nHX-To-D8G"; */
+"nHX-To-D8G.normalTitle" = "Отправить заказ";
+
+/* Class = "UILabel"; text = "Auto with out driver"; ObjectID = "nf4-Y1-9bt"; */
+"nf4-Y1-9bt.text" = "Авто без водителя";
+
+/* Class = "UILabel"; text = "Pick-up date:"; ObjectID = "nsd-QN-ztk"; */
+"nsd-QN-ztk.text" = "Начало аренды:";
+
+/* Class = "UILabel"; text = "АКПП"; ObjectID = "o04-Pz-zaG"; */
+"o04-Pz-zaG.text" = "АКПП";
+
+/* Class = "UINavigationItem"; title = "Create order"; ObjectID = "owl-WS-bSX"; */
+"owl-WS-bSX.title" = "Оформить заказ";
+
+/* Class = "UILabel"; text = "Deposit:"; ObjectID = "qbk-Vz-TqU"; */
+"qbk-Vz-TqU.text" = "Залог:";
+
+/* Class = "UIButton"; normalTitle = "Create order"; ObjectID = "qjM-oO-bxd"; */
+"qjM-oO-bxd.normalTitle" = "Оформить заказ";
+
+/* Class = "UITextField"; placeholder = "Enter the text from the image"; ObjectID = "qmo-WK-IjJ"; */
+"qmo-WK-IjJ.placeholder" = "Введите текст с картинки";
+
+/* Class = "UINavigationItem"; title = "PROKATAUTO31"; ObjectID = "qsG-oO-8cu"; */
+"qsG-oO-8cu.title" = "ПРОКАТАВТО31";
+
+/* Class = "UILabel"; text = "Transmission"; ObjectID = "rIz-vZ-u1F"; */
+"rIz-vZ-u1F.text" = "Коробка передач";
+
+/* Class = "UIButton"; normalTitle = "Pay"; ObjectID = "rgm-iV-4iy"; */
+"rgm-iV-4iy.normalTitle" = "Оплатить";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "rkK-FG-xyE"; */
+"rkK-FG-xyE.text" = "Описание";
+
+/* Class = "UILabel"; text = "Drop-off date"; ObjectID = "rl0-vj-bnC"; */
+"rl0-vj-bnC.text" = "Дата возврата авто";
+
+/* Class = "UITabBarItem"; title = "AUTO WITH DRIVER"; ObjectID = "rpg-ov-fWn"; */
+"rpg-ov-fWn.title" = "АВТО С ВОДИТЕЛЕМ";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "s0I-MJ-nIf"; */
+"s0I-MJ-nIf.text" = "...";
+
+/* Class = "UITextField"; placeholder = "Enter booking description"; ObjectID = "s2y-DU-jBX"; */
+"s2y-DU-jBX.placeholder" = "Введите описание заказа";
+
+/* Class = "UITextField"; text = "+7"; ObjectID = "s9s-6z-ofk"; */
+"s9s-6z-ofk.text" = "+7";
+
+/* Class = "UILabel"; text = "Pick-up date"; ObjectID = "tCL-Hk-v7s"; */
+"tCL-Hk-v7s.text" = "Дата подачи авто";
+
+/* Class = "UILabel"; text = "Optional equipment:"; ObjectID = "tHt-Wh-Pm2"; */
+"tHt-Wh-Pm2.text" = "Дополнительное оборудование:";
+
+/* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "tep-Ye-CWE"; */
+"tep-Ye-CWE.placeholder" = "Номер телефона";
+
+/* Class = "UILabel"; text = "Подача авто, наш офис"; ObjectID = "tpR-tS-IFT"; */
+"tpR-tS-IFT.text" = "Подача авто, наш офис";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "trb-Oo-ZAH"; */
+"trb-Oo-ZAH.placeholder" = "Пароль";
+
+/* Class = "UILabel"; text = "status"; ObjectID = "u2y-N0-9Ul"; */
+"u2y-N0-9Ul.text" = "статус";
+
+/* Class = "UILabel"; text = "0 000 рублей"; ObjectID = "u8g-TI-IQf"; */
+"u8g-TI-IQf.text" = "0 000 рублей";
+
+/* Class = "UITextField"; placeholder = "Route"; ObjectID = "uh4-te-sdJ"; */
+"uh4-te-sdJ.placeholder" = "Маршрут";
+
+/* Class = "UILabel"; text = "from 4 to 6 days:"; ObjectID = "uiW-W1-jIu"; */
+"uiW-W1-jIu.text" = "от 4 до 6 суток";
+
+/* Class = "UILabel"; text = " 100 руб. в сутки"; ObjectID = "ul0-BE-41C"; */
+"ul0-BE-41C.text" = " 100 руб. в сутки";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "ulW-Lq-6i7"; */
+"ulW-Lq-6i7.placeholder" = "Емейл";
+
+/* Class = "UILabel"; text = "1,900 руб"; ObjectID = "uoy-SJ-hGT"; */
+"uoy-SJ-hGT.text" = "1,900 руб";
+
+/* Class = "UILabel"; text = "Sum total, rubles:"; ObjectID = "vNn-bL-qRp"; */
+"vNn-bL-qRp.text" = "Итого сумма, руб:";
+
+/* Class = "UILabel"; text = "Russia"; ObjectID = "vS6-2e-hDW"; */
+"vS6-2e-hDW.text" = "Russia";
+
+/* Class = "UILabel"; text = "+*********"; ObjectID = "vZ1-Vo-7j3"; */
+"vZ1-Vo-7j3.text" = "+*********";
+
+/* Class = "UIButton"; normalTitle = "Create order"; ObjectID = "vi7-kj-SLI"; */
+"vi7-kj-SLI.normalTitle" = "Оформить заказ";
+
+/* Class = "UITextField"; text = "+7"; ObjectID = "vnq-hc-Pef"; */
+"vnq-hc-Pef.text" = "+7";
+
+/* Class = "UILabel"; text = "Fuel:"; ObjectID = "vnr-05-BsM"; */
+"vnr-05-BsM.text" = "Топливо:";
+
+/* Class = "UILabel"; text = "xx.xx.xxxx  ____"; ObjectID = "vtI-bL-IuE"; */
+"vtI-bL-IuE.text" = "xx.xx.xxxx  ____";
+
+/* Class = "UILabel"; text = "11 400"; ObjectID = "vvv-ph-sRe"; */
+"vvv-ph-sRe.text" = "11 400";
+
+/* Class = "UILabel"; text = "20.10.2016"; ObjectID = "vyY-Mc-6BI"; */
+"vyY-Mc-6BI.text" = "20.10.2016";
+
+/* Class = "UINavigationItem"; title = "PROKATAUTO31"; ObjectID = "wFF-Aj-EP0"; */
+"wFF-Aj-EP0.title" = "ПРОКАТАВТО31";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "wJn-oA-3va"; */
+"wJn-oA-3va.text" = "Адрес";
+
+/* Class = "UILabel"; text = "Rent rate, rubbles:"; ObjectID = "x4l-YN-ayX"; */
+"x4l-YN-ayX.text" = "Соимость аренды, руб.: ";
+
+/* Class = "UILabel"; text = "Rent range:"; ObjectID = "x9k-wA-KYz"; */
+"x9k-wA-KYz.text" = "Срок арренды:";
+
+/* Class = "UITextField"; placeholder = "Phone"; ObjectID = "xSn-HL-6FN"; */
+"xSn-HL-6FN.placeholder" = "Телефон";
+
+/* Class = "UILabel"; text = "1,800 руб"; ObjectID = "xXn-ER-HsH"; */
+"xXn-ER-HsH.text" = "1,800 руб";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "xnM-1x-hU9"; */
+"xnM-1x-hU9.text" = "Label";
+
+/* Class = "UILabel"; text = "Personal data"; ObjectID = "xnw-d5-zLl"; */
+"xnw-d5-zLl.text" = "Персональные данные";
+
+/* Class = "UILabel"; text = "Penalties"; ObjectID = "xq9-Ao-kl6"; */
+"xq9-Ao-kl6.text" = "Штрафы";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "yEv-c6-vLU"; */
+"yEv-c6-vLU.normalTitle" = "Продолжить";
+
+/* Class = "UILabel"; text = "Deposite, rubles:"; ObjectID = "yQE-Mw-7bc"; */
+"yQE-Mw-7bc.text" = "Залог, руб.:";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "yVN-tF-1yY"; */
+"yVN-tF-1yY.text" = "0";
+
+/* Class = "UILabel"; text = "15 000 руб"; ObjectID = "yX5-ku-Y2G"; */
+"yX5-ku-Y2G.text" = "15 000 руб";
+
+/* Class = "UIButton"; normalTitle = "Get a new password"; ObjectID = "yfE-4I-DX7"; */
+"yfE-4I-DX7.normalTitle" = "Получить новый пароль";
+
+/* Class = "UILabel"; text = "Rental rent per day"; ObjectID = "yxr-M9-SgD"; */
+"yxr-M9-SgD.text" = "Стоимость аренды в сутки:";
+
+/* Class = "UILabel"; text = "status"; ObjectID = "z4t-7k-AdH"; */
+"z4t-7k-AdH.text" = "статус";
+
+/* Class = "UILabel"; text = "2 000 руб"; ObjectID = "zJp-I1-iRb"; */
+"zJp-I1-iRb.text" = "2 000 руб";
+
+/* Class = "UITextField"; placeholder = "Enter password"; ObjectID = "zd8-Ck-MxE"; */
+"zd8-Ck-MxE.placeholder" = "Введите пароль";
+
+/* Class = "UILabel"; text = "Engine power:"; ObjectID = "zfy-hg-EBJ"; */
+"zfy-hg-EBJ.text" = "Мощность двигателя";
+
+/* Class = "UINavigationItem"; title = "Authorization"; ObjectID = "zn5-49-npI"; */
+"zn5-49-npI.title" = "Авторизация";

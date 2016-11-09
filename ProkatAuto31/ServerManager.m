@@ -23,6 +23,7 @@
 @interface ServerManager ()
 
 @property (strong, nonatomic) AFHTTPSessionManager *sessionManager;
+@property (strong, nonatomic) NSString *language;
 
 
 @end
@@ -48,6 +49,14 @@
         
         NSURL *url = [NSURL URLWithString:@"http://83.220.170.187/api/v1/public/"];
         self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:url];
+        NSString *currentLanguage =  [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+        if([currentLanguage isEqualToString:@"ru"] || [currentLanguage isEqualToString:@"uk"] || [currentLanguage isEqualToString:@"be"])
+        {
+            self.language = @"ru";
+        }else
+        {
+             self.language = @"en";
+        }
         //[self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadRevalidatingCacheData];
     }
     return self;
@@ -64,7 +73,8 @@
 
     
     [self.sessionManager GET:@"thesaurus/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -98,7 +108,8 @@
 
     
     [self.sessionManager GET:@"thesaurus/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          
@@ -144,7 +155,8 @@
 
     
     [self.sessionManager GET:@"thesaurus/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSMutableArray *objectsArray = [NSMutableArray array];
@@ -188,7 +200,8 @@
 
 
     [self.sessionManager GET:@"pages/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSArray *dictsArray = [responseObject allObjects];
@@ -216,7 +229,8 @@
                                      onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
                                         withCategoryID: (NSNumber*) categoryID {
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category",
+                            self.language, @"lang", nil];
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 
@@ -250,7 +264,8 @@
                                      onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
                              withCategoryID: (NSNumber*) categoryID {
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"category",
+                            self.language, @"lang", nil];
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 
@@ -284,7 +299,8 @@
 - (void) getCarWithoutDriverDetailWithTransmissionOnSuccess:(void(^)(NSArray* thisData)) success
                                                      onFail:(void(^)(NSError* error, NSInteger statusCode)) failure
                                              withCategoryID: (NSNumber*) categoryID {
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"transmission", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:categoryID, @"transmission",
+                            self.language, @"lang", nil];
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 
@@ -318,7 +334,8 @@
 
     
     [self.sessionManager GET:@"services/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSArray *dictsArray = [responseObject allObjects];
@@ -341,6 +358,7 @@
                  OnSuccess:(void(^)(NSArray* thisData)) success
                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            self.language, @"lang",
                             carId,      @"car",
                             dateFrom,   @"date_from",
                             dateTo,     @"date_to" , nil];
@@ -383,7 +401,8 @@
 
     
     [self.sessionManager GET:@"options/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSArray *dictsArray = [responseObject allObjects];
@@ -413,7 +432,8 @@
 
     
     [self.sessionManager GET:@"captcha/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSString *key = [responseObject objectForKey:@"key"];
@@ -439,7 +459,8 @@
 
     
     [self.sessionManager GET:[NSString stringWithFormat:@"captcha/%@/", key]
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          UIImage *img = responseObject;
@@ -472,6 +493,7 @@
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yyyy-MM-dd"];
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            self.language, @"lang",
                             currentPhoneNumber, @"phone",
                             person.Password,
                             @"password",
@@ -548,6 +570,7 @@
 
     
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            self.language, @"lang",
                             login,    @"phone",
                             password, @"password", nil];
     
@@ -578,6 +601,7 @@
                              OnSuccess:(void (^)(NSString *))success
                                 onFail:(void (^)(NSError *, NSInteger, NSArray* dataArray))failure {
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            self.language, @"lang",
                             phone,  @"phone",
                             key,    @"key",
                             value,  @"captcha_value",nil];
@@ -630,6 +654,7 @@
 
     
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            self.language, @"lang",
                             [NSString stringWithFormat:@"%@", carId], @"car",
                             description, @"description",
                             name, @"name",
@@ -675,7 +700,8 @@
 
 
     [self.sessionManager GET:@"side-menu/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSLog(@"side menu responseObject %@", responseObject);
@@ -704,7 +730,8 @@
     
     
     [self.sessionManager GET:[NSString stringWithFormat:@"side-menu/%@/", pageId]
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSLog(@"responseObject WithPageId: %@ -> %@", pageId, responseObject);
@@ -730,7 +757,8 @@
     NSString *tokenString = [defaults valueForKey:@"tokenString"];
     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
     [self.sessionManager GET:@"orders/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSArray *dicArray = [responseObject objectForKey:@"results"];
@@ -755,7 +783,8 @@
     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [self.sessionManager GET:@"profile/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSLog(@"data with token %@", responseObject);
@@ -786,6 +815,7 @@
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            self.language, @"lang",
                             oldPassword, @"old_password",
                             password, @"new_password",
                             retryPassword, @"retype_new_password", nil];
@@ -827,7 +857,8 @@
     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:payMethod, @"method", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:payMethod, @"method",
+                            self.language, @"lang", nil];
     
     [self.sessionManager POST:[NSString stringWithFormat:@"orders/%@/prepare_payment/", orderId]
                    parameters:params
@@ -872,6 +903,7 @@
     
     
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            self.language, @"lang",
                             [NSString stringWithFormat:@"%@", car], @"car",
                             description, @"description", nil];
     
@@ -917,7 +949,8 @@
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     
     [self.sessionManager GET:[NSString stringWithFormat:@"orders/%@/", orderId]
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          NSLog(@"responseObject orderr detail %@", [responseObject objectForKey:@"equipment"]);
@@ -964,7 +997,8 @@
     
     
     [self.sessionManager DELETE:[NSString stringWithFormat:@"orders/%@/", keyPK]
-                     parameters:nil
+                     parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                 self.language, @"lang", nil]
                         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                             NSLog(@"responseObject DELETE %@", responseObject);
                             if (success) {
@@ -986,7 +1020,8 @@
     self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [self.sessionManager GET:@"transfer/"
-                  parameters:nil
+                  parameters:[[NSDictionary alloc] initWithObjectsAndKeys:
+                              self.language, @"lang", nil]
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                          Category *category = [[Category alloc] initWithServerResponse:responseObject];
@@ -1014,6 +1049,7 @@
     self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            self.language, @"lang",
                             car, @"car",
                             name, @"name",
                             phone, @"phone",
@@ -1057,6 +1093,7 @@
     self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            self.language, @"lang",
                             car, @"car",
                             location, @"pickup_location",
                             dateTime, @"pickup_datetime",
@@ -1133,8 +1170,11 @@
                           NSString *detail;
                           if ([jsonResponse objectForKey:@"opened_orders"]) {
                               openedOrders = [jsonResponse objectForKey:@"detail"];
-                          }
+                          } else {
                               errorMessage = [[[jsonResponse allValues] objectAtIndex:0] objectAtIndex:0];
+
+                          }
+                          
                           
                           if (failure) {
                               failure (errorMessage, openedOrders, detail);

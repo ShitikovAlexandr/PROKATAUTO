@@ -42,7 +42,6 @@
     [super viewDidLoad];
     
     self.baseAddress = @"http://83.220.170.187";
-    self.title = @"Шаг 4: Подтверждение заказа";
     
     [self.doneButton addTarget:self action:@selector(sendNewOrder) forControlEvents:UIControlEventTouchDown];
     
@@ -78,7 +77,7 @@
         
     }
     NSString *daysText = [NSString stringWithFormat:@"%d", self.order.rentalPeriodDays];
-    self.calculateRental.text = [NSString stringWithFormat:@"%d x %d %@", range, self.order.rentalPeriodDays ,[daysText hasSuffix:@"1"] ? @"сутки" : @"суток"];
+    self.calculateRental.text = [NSString stringWithFormat:@"%d x %d %@", range, self.order.rentalPeriodDays ,[daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
     self.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];//self.order.car.deposit;
     
     
@@ -182,7 +181,7 @@
     alertMessage.textAlignment = NSTextAlignmentLeft;
     
     
-    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Сделать предоплату %d руб.", [avans integerValue] ] style:UIAlertActionStyleDestructive
+    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Сделать предоплату %ld руб.", (long)[avans integerValue] ] style:UIAlertActionStyleDestructive
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];

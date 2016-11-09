@@ -52,8 +52,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Мой профиль";
-    
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
@@ -156,17 +154,17 @@
                                                   OnSuccess:^(NSNumber* days, NSNumber* orderCount, NSNumber* penalties, NSNumber* status) {
                                                       
                                                       self.ordersCount.text = [NSString stringWithFormat:@"%@", orderCount];
-                                                      self.fines.text = [NSString stringWithFormat:@"%@ руб.", penalties];
+                                                      self.fines.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), penalties];
                                                       
                                                       int arrears = [days integerValue]* [penalties integerValue];
-                                                      self.arrears.text = [NSString stringWithFormat:@"%d руб.", arrears];
+                                                      self.arrears.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), arrears];
                                                       
                                                       if ([status integerValue]==1) {
-                                                          self.clientType.text = @"Новый клиент";
+                                                          self.clientType.text = NSLocalizedString(@"New customer", nil);
                                                       } else if ([status integerValue] == 2) {
-                                                          self.clientType.text = @"Постоянный клиент";
+                                                          self.clientType.text = NSLocalizedString(@"Regular customer", nil);
                                                       } else if ([status integerValue] == 3) {
-                                                          self.clientType.text = @"VIP клиент";
+                                                          self.clientType.text = NSLocalizedString(@"VIP customer", nil);
                                                       }
                                                       
                                                       

@@ -461,7 +461,7 @@ extern NSString *baseAddress;
 
     [self.isTextFieldEnterText removeAllObjects];
     NSString *empty = [NSString string];
-    empty = @"Заполните все поля!";
+    empty = NSLocalizedString(@"Fill in all fields!!!", nil);
 
     if ([self.person.name length] <1) {
        // empty = @"name";
@@ -473,34 +473,34 @@ extern NSString *baseAddress;
        // empty = @"surname";
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.email length] <6 || ([self.person.email rangeOfString:@"@"].location == NSNotFound)) {
-        empty = @"Введите корректный адрес электронной почты";
+        empty = NSLocalizedString(@"Please, input correct email", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.countryCode length]<1) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.phoneNumber length]<1) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if (self.person.dateOfBirth == NULL) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.passportSeries length] < 1) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.passportNumber length] <1) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if (self.person.dateOfPassport == NULL) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.driverLicense length] <1) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.driverLicenseNumber length] <1) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if (self.person.drivelLicenseDate == NULL) {
-        empty = @"Заполните все поля!";
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
     } else if ([self.person.Password length] <8) {
         empty = @"Password";

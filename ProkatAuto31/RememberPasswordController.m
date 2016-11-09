@@ -33,8 +33,6 @@
     
     [self getCapchaImg];
     
-    self.title = @"Восстановление пароля";
-    
     // Do any additional setup after loading the view.
     [self styleRCButton:self.getNewPasswordButton];
     self.alertView.layer.cornerRadius = 2.f;
@@ -206,7 +204,7 @@
                                                          andPhone:phone
                                                         OnSuccess:^(NSString *data) {
                                                             
-                                                            [self ErrorTextFieldInput:@"Новый пароль отправлен в СМС"];
+                                                            [self ErrorTextFieldInput:NSLocalizedString(@"New password has been sent to the SMS", nil)];
                                                         }
                                                            onFail:^(NSError *error, NSInteger statusCode, NSArray* dataArray) {
                                                                
