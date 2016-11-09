@@ -67,7 +67,7 @@
         self.exit.title = @"Выход";
         [self.tableView reloadData];
     } else {
-        self.exit.title = @"Вход";
+        self.exit.title = @"Войти";
         self.clienHellow.text = @"уважаемый Клиент.";
     }
     
@@ -170,7 +170,7 @@
                                                       NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                       NSString *tokenString = @"";
                                                       [defaults setValue:tokenString forKey:@"tokenString"];
-                                                      self.exit.title = @"Вход";
+                                                      self.exit.title = @"Войти";
                                                       SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
                                                       [self presentViewController:vc animated:YES completion:nil];
 
