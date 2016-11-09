@@ -31,6 +31,7 @@
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    self.wkWebV.navigationDelegate = self;
     
     [self payOrder];
     
@@ -60,7 +61,7 @@
     self.wkWebV = [[WKWebView alloc] initWithFrame:self.webConteiner.frame configuration:wkWebConfig];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
    // wkWebV.UIDelegate = self;
-   // wkWebV.navigationDelegate = self;
+    self.wkWebV.navigationDelegate = self;
     [self.wkWebV loadRequest:nsrequest];
     [self.view addSubview:self.wkWebV];
 
@@ -68,16 +69,93 @@
 
 #pragma mark - WKNavigationDelegate
 
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+}
 
-
-
-/*
-
+/*! @abstract Decides whether to allow or cancel a navigation after its
+ response is known.
+ @param webView The web view invoking the delegate method.
+ @param navigationResponse Descriptive information about the navigation
+ response.
+ @param decisionHandler The decision handler to call to allow or cancel the
+ navigation. The argument is one of the constants of the enumerated type WKNavigationResponsePolicy.
+ @discussion If you do not implement this method, the web view will allow the response, if the web view can show it.
+ */
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     
-    NSLog(@"navigationResponse %@", navigationResponse);
 }
-*/
+
+/*! @abstract Invoked when a main frame navigation starts.
+ @param webView The web view invoking the delegate method.
+ @param navigation The navigation.
+ */
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+/*! @abstract Invoked when a server redirect is received for the main
+ frame.
+ @param webView The web view invoking the delegate method.
+ @param navigation The navigation.
+ */
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+/*! @abstract Invoked when an error occurs while starting to load data for
+ the main frame.
+ @param webView The web view invoking the delegate method.
+ @param navigation The navigation.
+ @param error The error that occurred.
+ */
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    
+}
+
+/*! @abstract Invoked when content starts arriving for the main frame.
+ @param webView The web view invoking the delegate method.
+ @param navigation The navigation.
+ */
+- (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+/*! @abstract Invoked when a main frame navigation completes.
+ @param webView The web view invoking the delegate method.
+ @param navigation The navigation.
+ */
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+/*! @abstract Invoked when an error occurs during a committed main frame
+ navigation.
+ @param webView The web view invoking the delegate method.
+ @param navigation The navigation.
+ @param error The error that occurred.
+ */
+- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    
+}
+
+/*! @abstract Invoked when the web view needs to respond to an authentication challenge.
+ @param webView The web view that received the authentication challenge.
+ @param challenge The authentication challenge.
+ @param completionHandler The completion handler you must invoke to respond to the challenge. The
+ disposition argument is one of the constants of the enumerated type
+ NSURLSessionAuthChallengeDisposition. When disposition is NSURLSessionAuthChallengeUseCredential,
+ the credential argument is the credential to use, or nil to indicate continuing without a
+ credential.
+ @discussion If you do not implement this method, the web view will respond to the authentication challenge with the NSURLSessionAuthChallengeRejectProtectionSpace disposition.
+ */
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
+    
+}
+
+
+
+
 
 #pragma mark - API
 
