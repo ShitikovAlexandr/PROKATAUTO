@@ -118,6 +118,7 @@
         SidePageIdController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SidePageIdController"];
         vc.pageId = item.itemId;
         UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"NavSideId"];
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
         [navVC setViewControllers:@[vc] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
         NSLog(@"go to controller with id page = %@", item.itemId);
@@ -125,6 +126,7 @@
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:99]]) {
         ProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileController"];
         UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
         [navVC setViewControllers:@[vc] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
         NSLog(@"go to profile");
@@ -132,12 +134,14 @@
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:88]]) {
         ChangePasswordController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordController"];
         UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
         [navVC setViewControllers:@[vc] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
         NSLog(@"go to change password ----->>>>");
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:77]]) {
         UINavigationController *ordersVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
         UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
         [navVC setViewControllers:@[ordersVC] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:66]]) {
@@ -149,6 +153,7 @@
         } else {
             [self.tableView reloadData];
             UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"NavReg"];
+            vc.navigationBar.barStyle = UIBarStyleBlack;
             [self presentViewController:vc animated:YES completion:nil];
         }
         NSLog(@"you press Exit/Enter");

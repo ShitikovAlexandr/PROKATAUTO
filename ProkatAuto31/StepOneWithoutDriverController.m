@@ -15,6 +15,7 @@
 #import "ServerManager.h"
 #import "Place.h"
 #import "StepTwoWithoutDriverController.h"
+#import "WithoutDriverDetailController.h"
 
 
 
@@ -76,10 +77,18 @@
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
+    
+    
     
     
     self.order = [[Order alloc] init];
     self.baseAddress = @"http://83.220.170.187";
+}
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -438,7 +447,7 @@
                                                    StepTwoWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepTwoWithoutDriverController"];
                                                    self.order.car = self.car;
                                                    vc.order = self.order;
-                                                   vc.title = @"Шаг 2: Выбор дополнительного оборудования";
+                                                   //vc.title = @"Шаг 2: Выбор дополнительного оборудования";
                                                    [self.navigationController pushViewController:vc animated:YES];
                                                   
                                                }
@@ -511,11 +520,24 @@
     
     self.alert = nil;
     self.alert = [UIAlertController alertControllerWithTitle:
-                  @"Авто занято" message:nil preferredStyle:UIAlertControllerStyleAlert];
+                  @"" message:@"Данная машина забронирована. Перейти в список свободных авто?" preferredStyle:UIAlertControllerStyleAlert];
     
-            UIAlertAction *topic = [UIAlertAction actionWithTitle:@"Список свободных авто" style:UIAlertActionStyleDefault
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action) {}];
-            [self.alert addAction:topic];
+    
+            UIAlertAction *topic = [UIAlertAction actionWithTitle:@"Да" style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * _Nonnull action) {
+                                                  
+                                                      WithoutDriverDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WithoutDriverDetailController"];
+                                                      //vc.categoryID = category.categoryID;
+                                                      vc.title = @"Свободные авто";
+                                                      [self.navigationController pushViewController:vc animated:YES];
+
+                                                  
+                                                  }];
+    [self.alert addAction:topic];
+    [self.alert addAction:cancel];
+
     
     
     

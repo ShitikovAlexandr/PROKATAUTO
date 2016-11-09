@@ -48,6 +48,8 @@
                                                                              style:UIBarButtonItemStylePlain target:self
                                                                             action:@selector(myCustomBack)];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
+    
     [self.payButton addTarget:self action:@selector(payOrder) forControlEvents:UIControlEventTouchDown];
     [self.cancelButton addTarget:self action:@selector(deleteOrder) forControlEvents:UIControlEventTouchDown];
     
@@ -56,6 +58,11 @@
     }
 
     
+}
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource

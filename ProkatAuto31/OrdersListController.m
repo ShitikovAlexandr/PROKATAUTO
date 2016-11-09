@@ -15,6 +15,8 @@
 
 @interface OrdersListController ()
 @property (strong, nonatomic) NSMutableArray *dataArray;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *CallButton;
+
 @end
 
 @implementation OrdersListController
@@ -22,9 +24,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //CallAction
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
     
     self.title = @"Список заказов";
     
@@ -171,5 +175,10 @@
         NSLog(@"Error = %@", error);
     }];
     
+}
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
 }
 @end

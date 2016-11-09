@@ -22,6 +22,8 @@
 
 @property (strong, nonatomic) NSString *baseAddress;
 
+@property (weak, nonatomic) IBOutlet UIButton *CallButton;
+
 
 @end
 
@@ -31,6 +33,8 @@
     [super viewDidLoad];
     
     self.baseAddress = @"http://83.220.170.187";
+    
+    [self.CallButton addTarget:self action:@selector(CallAction) forControlEvents:(UIControlEventTouchDown)];
     
     self.categoryWithDriverArray = [NSMutableArray array];
     [self getCarCategorieFromAPI];
@@ -110,6 +114,11 @@
     }];
     
     
+}
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
 }
 
 

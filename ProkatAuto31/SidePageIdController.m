@@ -26,12 +26,15 @@
     self.activityIndicatorView.hidesWhenStopped = YES;
     [self.view addSubview:self.activityIndicatorView];
     [self.activityIndicatorView startAnimating];
+    
 
     
     [self sideItemInfoWithPageId:self.pageId];
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
     
     
    }
@@ -40,6 +43,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
+}
+
 
 #pragma marck = API
 
@@ -51,6 +60,7 @@
                                                 [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
 
                                                 self.contantLable.attributedText = description;
+                                        
                                                 [self.contantLable sizeToFit];
                                                 
                                                 NSMutableAttributedString *titlelable = [[NSMutableAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];

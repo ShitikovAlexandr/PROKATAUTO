@@ -10,6 +10,8 @@
 #import "ServerManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "Option.h"
+#import "PaymentController.h"
+#import "OrdersListController.h"
 
 @interface StepFourWithoutdriverController ()
 @property (weak, nonatomic) IBOutlet UIImageView *carImageView;
@@ -26,8 +28,10 @@
 @property (weak, nonatomic) IBOutlet UIView *priceVew;
 @property (weak, nonatomic) IBOutlet UILabel *priceForDaysOnly;
 @property (weak, nonatomic) IBOutlet UILabel *optionPriceText;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @property (strong, nonatomic) NSString *baseAddress;
+@property (assign, nonatomic) NSInteger optionPriceInt;
 
 
 @end
@@ -40,10 +44,16 @@
     self.baseAddress = @"http://83.220.170.187";
     self.title = @"Шаг 4: Подтверждение заказа";
     
-
+    [self.doneButton addTarget:self action:@selector(sendNewOrder) forControlEvents:UIControlEventTouchDown];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, self.order.car.imageURL]];
     [self.carImageView setImageWithURL:url];
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
+    
     
     self.carFullName.text = [NSString stringWithFormat:@"%@ %@", self.order.car.itemFullName, self.order.car.itemTransmissionName];
     self.rentalPeriodDays.text = [NSString stringWithFormat:@"%d", self.order.rentalPeriodDays];
@@ -79,7 +89,7 @@
         NSLog(@"optionPrice - %d, %d", [opt.optionPrice integerValue], [opt.selectedAmount integerValue]);
         
     }
-    
+    self.optionPriceInt = optionTotalPrice;
     self.optionPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice];
     self.totalPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice + [self.order.totalPrice integerValue] + [self.order.car.deposit integerValue]];
     
@@ -93,12 +103,159 @@
     }
     
     
-    
-    }
+    NSLog(@"start %@",self.order.startDateOfRentalString);
+    NSLog(@"end %@",self.order.endDateOfRentalString);
+
+}
+
+- (void) CallAction {
+    NSLog(@"make call");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://+79036420187"]];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) sendNewOrder {
+    
+    NSDateFormatter *screenDate = [[NSDateFormatter alloc] init];
+    [screenDate setDateFormat:@"yyyy-MM-dd"];
+    NSDateFormatter *screenTime = [[NSDateFormatter alloc] init];
+    [screenTime setDateFormat:@"HH:mm"];
+    NSString *datefrom = [NSString stringWithFormat:@"%@T%@", [screenDate stringFromDate:self.order.dateOfRentalStart], [screenTime stringFromDate:self.order.timeOfRentalStart]];
+    
+    NSString *dateTo = [NSString stringWithFormat:@"%@T%@", [screenDate stringFromDate:self.order.dateOfRentalEnd], [screenTime stringFromDate:self.order.timeOfRentalEnd]];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token =  [defaults valueForKey:@"tokenString"];
+    NSMutableArray *paramsArray = [NSMutableArray array];
+    NSMutableDictionary *paramsDic = [NSMutableDictionary dictionary];
+    for (Option* opt in self.order.selectOptionArray) {
+        NSDictionary *option = [NSDictionary dictionaryWithObjectsAndKeys:
+                                opt.optionId, @"option",
+                                opt.selectedAmount, @"amount",nil];
+        [paramsArray addObject:option];
+        [paramsDic setObject:option forKey:@"opt"];
+
+    }
+    NSLog(@"options %@", paramsDic);
+    
+    //[{"option": 3, "amount": 1}]
+    
+    [[ServerManager sharedManager] publicOrderWithCarId:[NSString stringWithFormat:@"%@", [self.order.car.carID objectAtIndex:0]]
+                                               dateFrom:datefrom
+                                                 dateTo:dateTo
+                                         giveCarService:[self.order.startPlace.placeID stringValue]
+                                          returnService:[self.order.endPlace.placeID stringValue]
+                                                options:paramsArray
+                                              withToken:token
+                                              OnSuccess:^(NSString *resualtString) {
+                                                  
+                                                  [self payOrder:resualtString];
+                                                  
+                                              }
+                                                 onFail:^(NSString *errorArray, NSString *openedOrders, NSString *detail) {
+                                                     if (openedOrders) {
+                                                         [self alerExistOrder:openedOrders];
+                                                     } else {
+                                                         [self errorActionWithMasegr:errorArray];
+                                                     }
+                                                 }];
+    
+}
+
+- (void) myCustomBack {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) payOrder: (NSString*) orderId {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *avans =  [defaults valueForKey:@"minimal_payment"];
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                @"" message:@"Для Вашего удобства Вы можете сделать предоплату или оплатить заказ полностью.\nВ сумме заказа не включен залог, его необходимо оплатить перед подписанием договора аренды.  В случае полной предоплаты мы предоставим Вам любую еденицу дополнительного оборудования бесплатно." preferredStyle:UIAlertControllerStyleActionSheet];
+    NSArray *viewArray = [[[[[[[[[[[[alert view] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews] firstObject] subviews];
+    UILabel *alertMessage = viewArray[1];
+    alertMessage.textAlignment = NSTextAlignmentLeft;
+    
+    
+    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Сделать предоплату %d руб.", [avans integerValue] ] style:UIAlertActionStyleDestructive
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        
+                                                        PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
+                                                        vc.orderId = orderId;
+                                                        vc.fullPrice = @"partial";
+                                                        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
+                                                        [navVC setViewControllers:@[vc] animated:NO];
+                                                        [self presentViewController:navVC animated:YES completion:nil];
+                                                        
+                                                    }];
+    int totlPrice =[self.priceForDaysOnly.text integerValue] + self.optionPriceInt;
+    
+    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Оплатить заказ %d руб.",totlPrice ] style:UIAlertActionStyleDestructive
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        
+                                                        PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
+                                                        vc.orderId = orderId;
+                                                        vc.fullPrice = @"full";
+                                                        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
+                                                        [navVC setViewControllers:@[vc] animated:NO];
+                                                        [self presentViewController:navVC animated:YES completion:nil];
+                                                        
+                                                        
+                                                    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Оплатить позже" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * _Nonnull action) {}];
+    
+    [alert addAction:partPay];
+    [alert addAction:fullPay];
+    
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+    
+}
+
+- (void) alerExistOrder: (NSString*) masege {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                @"" message:masege preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отмена" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * _Nonnull action) {}];
+    UIAlertAction *goToOrders = [UIAlertAction actionWithTitle:@"Перейти" style:UIAlertActionStyleDefault
+                                                                                                                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                                                                                                                     OrdersListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
+                                                                                                                                                     UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+                                                                                                                                                     navVC.navigationBar.barStyle = UIBarStyleBlack;
+                                                                                                                                                     [navVC setViewControllers:@[vc] animated:NO];
+                                                                                                                                                     [self presentViewController:navVC animated:YES completion:nil];
+                                                                                                                                                 }];
+    
+    [alert addAction:cancel];
+    [alert addAction:goToOrders];
+    [self presentViewController:alert animated:YES completion:nil];
+
+    
+}
+
+- (void) errorActionWithMasegr: (NSString*) masege {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                @"" message:masege preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+
+
 }
 
 

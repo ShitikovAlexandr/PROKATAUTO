@@ -15,6 +15,7 @@
 @interface PaymentController ()
 
 @property (weak, nonatomic) IBOutlet UIView *webConteiner;
+@property (strong, nonatomic) WKWebView *wkWebV;
 
 @end
 
@@ -56,13 +57,27 @@
     WKWebViewConfiguration *wkWebConfig = [[WKWebViewConfiguration alloc] init];
     wkWebConfig.userContentController = wkUController;
     
-    WKWebView *wkWebV = [[WKWebView alloc] initWithFrame:self.webConteiner.frame configuration:wkWebConfig];
+    self.wkWebV = [[WKWebView alloc] initWithFrame:self.webConteiner.frame configuration:wkWebConfig];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-
-    [wkWebV loadRequest:nsrequest];
-    [self.view addSubview:wkWebV];
+   // wkWebV.UIDelegate = self;
+   // wkWebV.navigationDelegate = self;
+    [self.wkWebV loadRequest:nsrequest];
+    [self.view addSubview:self.wkWebV];
 
 }
+
+#pragma mark - WKNavigationDelegate
+
+
+
+
+/*
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    
+    NSLog(@"navigationResponse %@", navigationResponse);
+}
+*/
 
 #pragma mark - API
 

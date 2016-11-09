@@ -113,6 +113,7 @@
 
 - (void) orderDitailOptionsWithToken: (NSString*) tokenString andOrderId: (NSNumber*) orderId OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount)) success
                        onFail:(void(^)(NSArray* errorArray)) failure;
+
 - (void) getTransferCategoryInfo:(void (^)(Category *))success
                           onFail:(void (^)(NSError *))failure;
 
@@ -144,4 +145,21 @@
                 OnSuccess:(void(^)(NSString* responce)) success
                    onFail:(void(^)(NSError* error)) failure;
 
+- (void) publicOrderWithCarId: (NSString*) carId
+                     dateFrom:(NSString*) dateFrom
+                       dateTo: (NSString*) dateTo
+               giveCarService: (NSString*) give
+                returnService: (NSString*) returnService
+                      options:(NSArray*) options
+                    withToken:(NSString*) tokenString
+                    OnSuccess:(void(^)(NSString* resualtString)) success
+                       onFail:(void(^)(NSString* errorArray, NSString *openedOrders, NSString *detail)) failure;
+
+- (void) validatePhoneWithCode: (NSString*) code
+                     withToken: (NSString*) tokrnString
+                     OnSuccess:(void(^)(NSString* resualtString)) success
+                        onFail:(void(^)( NSString  *detail)) failure;
+
 @end
+
+
