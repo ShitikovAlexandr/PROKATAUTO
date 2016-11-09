@@ -52,17 +52,23 @@
         SideMenuItem *profile = [[SideMenuItem alloc] init];
         profile.itemId = @99;
         profile.image = @"ic_person.png";
+        profile.title = NSLocalizedString(@"My profile", nil);
         [self.objectsInSlideBar addObject:profile];
         SideMenuItem *changePassword = [[SideMenuItem alloc] init];
         changePassword.itemId = @88;
         changePassword.image = @"ic_lock_open.png";
+        changePassword.title = NSLocalizedString(@"Change password", nil);
         [self.objectsInSlideBar addObject:changePassword];
         SideMenuItem *orders = [[SideMenuItem alloc]  init];
         orders.itemId = @77;
         orders.image = @"ic_inbox.png";
+        orders.title = NSLocalizedString(@"My orders", nil);
+        self.exit.title = NSLocalizedString(@"Logout", nil);
         [self.objectsInSlideBar addObject:orders];
         [self.tableView reloadData];
     } else {
+        self.exit.title = NSLocalizedString(@"Login", nil);
+        self.clienHellow.text = NSLocalizedString(@"dear customer.", nil);
     }
     
     
