@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Регистрация";
     
     [self styleRCButton:self.registerButton];
     self.codeTextField.delegate =self;

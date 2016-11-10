@@ -524,7 +524,7 @@
                                                   
                                                       WithoutDriverDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WithoutDriverDetailController"];
                                                       //vc.categoryID = category.categoryID;
-
+                                                      vc.title = NSLocalizedString(@"List of available cars", nil);
                                                       [self.navigationController pushViewController:vc animated:YES];
 
                                                   

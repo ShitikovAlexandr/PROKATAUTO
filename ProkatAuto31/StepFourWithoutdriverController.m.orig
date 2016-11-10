@@ -203,9 +203,13 @@
                                                         [self presentViewController:navVC animated:YES completion:nil];
                                                         
                                                     }];
-    int totlPrice =[self.priceForDaysOnly.text integerValue] + self.optionPriceInt;
+    NSUInteger totlPrice = [self.priceForDaysOnly.text integerValue] + self.optionPriceInt;
     
+<<<<<<< HEAD
+    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Оплатить заказ %lu руб.",(unsigned long)totlPrice ] style:UIAlertActionStyleDestructive
+=======
     UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat: NSLocalizedString(@"Pay order %d rubles", nil),totlPrice ] style:UIAlertActionStyleDestructive
+>>>>>>> 8265344a329cb59f57bf62ec8b9883817e625653
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];

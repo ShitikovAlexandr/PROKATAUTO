@@ -92,6 +92,8 @@
 		84109E201DA93F6800010EA3 /* CarsWithDriverListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84109E1F1DA93F6800010EA3 /* CarsWithDriverListController.m */; };
 		84109E231DA997E600010EA3 /* CarWithDriverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84109E221DA997E600010EA3 /* CarWithDriverCell.m */; };
 		8435724E1DC33D38009CFFC0 /* OrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8435724D1DC33D38009CFFC0 /* OrderCell.m */; };
+		84754C331DD376C800CA7BB9 /* fab.png in Resources */ = {isa = PBXBuildFile; fileRef = 84754C321DD376C800CA7BB9 /* fab.png */; };
+		84754C351DD376DB00CA7BB9 /* ic_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 84754C341DD376DB00CA7BB9 /* ic_phone.png */; };
 		8486453C1DB7FF7900D6D813 /* CarWithDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486453B1DB7FF7900D6D813 /* CarWithDriver.m */; };
 		848645401DBC040400D6D813 /* OrderCarWithDriverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486453F1DBC040400D6D813 /* OrderCarWithDriverController.m */; };
 		848645441DC1FBCC00D6D813 /* OrdersListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848645431DC1FBCC00D6D813 /* OrdersListController.m */; };
@@ -128,6 +130,11 @@
 		FA88FD911DABB1380039CF33 /* oherCar.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD901DABB1380039CF33 /* oherCar.png */; };
 		FA88FD931DABB2220039CF33 /* 12.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD921DABB2220039CF33 /* 12.png */; };
 		FA9DB7891DB66925006D81D5 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9DB7881DB66925006D81D5 /* RegistrationController.m */; };
+<<<<<<< HEAD
+		FAB3C8691DD212930062A75C /* ic_phone_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB3C8661DD212930062A75C /* ic_phone_2x.png */; };
+		FAB3C86A1DD212930062A75C /* ic_phone_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB3C8671DD212930062A75C /* ic_phone_3x.png */; };
+=======
+>>>>>>> 8265344a329cb59f57bf62ec8b9883817e625653
 		FABE7B741DC9E6120043F8F1 /* ChangePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */; };
 		FABE7B771DCA111F0043F8F1 /* PaymentController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE7B761DCA111F0043F8F1 /* PaymentController.m */; };
 		FABE7B7A1DCA421E0043F8F1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABE7B791DCA421E0043F8F1 /* WebKit.framework */; };
@@ -348,6 +355,11 @@
 		FA88FD921DABB2220039CF33 /* 12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12.png; sourceTree = "<group>"; };
 		FA9DB7871DB66925006D81D5 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		FA9DB7881DB66925006D81D5 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
+<<<<<<< HEAD
+		FAB3C8661DD212930062A75C /* ic_phone_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone_2x.png; sourceTree = "<group>"; };
+		FAB3C8671DD212930062A75C /* ic_phone_3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone_3x.png; sourceTree = "<group>"; };
+=======
+>>>>>>> 8265344a329cb59f57bf62ec8b9883817e625653
 		FABE7B721DC9E6120043F8F1 /* ChangePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordController.h; sourceTree = "<group>"; };
 		FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordController.m; sourceTree = "<group>"; };
 		FABE7B751DCA111F0043F8F1 /* PaymentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentController.h; sourceTree = "<group>"; };
@@ -504,9 +516,10 @@
 				FAD301E21DC739AD001FE7DC /* logo2.png */,
 				FA10378E1DD36E0C00C11EC3 /* car.png */,
 				FA7E82A81DA3C0FA00F5BFB4 /* Back-25.png */,
-				FA1A37F71DD3386F00F94133 /* fab.png */,
-				FA1A37F91DD3389700F94133 /* ic_phone.png */,
+<<<<<<< HEAD
 				FA1037901DD374FB00C11EC3 /* fab.png */,
+=======
+>>>>>>> 8265344a329cb59f57bf62ec8b9883817e625653
 				FA7E82A41DA3B85F00F5BFB4 /* navBack.png */,
 				636441CF1D97EB6800089E84 /* ic_arrow_drop_down.imageset */,
 				636441C61D97EB3900089E84 /* ic_arrow_drop_up.imageset */,
@@ -846,12 +859,12 @@
 		FAB3C8641DD212930062A75C /* ic_phone.imageset */ = {
 			isa = PBXGroup;
 			children = (
-				FAB3C8651DD212930062A75C /* ic_phone.png */,
-				FAB3C8661DD212930062A75C /* ic_phone_2x.png */,
-				FAB3C8671DD212930062A75C /* ic_phone_3x.png */,
+<<<<<<< HEAD
 				FA1037921DD3755300C11EC3 /* ic_phone.png */,
 				FAB3C8661DD212930062A75C /* ic_phone_2x.png */,
 				FAB3C8671DD212930062A75C /* ic_phone_3x.png */,
+=======
+>>>>>>> 8265344a329cb59f57bf62ec8b9883817e625653
 			);
 			name = ic_phone.imageset;
 			path = ../../../Users/alex/Downloads/ic_phone_black_24dp/ios/ic_phone.imageset;
@@ -975,8 +988,11 @@
 				63F4B86A1D82C842006B391D /* Assets.xcassets in Resources */,
 				636441CE1D97EB3900089E84 /* ic_arrow_drop_up_3x.png in Resources */,
 				6359CE961D92709700E76AD4 /* van.png in Resources */,
+<<<<<<< HEAD
 				FA1037911DD374FB00C11EC3 /* fab.png in Resources */,
+=======
 				84754C331DD376C800CA7BB9 /* fab.png in Resources */,
+>>>>>>> 8265344a329cb59f57bf62ec8b9883817e625653
 				636441CD1D97EB3900089E84 /* ic_arrow_drop_up_2x.png in Resources */,
 				636441CC1D97EB3900089E84 /* ic_arrow_drop_up.png in Resources */,
 				6306F56B1D90306200915F22 /* withoutDriver@3x.png in Resources */,
@@ -995,8 +1011,10 @@
 				6306F5401D90137100915F22 /* ic_info_outline.png in Resources */,
 				6306F56C1D90306200915F22 /* withDriver2x.png in Resources */,
 				6306F5551D90139000915F22 /* ic_lock_open_3x.png in Resources */,
-				FAB3C8681DD212930062A75C /* ic_phone.png in Resources */,
+<<<<<<< HEAD
 				FA1037931DD3755300C11EC3 /* ic_phone.png in Resources */,
+=======
+>>>>>>> 8265344a329cb59f57bf62ec8b9883817e625653
 				6359CE9B1D92741F00E76AD4 /* mkpp120x90.jpg in Resources */,
 				6306F5431D90137100915F22 /* Thumbs.db in Resources */,
 				6306F52E1D90134C00915F22 /* ic_map_2x.png in Resources */,

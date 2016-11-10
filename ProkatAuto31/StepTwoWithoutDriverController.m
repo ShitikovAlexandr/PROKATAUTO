@@ -95,7 +95,6 @@
         
         NSDateFormatter *screenDate = [[NSDateFormatter alloc] init];
         [screenDate setDateFormat:@"dd.MM.yyyy"];
-
         NSDate *startRental = [df dateFromString:self.order.startDateOfRentalString];
         NSDate *endRental = [df dateFromString:self.order.endDateOfRentalString];
         NSLog(@"Date of start rental %@", startRental);
@@ -115,28 +114,28 @@
         NSInteger range;
         NSInteger dayPrice;
         if (rentalPeriodDay < 4) {
-             range =  [self.order.car.priceRange1 integerValue];
+            range =  [self.order.car.priceRange1 integerValue];
         } else if (rentalPeriodDay >= 4 && rentalPeriodDay < 7) {
-             range =  [self.order.car.priceRange2 integerValue];
+            range =  [self.order.car.priceRange2 integerValue];
         } else {
-             range =  [self.order.car.priceRange3 integerValue];
-
+            range =  [self.order.car.priceRange3 integerValue];
         }
         dayPrice = rentalPeriodDay * range;
         
         self.order.totalPrice = [NSNumber numberWithInteger:dayPrice];
         cell.rentalPrice.text = [NSString stringWithFormat:@"%@", self.order.totalPrice];
+        cell.rentalPriceCalculation.text = [NSString stringWithFormat:NSLocalizedString(@"%ld x %ld days", nil), (long)range, (long)rentalPeriodDay];
         cell.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];
         
         
         
         
+        cell.rentalDayPeriod.text = [NSString stringWithFormat:NSLocalizedString(@"%ld days", nil), (long)rentalPeriodDay];
         
         cell.placeStart.text = self.order.startPlace.name;
         cell.placeend.text = self.order.endPlace.name;
         
-      
-
+        
         return cell;
         
     } else {
@@ -150,16 +149,18 @@
             
             return cell;
         } else {
-        
-        static NSString* identifier = @"StepTwoOptionsCell";
-        StepTwoOptionsCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
-        
-        Option *option = [self.optionsArray objectAtIndex:indexPath.row];
-        cell.nameOption.text = [NSString stringWithFormat:@"%@",option.optionName]; //option.optionName;
-        cell.optionCount.text = @"1";
-        
+            
+            static NSString* identifier = @"StepTwoOptionsCell";
+            StepTwoOptionsCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
+            
+            Option *option = [self.optionsArray objectAtIndex:indexPath.row];
+            cell.nameOption.text = [NSString stringWithFormat:@"%@",option.optionName]; //option.optionName;
+            cell.optionCount.text = @"1";
+            
             if ([option.optionPrice integerValue] <1) {
+                cell.priceOption.text = NSLocalizedString(@"Free", nil);
             } else {
+                cell.priceOption.text = [NSString stringWithFormat:NSLocalizedString(@"%d rubles per day", nil), [option.optionPrice integerValue]];
             }
             
             if ([option.optionAvaliableAmount intValue] >1) {
@@ -172,7 +173,7 @@
                 [cell.optionCount addGestureRecognizer:tapGestureRecognizer];
             }
             
-        return cell;
+            return cell;
         }
     }
 }
