@@ -113,7 +113,7 @@
 
 - (IBAction)SendOrder:(id) sender event: (id) event {
     
-    if([self.tokenString isEqualToString:@""])
+    if([self.tokenString isEqualToString:@""] || self.tokenString == nil)
     {
         [self sendOrderWithCaptcha];
     }else

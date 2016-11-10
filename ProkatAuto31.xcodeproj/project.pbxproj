@@ -101,7 +101,6 @@
 		FA06A3D91DA8F50900E4DB5F /* RCDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */; };
 		FA10378F1DD36E0C00C11EC3 /* car.png in Resources */ = {isa = PBXBuildFile; fileRef = FA10378E1DD36E0C00C11EC3 /* car.png */; };
 		FA1037911DD374FB00C11EC3 /* fab.png in Resources */ = {isa = PBXBuildFile; fileRef = FA1037901DD374FB00C11EC3 /* fab.png */; };
-		FA1037931DD3755300C11EC3 /* ic_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = FA1037921DD3755300C11EC3 /* ic_phone.png */; };
 		FA13E9C71DC7A14200E4A549 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA13E9C61DC7A14200E4A549 /* ProfileController.m */; };
 		FA1A37F61DD308BB00F94133 /* SMSController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A37F51DD308BB00F94133 /* SMSController.m */; };
 		FA2015981DAE65BB0091D953 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2015971DAE65BB0091D953 /* Place.m */; };
@@ -302,7 +301,6 @@
 		FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDatePicker.m; sourceTree = "<group>"; };
 		FA10378E1DD36E0C00C11EC3 /* car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car.png; sourceTree = "<group>"; };
 		FA1037901DD374FB00C11EC3 /* fab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fab.png; sourceTree = "<group>"; };
-		FA1037921DD3755300C11EC3 /* ic_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_phone.png; path = /Projects/ProkatAuto31/ProkatAuto31/ic_phone.png; sourceTree = "<absolute>"; };
 		FA13E9C51DC7A14200E4A549 /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileController.h; sourceTree = "<group>"; };
 		FA13E9C61DC7A14200E4A549 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileController.m; sourceTree = "<group>"; };
 		FA1A37F41DD308BB00F94133 /* SMSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSController.h; sourceTree = "<group>"; };
@@ -504,8 +502,6 @@
 				FAD301E21DC739AD001FE7DC /* logo2.png */,
 				FA10378E1DD36E0C00C11EC3 /* car.png */,
 				FA7E82A81DA3C0FA00F5BFB4 /* Back-25.png */,
-				FA1A37F71DD3386F00F94133 /* fab.png */,
-				FA1A37F91DD3389700F94133 /* ic_phone.png */,
 				FA1037901DD374FB00C11EC3 /* fab.png */,
 				FA7E82A41DA3B85F00F5BFB4 /* navBack.png */,
 				636441CF1D97EB6800089E84 /* ic_arrow_drop_down.imageset */,
@@ -846,12 +842,6 @@
 		FAB3C8641DD212930062A75C /* ic_phone.imageset */ = {
 			isa = PBXGroup;
 			children = (
-				FAB3C8651DD212930062A75C /* ic_phone.png */,
-				FAB3C8661DD212930062A75C /* ic_phone_2x.png */,
-				FAB3C8671DD212930062A75C /* ic_phone_3x.png */,
-				FA1037921DD3755300C11EC3 /* ic_phone.png */,
-				FAB3C8661DD212930062A75C /* ic_phone_2x.png */,
-				FAB3C8671DD212930062A75C /* ic_phone_3x.png */,
 			);
 			name = ic_phone.imageset;
 			path = ../../../Users/alex/Downloads/ic_phone_black_24dp/ios/ic_phone.imageset;
@@ -937,7 +927,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84754C351DD376DB00CA7BB9 /* ic_phone.png in Resources */,
 				6306F5361D90136200915F22 /* ic_inbox.png in Resources */,
 				6306F5241D90133B00915F22 /* ic_exit_to_app.png in Resources */,
 				FA7E82A91DA3C0FB00F5BFB4 /* Back-25.png in Resources */,
@@ -976,7 +965,6 @@
 				636441CE1D97EB3900089E84 /* ic_arrow_drop_up_3x.png in Resources */,
 				6359CE961D92709700E76AD4 /* van.png in Resources */,
 				FA1037911DD374FB00C11EC3 /* fab.png in Resources */,
-				84754C331DD376C800CA7BB9 /* fab.png in Resources */,
 				636441CD1D97EB3900089E84 /* ic_arrow_drop_up_2x.png in Resources */,
 				636441CC1D97EB3900089E84 /* ic_arrow_drop_up.png in Resources */,
 				6306F56B1D90306200915F22 /* withoutDriver@3x.png in Resources */,
@@ -995,8 +983,6 @@
 				6306F5401D90137100915F22 /* ic_info_outline.png in Resources */,
 				6306F56C1D90306200915F22 /* withDriver2x.png in Resources */,
 				6306F5551D90139000915F22 /* ic_lock_open_3x.png in Resources */,
-				FAB3C8681DD212930062A75C /* ic_phone.png in Resources */,
-				FA1037931DD3755300C11EC3 /* ic_phone.png in Resources */,
 				6359CE9B1D92741F00E76AD4 /* mkpp120x90.jpg in Resources */,
 				6306F5431D90137100915F22 /* Thumbs.db in Resources */,
 				6306F52E1D90134C00915F22 /* ic_map_2x.png in Resources */,

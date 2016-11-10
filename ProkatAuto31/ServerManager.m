@@ -654,7 +654,6 @@
 
     
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
-                            self.language, @"lang",
                             [NSString stringWithFormat:@"%@", carId], @"car",
                             description, @"description",
                             name, @"name",
@@ -664,7 +663,7 @@
                             password, @"captcha_value", nil];
     
     
-    [self.sessionManager POST:@"hourly-orders/"
+    [self.sessionManager POST:[NSString stringWithFormat:@"hourly-orders/?lang=%@", self.language]
                    parameters:params
                      progress:nil
                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -903,14 +902,13 @@
     
     
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
-                            self.language, @"lang",
                             [NSString stringWithFormat:@"%@", car], @"car",
                             description, @"description", nil];
     
     [self.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@", tokenString] forHTTPHeaderField:@"Authorization"];
     
     
-    [self.sessionManager POST:@"hourly-orders/"
+    [self.sessionManager POST:[NSString stringWithFormat:@"hourly-orders/?lang=%@", self.language]
                    parameters:params
                      progress:nil
                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
