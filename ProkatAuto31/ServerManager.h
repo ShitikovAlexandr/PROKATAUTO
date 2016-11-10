@@ -150,7 +150,7 @@
                        dateTo: (NSString*) dateTo
                giveCarService: (NSString*) give
                 returnService: (NSString*) returnService
-                      options:(NSArray*) options
+                      options:(NSString*) options
                     withToken:(NSString*) tokenString
                     OnSuccess:(void(^)(NSString* resualtString)) success
                        onFail:(void(^)(NSString* errorArray, NSString *openedOrders, NSString *detail)) failure;

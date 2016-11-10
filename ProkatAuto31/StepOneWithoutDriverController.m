@@ -45,6 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.activityIndicatorView.color = [UIColor blackColor];
     self.activityIndicatorView.center = self.view.center;

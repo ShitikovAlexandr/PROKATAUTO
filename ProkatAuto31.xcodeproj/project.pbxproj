@@ -128,7 +128,6 @@
 		FA88FD911DABB1380039CF33 /* oherCar.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD901DABB1380039CF33 /* oherCar.png */; };
 		FA88FD931DABB2220039CF33 /* 12.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD921DABB2220039CF33 /* 12.png */; };
 		FA9DB7891DB66925006D81D5 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9DB7881DB66925006D81D5 /* RegistrationController.m */; };
-		FAB3C8681DD212930062A75C /* ic_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB3C8651DD212930062A75C /* ic_phone.png */; };
 		FAB3C8691DD212930062A75C /* ic_phone_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB3C8661DD212930062A75C /* ic_phone_2x.png */; };
 		FAB3C86A1DD212930062A75C /* ic_phone_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB3C8671DD212930062A75C /* ic_phone_3x.png */; };
 		FABE7B741DC9E6120043F8F1 /* ChangePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */; };
@@ -303,7 +302,7 @@
 		FA06A3D81DA8F50800E4DB5F /* RCDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDatePicker.m; sourceTree = "<group>"; };
 		FA10378E1DD36E0C00C11EC3 /* car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car.png; sourceTree = "<group>"; };
 		FA1037901DD374FB00C11EC3 /* fab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fab.png; sourceTree = "<group>"; };
-		FA1037921DD3755300C11EC3 /* ic_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone.png; sourceTree = "<group>"; };
+		FA1037921DD3755300C11EC3 /* ic_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_phone.png; path = /Projects/ProkatAuto31/ProkatAuto31/ic_phone.png; sourceTree = "<absolute>"; };
 		FA13E9C51DC7A14200E4A549 /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileController.h; sourceTree = "<group>"; };
 		FA13E9C61DC7A14200E4A549 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileController.m; sourceTree = "<group>"; };
 		FA1A37F41DD308BB00F94133 /* SMSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSController.h; sourceTree = "<group>"; };
@@ -349,7 +348,6 @@
 		FA88FD921DABB2220039CF33 /* 12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12.png; sourceTree = "<group>"; };
 		FA9DB7871DB66925006D81D5 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		FA9DB7881DB66925006D81D5 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
-		FAB3C8651DD212930062A75C /* ic_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone.png; sourceTree = "<group>"; };
 		FAB3C8661DD212930062A75C /* ic_phone_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone_2x.png; sourceTree = "<group>"; };
 		FAB3C8671DD212930062A75C /* ic_phone_3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone_3x.png; sourceTree = "<group>"; };
 		FABE7B721DC9E6120043F8F1 /* ChangePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordController.h; sourceTree = "<group>"; };
@@ -504,7 +502,6 @@
 			isa = PBXGroup;
 			children = (
 				FAD301E21DC739AD001FE7DC /* logo2.png */,
-				FA1037921DD3755300C11EC3 /* ic_phone.png */,
 				FA10378E1DD36E0C00C11EC3 /* car.png */,
 				FA7E82A81DA3C0FA00F5BFB4 /* Back-25.png */,
 				FA1037901DD374FB00C11EC3 /* fab.png */,
@@ -847,7 +844,7 @@
 		FAB3C8641DD212930062A75C /* ic_phone.imageset */ = {
 			isa = PBXGroup;
 			children = (
-				FAB3C8651DD212930062A75C /* ic_phone.png */,
+				FA1037921DD3755300C11EC3 /* ic_phone.png */,
 				FAB3C8661DD212930062A75C /* ic_phone_2x.png */,
 				FAB3C8671DD212930062A75C /* ic_phone_3x.png */,
 			);
@@ -994,7 +991,6 @@
 				6306F56C1D90306200915F22 /* withDriver2x.png in Resources */,
 				6306F5551D90139000915F22 /* ic_lock_open_3x.png in Resources */,
 				FA1037931DD3755300C11EC3 /* ic_phone.png in Resources */,
-				FAB3C8681DD212930062A75C /* ic_phone.png in Resources */,
 				6359CE9B1D92741F00E76AD4 /* mkpp120x90.jpg in Resources */,
 				6306F5431D90137100915F22 /* Thumbs.db in Resources */,
 				6306F52E1D90134C00915F22 /* ic_map_2x.png in Resources */,

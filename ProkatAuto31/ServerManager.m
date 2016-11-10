@@ -937,6 +937,29 @@
     
 }
 
+- (void) paymentSuccessWithAccesTocen: (NSString*) token
+                               andURL: (NSString*) urlString
+                            OnSuccess:(void(^)(NSString* urlString)) success
+                               onFail:(void(^)(NSArray* errorArray)) failure {
+    
+    self.sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    [self.sessionManager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    /*
+    [self.sessionManager GET:
+                  parameters:<#(nullable id)#>
+                    progress:<#^(NSProgress * _Nonnull downloadProgress)downloadProgress#>
+                     success:<#^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)success#>
+                     failure:<#^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)failure#>];
+    
+    */
+}
+
+
+
+
+
 - (void) orderDitailOptionsWithToken: (NSString*) tokenString
                           andOrderId: (NSNumber*) orderId
                            OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount)) success
@@ -1125,7 +1148,7 @@
                        dateTo: (NSString*) dateTo
                giveCarService: (NSString*) give
                 returnService: (NSString*) returnService
-                      options:(NSArray*) options
+                      options:(NSString*) options
                     withToken: (NSString*) tokenString
                     OnSuccess:(void(^)(NSString* resualtString)) success
                        onFail:(void(^)(NSString* errorArray, NSString *openedOrders, NSString *detail)) failure {

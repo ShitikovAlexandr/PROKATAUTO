@@ -55,7 +55,7 @@
     
     
     self.carFullName.text = [NSString stringWithFormat:@"%@ %@", self.order.car.itemFullName, self.order.car.itemTransmissionName];
-    self.rentalPeriodDays.text = [NSString stringWithFormat:@"%d", self.order.rentalPeriodDays];
+    self.rentalPeriodDays.text = [NSString stringWithFormat:@"%ld", (long)self.order.rentalPeriodDays];
     NSDateFormatter *screenDate = [[NSDateFormatter alloc] init];
     [screenDate setDateFormat:@"dd.MM.yyyy"];
     NSDateFormatter *screenTime = [[NSDateFormatter alloc] init];
@@ -76,8 +76,8 @@
         range =  [self.order.car.priceRange3 integerValue];
         
     }
-    NSString *daysText = [NSString stringWithFormat:@"%d", self.order.rentalPeriodDays];
-    self.calculateRental.text = [NSString stringWithFormat:@"%d x %d %@", range, self.order.rentalPeriodDays ,[daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
+    NSString *daysText = [NSString stringWithFormat:@"%ld", (long)self.order.rentalPeriodDays];
+    self.calculateRental.text = [NSString stringWithFormat:@"%ld x %ld %@", (long)range, (long)self.order.rentalPeriodDays ,[daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
     self.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];//self.order.car.deposit;
     
     
@@ -85,12 +85,12 @@
     NSInteger optionTotalPrice = 0;
     for (Option *opt in self.order.selectOptionArray) {
         optionTotalPrice = optionTotalPrice + [opt.optionPrice integerValue] * [opt.selectedAmount integerValue];
-        NSLog(@"optionPrice - %d, %d", [opt.optionPrice integerValue], [opt.selectedAmount integerValue]);
+        NSLog(@"optionPrice - %ld, %ld", (long)[opt.optionPrice integerValue], (long)[opt.selectedAmount integerValue]);
         
     }
     self.optionPriceInt = optionTotalPrice;
-    self.optionPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice];
-    self.totalPrice.text = [NSString stringWithFormat:@"%d", optionTotalPrice + [self.order.totalPrice integerValue] + [self.order.car.deposit integerValue]];
+    self.optionPrice.text = [NSString stringWithFormat:@"%ld", (long)optionTotalPrice];
+    self.totalPrice.text = [NSString stringWithFormat:@"%ld", optionTotalPrice + [self.order.totalPrice integerValue] + [self.order.car.deposit integerValue]];
     
     if ([self.optionPrice.text integerValue]<1) {
         CGRect rect = self.priceVew.frame;
@@ -130,16 +130,26 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token =  [defaults valueForKey:@"tokenString"];
     NSMutableArray *paramsArray = [NSMutableArray array];
-    NSMutableDictionary *paramsDic = [NSMutableDictionary dictionary];
+    NSMutableSet *paramsSet = [NSMutableSet set];
     for (Option* opt in self.order.selectOptionArray) {
         NSDictionary *option = [NSDictionary dictionaryWithObjectsAndKeys:
                                 opt.optionId, @"option",
                                 opt.selectedAmount, @"amount",nil];
         [paramsArray addObject:option];
-        [paramsDic setObject:option forKey:@"opt"];
+        
+        [paramsSet addObject:option];
+        
 
     }
-    NSLog(@"options %@", paramsDic);
+    NSError *error=nil;
+    NSData *jsonData2 = [NSJSONSerialization dataWithJSONObject:paramsArray options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
+    NSLog(@"jsonData as string:\n%@", jsonString);
+    
+
+    NSLog(@"options %@", paramsArray);
+    NSLog(@"paramsSet %@", paramsSet);
+
     
     //[{"option": 3, "amount": 1}]
     
@@ -148,7 +158,7 @@
                                                  dateTo:dateTo
                                          giveCarService:[self.order.startPlace.placeID stringValue]
                                           returnService:[self.order.endPlace.placeID stringValue]
-                                                options:paramsArray
+                                                options:jsonString
                                               withToken:token
                                               OnSuccess:^(NSString *resualtString) {
                                                   
@@ -162,6 +172,7 @@
                                                          [self errorActionWithMasegr:errorArray];
                                                      }
                                                  }];
+     
     
 }
 
@@ -192,9 +203,9 @@
                                                         [self presentViewController:navVC animated:YES completion:nil];
                                                         
                                                     }];
-    int totlPrice =[self.priceForDaysOnly.text integerValue] + self.optionPriceInt;
+    NSUInteger totlPrice = [self.priceForDaysOnly.text integerValue] + self.optionPriceInt;
     
-    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Оплатить заказ %d руб.",totlPrice ] style:UIAlertActionStyleDestructive
+    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Оплатить заказ %lu руб.",(unsigned long)totlPrice ] style:UIAlertActionStyleDestructive
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];

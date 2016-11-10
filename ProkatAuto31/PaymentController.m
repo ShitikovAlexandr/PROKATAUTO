@@ -16,19 +16,18 @@
 
 @property (weak, nonatomic) IBOutlet UIView *webConteiner;
 @property (strong, nonatomic) WKWebView *wkWebV;
+@property (strong, nonatomic) NSString *baseAddress;
+
 
 @end
 
 @implementation PaymentController
 
 - (void)viewDidLoad {
-    
-    
     [super viewDidLoad];
     
-    //self.orderId = @"436";
-    //self.fullPrice = @"1600";
-    
+    self.baseAddress = @"http://83.220.170.187";
+
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
@@ -75,12 +74,20 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
     NSLog(@"didFinishNavigation %@", webView.URL);
+    NSString *urlString = [NSString stringWithFormat:@"%@",webView.URL];
+    /*
+    if ([urlString rangeOfString:self.baseAddress].location !=NSNotFound) {
+        NSURLRequest *nsrequest=[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        [self.wkWebV loadRequest:nsrequest];
+
+    }
+    */
     
 }
 
 // http://83.220.170.187/api/v1/public/payments/payment-success/05e9086c-1a97-42d1-b5ff-485496b6c7e8/?orderId=624b4c50-2d3c-4123-b9b0-8bd8198e0072
 
-
+// http://83.220.170.187/api/v1/public/payments/payment-error/de25eefa-c256-4e84-ba6a-d9c648d92f44/?orderId=0bf2bc12-3605-4110-841a-bc5acae7f12d
 
 
 #pragma mark - API
