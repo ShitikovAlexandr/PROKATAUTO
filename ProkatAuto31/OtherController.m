@@ -89,7 +89,7 @@
     Category *category =[self.categoryArray objectAtIndex:indexPath.row];
     if([category.categoryID isEqual:self.transferId])
     {
-        TransferCategoryController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferCategoryController"];
+        TransferCategoryController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferOrderController"];
         vc.category = category;
         
         vc.title = category.name;
