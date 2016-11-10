@@ -727,3 +727,8 @@
 
 /* Class = "UINavigationItem"; title = "Authorization"; ObjectID = "zn5-49-npI"; */
 "zn5-49-npI.title" = "Авторизация";
+
+/* Class = "UINavigationItem"; title = "Registration"; ObjectID = "15y-Nj-ONl"; */
+"15y-Nj-ONl.title" = "Регистрация";
+
+

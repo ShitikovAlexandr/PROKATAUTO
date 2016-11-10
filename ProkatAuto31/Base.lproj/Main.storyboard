@@ -1808,7 +1808,7 @@
             </objects>
             <point key="canvasLocation" x="2882.5" y="-2974"/>
         </scene>
-        <!--Controller-->
+        <!--Registration-->
         <scene sceneID="WgT-YZ-kSq">
             <objects>
                 <viewController storyboardIdentifier="SMSController" id="REN-8H-Nh0" customClass="SMSController" sceneMemberID="viewController">
@@ -1849,6 +1849,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Registration" id="15y-Nj-ONl"/>
                     <connections>
                         <outlet property="alertView" destination="2te-Sa-qVN" id="gjD-1p-QTC"/>
                         <outlet property="codeTextField" destination="WHL-UO-X9l" id="dhe-bd-ubn"/>
@@ -2038,6 +2039,7 @@
                         <outlet property="countryCode" destination="PHI-Wj-vtk" id="rwm-zc-low"/>
                         <outlet property="getNewPasswordButton" destination="yfE-4I-DX7" id="PMM-ba-C4e"/>
                         <outlet property="phoneNumber" destination="Lyc-Tm-DVk" id="T8Y-KR-PrM"/>
+                        <segue destination="REN-8H-Nh0" kind="push" id="0OY-Rf-WWP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YlQ-q5-hB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3502,7 +3504,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="trr-eA-x7O">
-                                        <rect key="frame" x="15" y="15" width="0.0" height="0.0"/>
+                                        <rect key="frame" x="15" y="15" width="360" height="652"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Transfer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gd7-1k-ZNb">
