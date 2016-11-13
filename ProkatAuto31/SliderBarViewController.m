@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) SideMenuItem *exit;
 
-@property (weak, nonatomic) IBOutlet UIButton *testPay;
 
 @end
 
@@ -35,8 +34,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.testPay addTarget:self action:@selector(paymentScreen) forControlEvents:UIControlEventTouchDown];
     
     self.objectsInSlideBar = [NSMutableArray array];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -77,6 +74,7 @@
     
     [self getSideMenuItems];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -194,18 +192,6 @@
         NSLog(@"Что то пошло не так");
         
     }];
-}
-
-// testMethod
-- (void) paymentScreen {
-    
-    PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
-    UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
-    [navVC setViewControllers:@[vc] animated:NO];
-    [self presentViewController:navVC animated:YES completion:nil];
-
-    
-    
 }
 
 @end

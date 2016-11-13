@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OtherController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface OtherController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate>
 
 @end

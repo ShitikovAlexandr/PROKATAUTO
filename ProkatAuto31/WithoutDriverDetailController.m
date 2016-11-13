@@ -29,6 +29,8 @@
 @property (assign, nonatomic) NSInteger expandedCellIndex;
 
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) NSNumberFormatter* numberFormatter;
+
 
 
 
@@ -43,6 +45,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.numberFormatter = [[NSNumberFormatter alloc] init];
+    [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [self.numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+
+  
+    self.navigationItem.hidesBackButton = YES; 
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
+    
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.activityIndicatorView.color = [UIColor blackColor];
     self.activityIndicatorView.center = self.view.center;
@@ -51,12 +62,7 @@
     [self.activityIndicatorView startAnimating];
 
     
-    self.navigationItem.hidesBackButton = YES; 
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
-
-    //[self.navigationController.navigationItem.backBarButtonItem setTitle:@"dddd"];
     self.baseAddress = @"http://83.220.170.187";
     self.expandedCellIndex = -1;
     self.dataArray = [NSMutableArray array];
@@ -66,6 +72,10 @@
     } else {
         [self getCarInfoWithTransmissionFromAPI];
     }
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,11 +113,11 @@
     cell.power.text =  [NSString stringWithFormat:NSLocalizedString(@"%@ HP", nil), car.itemPower];
     cell.fuel.text = car.itemFuelName;
     
-    cell.deposit.text = [NSString stringWithFormat:@"%@", car.deposit];
-    cell.priceFrom.text = [NSString stringWithFormat:NSLocalizedString(@"from %@ rubles", nil), car.priceRange3]; //car.minimumPrice
-    cell.priceRange1.text = [NSString stringWithFormat:@"%@", car.priceRange1];
-    cell.priceRange2.text = [NSString stringWithFormat:@"%@", car.priceRange2];
-    cell.priceRange3.text = [NSString stringWithFormat:@"%@", car.priceRange3];
+    cell.deposit.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:car.deposit]];
+    cell.priceFrom.text = [NSString stringWithFormat:NSLocalizedString(@"from %@ rubles", nil), [self.numberFormatter stringFromNumber:car.minimumPrice]]; //car.minimumPrice
+    cell.priceRange1.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:car.priceRange1]];
+    cell.priceRange2.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:car.priceRange2]];
+    cell.priceRange3.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:car.priceRange3]];
 
     NSString* str = @"";
     for (NSString* color in car.itemColor) {
@@ -139,10 +149,10 @@
 
 - (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.expandedCellIndex == indexPath.item) {
-        return CGSizeMake(self.collectionView.frame.size.width - 16, 460);
+        return CGSizeMake(self.collectionView.frame.size.width - 16, 520);
       
     }
-    return CGSizeMake(self.collectionView.frame.size.width - 16, 355);
+    return CGSizeMake(self.collectionView.frame.size.width - 16, 380);
 }
 
 - (IBAction)infoClickEvent:(id) sender event: (id) event {

@@ -46,7 +46,7 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         
-                        self.lable.font = [self.lable.font fontWithSize:7.f];
+                        self.lable.font = [self.lable.font fontWithSize:10.f];
                         
                         
                         textField.layer.shadowColor = [UIColor redColor].CGColor;
@@ -64,8 +64,6 @@
     
     textField.layer.shadowColor = [UIColor grayColor].CGColor;
     textField.layer.shadowOffset = CGSizeMake(0.f, 1.0f);
-
-    
 }
 
 @end

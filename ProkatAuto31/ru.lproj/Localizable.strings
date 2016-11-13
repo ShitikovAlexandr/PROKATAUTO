@@ -14,7 +14,7 @@
 "Change password" = "Сменить пароль";
 "My orders" = "Мои заказы";
 "Logout" = "Выход";
-"Login" = "Вход";
+"Login" = "Войти";
 "dear customer." = "уважаемый Клиент.";
 "Do you want to exit?" = "Вы действительно хотите выйти?";
 "Yes" = "Да";
@@ -32,7 +32,7 @@
 "Rejected" = "Отказ";
 "Cancel" = "Отмена";
 "Reservation" = "Бронь";
-"Book a car" = "Аренда";
+"Book a car" = "Арендовать авто";
 "Archive" = "Архив";
 "Error" = "Ошибка";
 "not paid" = "не оплачено";
@@ -41,7 +41,9 @@
 "%@ rubles" = "%@ руб";
 "The car is reserved. Do you want go to the list of available cars?" = "Данная машина забронирована. Перейти в список свободных авто?";
 "List of available cars" = "Список свободных авто";
-"%ld x %ld days" = "%ld x %ld суток";
+//"%ld x %ld days" = "%ld x %ld суток";
+//"%@ x %ld days" = "%ld x %ld суток";
+
 "%ld days" = "%ld суток";
 "Free" = "Бесплатно";
 "%d rubles per day" = "%d руб. в сутки";

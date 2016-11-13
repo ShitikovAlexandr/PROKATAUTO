@@ -27,6 +27,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *CallButton;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+
 
 @end
 
@@ -34,6 +36,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
 
     self.baseAddress = @"http://83.220.170.187";
     
@@ -43,11 +52,12 @@
     [self getCarCategorieFromAPI];
     
     SWRevealViewController *revealViewController = self.revealViewController;
+
     if ( revealViewController )
         {
         [self.sidebarButton setTarget: self.revealViewController];
         [self.sidebarButton setAction: @selector( revealToggle: )];
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
         }
 
 }
@@ -117,14 +127,17 @@
              [self.categoryArray addObjectsFromArray:thisData];
              [[ServerManager sharedManager] getCarOtherCategoryWithPageOnSuccess:^(NSArray *thisData) {
                  [self.categoryArray addObjectsFromArray:thisData];
+                 [self.activityIndicatorView stopAnimating];
                  [self.collectionView reloadData];
              } onFail:^(NSError *error, NSInteger statusCode) {
                  NSLog(@"error = %@, ", error);
              }];
          } onFail:^(NSError *error, NSInteger statusCode) {
+             [self.activityIndicatorView stopAnimating];
              NSLog(@"error = %@, ", error);
          }];
      } onFail:^(NSError *error) {
+         [self.activityIndicatorView stopAnimating];
          NSLog(@"error = %@, ", error);
      }];
 }

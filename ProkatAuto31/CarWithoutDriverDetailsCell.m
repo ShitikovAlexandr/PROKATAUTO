@@ -27,8 +27,7 @@
     cell.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:cell.bounds cornerRadius:cell.contentView.layer.cornerRadius].CGPath;
     
     self.rentalButton.layer.cornerRadius = 3.f;
-    self.rentalButton.layer.borderWidth = 1.0f;
-    self.rentalButton.layer.borderColor = [UIColor blackColor].CGColor;
+    self.rentalButton.layer.borderColor = [UIColor clearColor].CGColor;
     self.rentalButton.layer.masksToBounds = YES;
 
     

@@ -11,6 +11,6 @@
 
 
 
-@interface CarWithDriverController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface CarWithDriverController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate>
 
 @end

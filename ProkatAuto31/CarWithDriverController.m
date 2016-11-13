@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSString *baseAddress;
 
 @property (weak, nonatomic) IBOutlet UIButton *CallButton;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
 
 @end
@@ -31,6 +32,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
     
     self.baseAddress = @"http://83.220.170.187";
     
@@ -41,12 +49,15 @@
 
     
     SWRevealViewController *revealViewController = self.revealViewController;
+
     if ( revealViewController )
-        {
+    {
         [self.sidebarButton setTarget: self.revealViewController];
         [self.sidebarButton setAction: @selector( revealToggle: )];
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-        }
+        //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
+    }
+    
 
 
 }
@@ -104,13 +115,13 @@
                                                      ascending:YES];
         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         self.categoryWithDriverArray = (NSMutableArray*)[thisData sortedArrayUsingDescriptors:sortDescriptors];
-        
+        [self.activityIndicatorView stopAnimating];
         //[self.categoryWithDriverArray addObjectsFromArray:thisData];
         [self.collectionView performBatchUpdates:^{
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
         } completion:nil];
     } onFail:^(NSError *error, NSInteger statusCode) {
-       
+        [self.activityIndicatorView stopAnimating];
     }];
     
     

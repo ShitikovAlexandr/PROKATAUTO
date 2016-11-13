@@ -14,7 +14,7 @@
 "Change password" = "Сменить пароль";
 "My orders" = "Мои заказы";
 "Logout" = "Выход";
-"Login" = "Вход";
+"Login" = "Войти";
 "dear customer." = "уважаемый Клиент.";
 "Do you want to exit?" = "Вы действительно хотите выйти?";
 "Yes" = "Да";
@@ -32,7 +32,7 @@
 "Rejected" = "Отказ";
 "Cancel" = "Отмена";
 "Reservation" = "Бронь";
-"Book a car" = "Аренда";
+"Book a car" = "Арендовать авто";
 "Archive" = "Архив";
 "Error" = "Ошибка";
 "not paid" = "не оплачено";

@@ -27,7 +27,7 @@
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
-    
+    self.navigationItem.rightBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_phone.png"] style:UIBarButtonItemStylePlain target:self action:@selector(CallAction)];
     
     NSURL *url = [NSURL URLWithString:self.car.imageURL];
@@ -80,7 +80,7 @@
     
     button.layer.cornerRadius = 3.f;
     button.layer.borderWidth = 1.0f;
-    button.layer.borderColor = [UIColor blackColor].CGColor;
+    button.layer.borderColor = [UIColor clearColor].CGColor;
     button.layer.masksToBounds = YES;
 }
 

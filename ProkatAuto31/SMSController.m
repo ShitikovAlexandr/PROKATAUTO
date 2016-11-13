@@ -54,7 +54,7 @@
     
     button.layer.cornerRadius = 3.f;
     button.layer.borderWidth = 1.0f;
-    button.layer.borderColor = [UIColor blackColor].CGColor;
+    button.layer.borderColor = [UIColor clearColor].CGColor;
     button.layer.masksToBounds = YES;
 }
 

@@ -32,6 +32,8 @@
 
 @property (strong, nonatomic) NSString *baseAddress;
 @property (assign, nonatomic) NSInteger optionPriceInt;
+@property (strong, nonatomic) NSNumberFormatter* numberFormatter;
+
 
 
 @end
@@ -42,6 +44,11 @@
     [super viewDidLoad];
     
     self.baseAddress = @"http://83.220.170.187";
+    
+    self.numberFormatter = [[NSNumberFormatter alloc] init];
+    [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [self.numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+
     
     [self.doneButton addTarget:self action:@selector(sendNewOrder) forControlEvents:UIControlEventTouchDown];
     
@@ -55,7 +62,9 @@
     
     
     self.carFullName.text = [NSString stringWithFormat:@"%@ %@", self.order.car.itemFullName, self.order.car.itemTransmissionName];
-    self.rentalPeriodDays.text = [NSString stringWithFormat:@"%ld", (long)self.order.rentalPeriodDays];
+    NSString *daysText = [NSString stringWithFormat:@"%ld", (long)self.order.rentalPeriodDays];
+
+    self.rentalPeriodDays.text = [NSString stringWithFormat:@"%ld %@", (long)self.order.rentalPeriodDays, [daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
     NSDateFormatter *screenDate = [[NSDateFormatter alloc] init];
     [screenDate setDateFormat:@"dd.MM.yyyy"];
     NSDateFormatter *screenTime = [[NSDateFormatter alloc] init];
@@ -65,20 +74,19 @@
     self.endRental.text = [NSString stringWithFormat:@"%@ %@", [screenDate stringFromDate:self.order.dateOfRentalEnd], [screenTime stringFromDate:self.order.timeOfRentalEnd]];
     self.startPlace.text = [NSString stringWithFormat:@"%@", self.order.startPlace.locationName];
     self.endPlace.text = [NSString stringWithFormat:@"%@", self.order.endPlace.locationName];
-    self.priceForDaysOnly.text = [self.order.totalPrice stringValue];
+    self.priceForDaysOnly.text =  [NSString stringWithFormat:@"%@",[self.numberFormatter stringFromNumber:self.order.totalPrice]];   //[self.order.totalPrice stringValue];
     
-    NSInteger range;
+    NSNumber *range;
     if (self.order.rentalPeriodDays  < 4) {
-        range =  [self.order.car.priceRange1 integerValue];
+        range =  self.order.car.priceRange1;
     } else if (self.order.rentalPeriodDays >= 4 && self.order.rentalPeriodDays < 7) {
-        range =  [self.order.car.priceRange2 integerValue];
+        range =  self.order.car.priceRange2;
     } else {
-        range =  [self.order.car.priceRange3 integerValue];
+        range =  self.order.car.priceRange3;
         
     }
-    NSString *daysText = [NSString stringWithFormat:@"%ld", (long)self.order.rentalPeriodDays];
-    self.calculateRental.text = [NSString stringWithFormat:@"%ld x %ld %@", (long)range, (long)self.order.rentalPeriodDays ,[daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
-    self.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];//self.order.car.deposit;
+    self.calculateRental.text = [NSString stringWithFormat:@"%@ x %ld %@", [self.numberFormatter stringFromNumber:range], (long)self.order.rentalPeriodDays ,[daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
+    self.deposite.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:self.order.car.deposit]];//self.order.car.deposit;
     
     
     
@@ -90,7 +98,8 @@
     }
     self.optionPriceInt = optionTotalPrice;
     self.optionPrice.text = [NSString stringWithFormat:@"%ld", (long)optionTotalPrice];
-    self.totalPrice.text = [NSString stringWithFormat:@"%ld", optionTotalPrice + [self.order.totalPrice integerValue] + [self.order.car.deposit integerValue]];
+    NSInteger totalOptionPrice = optionTotalPrice + [self.order.totalPrice integerValue] + [self.order.car.deposit integerValue];
+    self.totalPrice.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:[NSNumber numberWithUnsignedInteger:totalOptionPrice]]];
     
     if ([self.optionPrice.text integerValue]<1) {
         CGRect rect = self.priceVew.frame;

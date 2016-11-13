@@ -7,7 +7,6 @@
 //
 
 #import "CarWithoutDriverController.h"
-#import "SWRevealViewController.h"
 #import "WithoutDriverDetailController.h"
 #import "Category.h"
 #import "HeaderInSectionView.h"
@@ -37,6 +36,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
+    }
+
+    
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.activityIndicatorView.color = [UIColor blackColor];
     self.activityIndicatorView.center = self.view.center;
@@ -53,13 +64,6 @@
     
     self.transmisionCategories = [NSMutableArray arrayWithArray:[self creatinCategoriesOfTransmission]];
     
-    SWRevealViewController *revealViewController = self.revealViewController;
-    if ( revealViewController )
-        {
-        [self.sidebarButton setTarget: self.revealViewController];
-        [self.sidebarButton setAction: @selector( revealToggle: )];
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-        }
     
     
 }
@@ -68,6 +72,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 #pragma mark - UICollectionViewDataSource
 
@@ -123,6 +129,7 @@
     if (indexPath.section == 0) {
         Category *category =[self.carCategories objectAtIndex:indexPath.row];
         cell.categoryName.text = category.name;
+        cell.mainDescription.text = @"";
         CGRect frame = cell.categoryName.frame;
         frame.origin.y= 36.f;
         frame.origin.x= cell.categoryName.frame.origin.x;
@@ -203,12 +210,12 @@
         
         [self.carCategories addObjectsFromArray:thisData] ;
         [self.activityIndicatorView stopAnimating];
-
-        
+        [self.collectionView reloadData];
+        /*
         [self.collectionView performBatchUpdates:^{
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-
         } completion:nil];
+        */
     } onFail:^(NSError *error, NSInteger statusCode) {
         [self.activityIndicatorView stopAnimating];
 

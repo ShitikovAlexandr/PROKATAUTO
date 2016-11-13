@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CarMainCollectionViewCell.h"
+#import "SWRevealViewController.h"
 
 
-@interface CarWithoutDriverController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
+@interface CarWithoutDriverController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @end

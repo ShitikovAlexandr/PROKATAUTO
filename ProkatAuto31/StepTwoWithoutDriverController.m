@@ -25,6 +25,8 @@
 @property (strong, nonatomic) NSMutableArray *optionsArray;
 @property (strong, nonatomic) NSString *baseAddress;
 @property (strong, nonatomic) UIAlertController *alert;
+@property (strong, nonatomic) NSNumberFormatter* numberFormatter;
+
 
 
 
@@ -38,6 +40,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.baseAddress = @"http://83.220.170.187";
+    
+    self.numberFormatter = [[NSNumberFormatter alloc] init];
+    [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [self.numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
     
     self.order.selectOptionArray = [NSMutableArray array];
 
@@ -97,11 +103,12 @@
         [screenDate setDateFormat:@"dd.MM.yyyy"];
         NSDate *startRental = [df dateFromString:self.order.startDateOfRentalString];
         NSDate *endRental = [df dateFromString:self.order.endDateOfRentalString];
-        NSLog(@"Date of start rental %@", startRental);
-        NSLog(@"Date of end rental %@", endRental);
+
+        NSDateFormatter *screenTime = [[NSDateFormatter alloc] init];
+        [screenTime setDateFormat:@"HH:mm"];
         
-        cell.rentalStartDate.text = [screenDate stringFromDate:startRental];
-        cell.rentalEndDate.text = [screenDate stringFromDate:endRental];
+        cell.rentalStartDate.text = [NSString stringWithFormat:@"%@ %@", [screenDate stringFromDate:self.order.dateOfRentalStart], [screenTime stringFromDate:self.order.timeOfRentalStart]];
+        cell.rentalEndDate.text = [NSString stringWithFormat:@"%@ %@", [screenDate stringFromDate:self.order.dateOfRentalEnd], [screenTime stringFromDate:self.order.timeOfRentalEnd]];
         
         
         NSLog(@"rentalPeriod %f", [endRental timeIntervalSinceDate:startRental]);
@@ -111,29 +118,33 @@
         if (rentalPeriod % 24 > 0) {
             rentalPeriodDay = rentalPeriodDay+1;
         }
-        NSInteger range;
+        NSNumber *range;
         NSInteger dayPrice;
         if (rentalPeriodDay < 4) {
-            range =  [self.order.car.priceRange1 integerValue];
+            range =  self.order.car.priceRange1 ;
         } else if (rentalPeriodDay >= 4 && rentalPeriodDay < 7) {
-            range =  [self.order.car.priceRange2 integerValue];
+            range =  self.order.car.priceRange2;
         } else {
-            range =  [self.order.car.priceRange3 integerValue];
+            range = self.order.car.priceRange3;
         }
-        dayPrice = rentalPeriodDay * range;
-        
+        dayPrice = rentalPeriodDay * [range integerValue];
+        NSString *daysText = [NSString stringWithFormat:@"%ld", (long)rentalPeriodDay];
+
         self.order.totalPrice = [NSNumber numberWithInteger:dayPrice];
-        cell.rentalPrice.text = [NSString stringWithFormat:@"%@", self.order.totalPrice];
-        cell.rentalPriceCalculation.text = [NSString stringWithFormat:NSLocalizedString(@"%ld x %ld days", nil), (long)range, (long)rentalPeriodDay];
-        cell.deposite.text = [NSString stringWithFormat:@"%@", self.order.car.deposit];
+        cell.rentalPrice.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:self.order.totalPrice]];
+        cell.rentalPriceCalculation.text = [NSString stringWithFormat:@"%@ x %ld %@", [self.numberFormatter stringFromNumber:range], (long)rentalPeriodDay, [daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
+
+        
+        cell.deposite.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:self.order.car.deposit]];
+        
+
+        cell.rentalDayPeriod.text = [NSString stringWithFormat:@"%ld %@", (long)rentalPeriodDay, [daysText hasSuffix:@"1"] ? NSLocalizedString(@"day", nil) : NSLocalizedString(@"days", nil)];
         
         
+        //cell.rentalDayPeriod.text = [NSString stringWithFormat:NSLocalizedString(@"%ld days", nil), (long)rentalPeriodDay];
         
-        
-        cell.rentalDayPeriod.text = [NSString stringWithFormat:NSLocalizedString(@"%ld days", nil), (long)rentalPeriodDay];
-        
-        cell.placeStart.text = self.order.startPlace.name;
-        cell.placeend.text = self.order.endPlace.name;
+        cell.placeStart.text = self.order.startPlace.locationName;
+        cell.placeend.text = self.order.endPlace.locationName;
         
         
         return cell;
@@ -162,8 +173,8 @@
             } else {
                 cell.priceOption.text = [NSString stringWithFormat:NSLocalizedString(@"%d rubles per day", nil), [option.optionPrice integerValue]];
             }
-            
-            if ([option.optionAvaliableAmount intValue] >1) {
+            NSLog(@"optionsMultiple %@", option.optionsMultiple);
+            if ([option.optionsMultiple intValue] >0) {
                 NSLog(@"option name %@", option.optionAvaliableAmount);
                 [cell.optionCount setUserInteractionEnabled:YES];
                 cell.dropDownImg.image = [UIImage imageNamed:@"ic_arrow_drop_down_2x.png"];
@@ -199,7 +210,7 @@
 - (void) selectOptionCount: (UITapGestureRecognizer *) gesture  {
     CGPoint touchPoint=[gesture locationInView:self.tableView];
      NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-    Option *option = [self.optionsArray objectAtIndex:indexPath.row];
+    //Option *option = [self.optionsArray objectAtIndex:indexPath.row];
     
     StepTwoOptionsCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
@@ -210,7 +221,7 @@
     self.alert.view.transform = CGAffineTransformScale( self.alert.view.transform, 0.8, 0.8);
     
     
-    for (int i = 0; i < [option.optionAvaliableAmount integerValue]; i++) {
+    for (int i = 0; i < 3; i++) {
         
         NSString *value = [NSString stringWithFormat:@"%d",i+1];
         UIAlertAction *point = [UIAlertAction actionWithTitle:value style:UIAlertActionStyleDefault

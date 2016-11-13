@@ -78,7 +78,7 @@
 "5nZ-tT-qAG.normalTitle" = "Отправить заказ";
 
 /* Class = "UIButton"; normalTitle = "Book a car"; ObjectID = "5tz-bL-SBr"; */
-"5tz-bL-SBr.normalTitle" = "Забронировать";
+"5tz-bL-SBr.normalTitle" = "Забронировать авто";
 
 /* Class = "UIButton"; normalTitle = "Book a car"; ObjectID = "617-l2-zSE"; */
 "617-l2-zSE.normalTitle" = "Арендовать";
@@ -168,7 +168,7 @@
 "CRJ-lT-TAu.text" = "Возврат авто:";
 
 /* Class = "UILabel"; text = "Rent rate, rubles:"; ObjectID = "CVs-JS-PHq"; */
-"CVs-JS-PHq.text" = "Соимость аренды, руб.: ";
+"CVs-JS-PHq.text" = "Стоимость аренды, руб: ";
 
 /* Class = "UILabel"; text = "14.10.2016"; ObjectID = "Cvo-yh-uZE"; */
 "Cvo-yh-uZE.text" = "14.10.2016";
@@ -333,7 +333,7 @@
 "Rft-VW-m4F.normalTitle" = "Забыли пароль?";
 
 /* Class = "UILabel"; text = "Rent range:"; ObjectID = "RsR-0P-yI3"; */
-"RsR-0P-yI3.text" = "Срок арренды:";
+"RsR-0P-yI3.text" = "Срок аренды:";
 
 /* Class = "UILabel"; text = "6 суток"; ObjectID = "Rut-aE-5OH"; */
 "Rut-aE-5OH.text" = "6 суток";
@@ -465,13 +465,13 @@
 "e3e-c5-KAC.text" = "Дополнительное оборудование:";
 
 /* Class = "UILabel"; text = "from 7 and more days:"; ObjectID = "efo-y4-d1P"; */
-"efo-y4-d1P.text" = "от 7 и более суток";
+"efo-y4-d1P.text" = "от 7 и более суток:";
 
 /* Class = "UILabel"; text = "Description:"; ObjectID = "ejq-JR-qqc"; */
 "ejq-JR-qqc.text" = "Описание:";
 
 /* Class = "UILabel"; text = "from 1 to 3 days:"; ObjectID = "fY1-uj-jC1"; */
-"fY1-uj-jC1.text" = "от 1 до 3 суток";
+"fY1-uj-jC1.text" = "от 1 до 3 суток:";
 
 /* Class = "UILabel"; text = "0 000"; ObjectID = "fYQ-yV-89m"; */
 "fYQ-yV-89m.text" = "0 000";
@@ -569,8 +569,8 @@
 /* Class = "UINavigationItem"; title = "Create order"; ObjectID = "owl-WS-bSX"; */
 "owl-WS-bSX.title" = "Оформить заказ";
 
-/* Class = "UILabel"; text = "Deposit:"; ObjectID = "qbk-Vz-TqU"; */
-"qbk-Vz-TqU.text" = "Залог:";
+/* Class = "UILabel"; text = "Deposit, rubles:"; ObjectID = "qbk-Vz-TqU"; */
+"qbk-Vz-TqU.text" = "Залог, руб.:";
 
 /* Class = "UIButton"; normalTitle = "Create order"; ObjectID = "qjM-oO-bxd"; */
 "qjM-oO-bxd.normalTitle" = "Оформить заказ";
@@ -630,7 +630,7 @@
 "uh4-te-sdJ.placeholder" = "Маршрут";
 
 /* Class = "UILabel"; text = "from 4 to 6 days:"; ObjectID = "uiW-W1-jIu"; */
-"uiW-W1-jIu.text" = "от 4 до 6 суток";
+"uiW-W1-jIu.text" = "от 4 до 6 суток:";
 
 /* Class = "UILabel"; text = " 100 руб. в сутки"; ObjectID = "ul0-BE-41C"; */
 "ul0-BE-41C.text" = " 100 руб. в сутки";
@@ -675,10 +675,10 @@
 "wJn-oA-3va.text" = "Адрес";
 
 /* Class = "UILabel"; text = "Rent rate, rubbles:"; ObjectID = "x4l-YN-ayX"; */
-"x4l-YN-ayX.text" = "Соимость аренды, руб.: ";
+"x4l-YN-ayX.text" = "Стоимость аренды, руб: ";
 
 /* Class = "UILabel"; text = "Rent range:"; ObjectID = "x9k-wA-KYz"; */
-"x9k-wA-KYz.text" = "Срок арренды:";
+"x9k-wA-KYz.text" = "Срок аренды:";
 
 /* Class = "UITextField"; placeholder = "Phone"; ObjectID = "xSn-HL-6FN"; */
 "xSn-HL-6FN.placeholder" = "Телефон";
@@ -710,8 +710,8 @@
 /* Class = "UIButton"; normalTitle = "Get a new password"; ObjectID = "yfE-4I-DX7"; */
 "yfE-4I-DX7.normalTitle" = "Получить новый пароль";
 
-/* Class = "UILabel"; text = "Rental rent per day"; ObjectID = "yxr-M9-SgD"; */
-"yxr-M9-SgD.text" = "Стоимость аренды в сутки:";
+/* Class = "UILabel"; text = "Rental rent per day, rubles:"; ObjectID = "yxr-M9-SgD"; */
+"yxr-M9-SgD.text" = "Стоимость аренды в сутки, руб.:";
 
 /* Class = "UILabel"; text = "status"; ObjectID = "z4t-7k-AdH"; */
 "z4t-7k-AdH.text" = "статус";

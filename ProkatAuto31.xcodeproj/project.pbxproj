@@ -118,6 +118,7 @@
 		FA6A6A931DB5079D003BB8D1 /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6A6A921DB5079D003BB8D1 /* ButtonCell.m */; };
 		FA70B44A1DB7B5B80088FFE3 /* RCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = FA70B4491DB7B5B80088FFE3 /* RCTextField.m */; };
 		FA7A56641DA7CAC400CD6975 /* RCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7A56631DA7CAC400CD6975 /* RCViewController.m */; };
+		FA7DD2A71DD743DB00EE1257 /* ic_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = FA7DD2A61DD743DB00EE1257 /* ic_phone.png */; };
 		FA7E82A51DA3B85F00F5BFB4 /* navBack.png in Resources */ = {isa = PBXBuildFile; fileRef = FA7E82A41DA3B85F00F5BFB4 /* navBack.png */; };
 		FA7E82A91DA3C0FB00F5BFB4 /* Back-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FA7E82A81DA3C0FA00F5BFB4 /* Back-25.png */; };
 		FA7E82AC1DA3CF4500F5BFB4 /* StepOneWithoutDriverController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7E82AB1DA3CF4500F5BFB4 /* StepOneWithoutDriverController.m */; };
@@ -127,6 +128,7 @@
 		FA88FD911DABB1380039CF33 /* oherCar.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD901DABB1380039CF33 /* oherCar.png */; };
 		FA88FD931DABB2220039CF33 /* 12.png in Resources */ = {isa = PBXBuildFile; fileRef = FA88FD921DABB2220039CF33 /* 12.png */; };
 		FA9DB7891DB66925006D81D5 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9DB7881DB66925006D81D5 /* RegistrationController.m */; };
+		FA9E64041DD7043D008FB9A3 /* SideIdPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9E64031DD7043D008FB9A3 /* SideIdPageCell.m */; };
 		FABE7B741DC9E6120043F8F1 /* ChangePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */; };
 		FABE7B771DCA111F0043F8F1 /* PaymentController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE7B761DCA111F0043F8F1 /* PaymentController.m */; };
 		FABE7B7A1DCA421E0043F8F1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABE7B791DCA421E0043F8F1 /* WebKit.framework */; };
@@ -286,7 +288,6 @@
 		8435724C1DC33D38009CFFC0 /* OrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCell.h; sourceTree = "<group>"; };
 		8435724D1DC33D38009CFFC0 /* OrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCell.m; sourceTree = "<group>"; };
 		84754C321DD376C800CA7BB9 /* fab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fab.png; sourceTree = "<group>"; };
-		84754C341DD376DB00CA7BB9 /* ic_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone.png; sourceTree = "<group>"; };
 		8486453B1DB7FF7900D6D813 /* CarWithDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarWithDriver.m; sourceTree = "<group>"; };
 		8486453D1DB8000A00D6D813 /* CarWithDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarWithDriver.h; sourceTree = "<group>"; };
 		8486453E1DBC040400D6D813 /* OrderCarWithDriverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCarWithDriverController.h; sourceTree = "<group>"; };
@@ -335,6 +336,7 @@
 		FA70B4491DB7B5B80088FFE3 /* RCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTextField.m; sourceTree = "<group>"; };
 		FA7A56621DA7CAC400CD6975 /* RCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCViewController.h; sourceTree = "<group>"; };
 		FA7A56631DA7CAC400CD6975 /* RCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCViewController.m; sourceTree = "<group>"; };
+		FA7DD2A61DD743DB00EE1257 /* ic_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_phone.png; sourceTree = "<group>"; };
 		FA7E82A41DA3B85F00F5BFB4 /* navBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBack.png; sourceTree = "<group>"; };
 		FA7E82A81DA3C0FA00F5BFB4 /* Back-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back-25.png"; sourceTree = "<group>"; };
 		FA7E82AA1DA3CF4500F5BFB4 /* StepOneWithoutDriverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepOneWithoutDriverController.h; sourceTree = "<group>"; };
@@ -346,6 +348,8 @@
 		FA88FD921DABB2220039CF33 /* 12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12.png; sourceTree = "<group>"; };
 		FA9DB7871DB66925006D81D5 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		FA9DB7881DB66925006D81D5 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
+		FA9E64021DD7043D008FB9A3 /* SideIdPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideIdPageCell.h; sourceTree = "<group>"; };
+		FA9E64031DD7043D008FB9A3 /* SideIdPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideIdPageCell.m; sourceTree = "<group>"; };
 		FABE7B721DC9E6120043F8F1 /* ChangePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordController.h; sourceTree = "<group>"; };
 		FABE7B731DC9E6120043F8F1 /* ChangePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordController.m; sourceTree = "<group>"; };
 		FABE7B751DCA111F0043F8F1 /* PaymentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentController.h; sourceTree = "<group>"; };
@@ -497,7 +501,7 @@
 		633E00571D880F1400436D99 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				84754C341DD376DB00CA7BB9 /* ic_phone.png */,
+				FA7DD2A61DD743DB00EE1257 /* ic_phone.png */,
 				84754C321DD376C800CA7BB9 /* fab.png */,
 				FAD301E21DC739AD001FE7DC /* logo2.png */,
 				FA10378E1DD36E0C00C11EC3 /* car.png */,
@@ -687,6 +691,8 @@
 				FA3E7D261DCCACD9005EED75 /* OrderDetail.m */,
 				FA3E7D281DCCC93E005EED75 /* OrderDitailOptionsCell.h */,
 				FA3E7D291DCCC93E005EED75 /* OrderDitailOptionsCell.m */,
+				FA9E64021DD7043D008FB9A3 /* SideIdPageCell.h */,
+				FA9E64031DD7043D008FB9A3 /* SideIdPageCell.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -783,7 +789,6 @@
 		FA0B638E1DA7B23C0096AEB6 /* RCClass */ = {
 			isa = PBXGroup;
 			children = (
-				FAB3C8641DD212930062A75C /* ic_phone.imageset */,
 				FA7A56621DA7CAC400CD6975 /* RCViewController.h */,
 				FA7A56631DA7CAC400CD6975 /* RCViewController.m */,
 				FA06A3D71DA8F50800E4DB5F /* RCDatePicker.h */,
@@ -799,6 +804,8 @@
 		FA464BCB1DC3394B000EDF79 /* MainTabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
+				633E00421D86DDBE00436D99 /* CarWithoutDriverController.h */,
+				633E00431D86DDBE00436D99 /* CarWithoutDriverController.m */,
 				633E00481D86DE2A00436D99 /* OtherController.h */,
 				633E00491D86DE2A00436D99 /* OtherController.m */,
 				633E00451D86DE0B00436D99 /* CarWithDriverController.h */,
@@ -820,8 +827,6 @@
 				FAC2E4651DAED28D0045A3C4 /* StepTwoWithoutDriverController.m */,
 				633E00911D888A4300436D99 /* WithoutDriverDetailController.h */,
 				633E00921D888A4300436D99 /* WithoutDriverDetailController.m */,
-				633E00421D86DDBE00436D99 /* CarWithoutDriverController.h */,
-				633E00431D86DDBE00436D99 /* CarWithoutDriverController.m */,
 			);
 			name = CarWithoutdriverControllers;
 			sourceTree = "<group>";
@@ -837,14 +842,6 @@
 				FA13E9C61DC7A14200E4A549 /* ProfileController.m */,
 			);
 			name = SideMenu;
-			sourceTree = "<group>";
-		};
-		FAB3C8641DD212930062A75C /* ic_phone.imageset */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ic_phone.imageset;
-			path = ../../../Users/alex/Downloads/ic_phone_black_24dp/ios/ic_phone.imageset;
 			sourceTree = "<group>";
 		};
 		FABE7B781DCA421E0043F8F1 /* Frameworks */ = {
@@ -967,6 +964,7 @@
 				FA1037911DD374FB00C11EC3 /* fab.png in Resources */,
 				636441CD1D97EB3900089E84 /* ic_arrow_drop_up_2x.png in Resources */,
 				636441CC1D97EB3900089E84 /* ic_arrow_drop_up.png in Resources */,
+				FA7DD2A71DD743DB00EE1257 /* ic_phone.png in Resources */,
 				6306F56B1D90306200915F22 /* withoutDriver@3x.png in Resources */,
 				6306F55D1D90139C00915F22 /* ic_content_paste_2x.png in Resources */,
 				6306F5541D90139000915F22 /* ic_lock_open_2x.png in Resources */,
@@ -1078,6 +1076,7 @@
 				FA70B44A1DB7B5B80088FFE3 /* RCTextField.m in Sources */,
 				633E00891D880F8000436D99 /* UIWebView+AFNetworking.m in Sources */,
 				FABE7B741DC9E6120043F8F1 /* ChangePasswordController.m in Sources */,
+				FA9E64041DD7043D008FB9A3 /* SideIdPageCell.m in Sources */,
 				633E006A1D880F7800436D99 /* AFURLResponseSerialization.m in Sources */,
 				848645401DBC040400D6D813 /* OrderCarWithDriverController.m in Sources */,
 				633E00861D880F8000436D99 /* UIImageView+AFNetworking.m in Sources */,

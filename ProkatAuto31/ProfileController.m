@@ -42,6 +42,7 @@
 // driver's
 @property (weak, nonatomic) IBOutlet UILabel *siriesAndNumberLicense;
 @property (weak, nonatomic) IBOutlet UILabel *dateLicense;
+@property (strong, nonatomic) NSNumberFormatter* numberFormatter;
 
 
 
@@ -52,6 +53,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.numberFormatter = [[NSNumberFormatter alloc] init];
+    [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [self.numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
     
@@ -138,7 +142,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *dateFromString = [[NSDate alloc] init];
     dateFromString = [dateFormatter dateFromString:dataString];
-    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    [dateFormatter setDateFormat:@"dd.MM.yyyy"];
     newDate = [dateFormatter stringFromDate:dateFromString];
     
     return newDate;
@@ -154,10 +158,11 @@
                                                   OnSuccess:^(NSNumber* days, NSNumber* orderCount, NSNumber* penalties, NSNumber* status) {
                                                       
                                                       self.ordersCount.text = [NSString stringWithFormat:@"%@", orderCount];
-                                                      self.fines.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), penalties];
+                                                      self.fines.text = [NSString stringWithFormat:@"%@", penalties];
                                                       
-                                                      int arrears = [days integerValue]* [penalties integerValue];
-                                                      self.arrears.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), arrears];
+                                                      CGFloat arrears =  [days floatValue]  * [penalties floatValue] ;
+                                                      NSString *arrearsString = [self.numberFormatter stringFromNumber:[NSNumber numberWithFloat:arrears]];
+                                                      self.arrears.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), arrearsString];
                                                       
                                                       if ([status integerValue]==1) {
                                                           self.clientType.text = NSLocalizedString(@"New customer", nil);

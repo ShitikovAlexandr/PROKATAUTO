@@ -32,7 +32,7 @@
 @property (strong, nonatomic) NSString *itemTransmissionName;//
 @property (strong, nonatomic) NSNumber *itemTransmissionType;//
 
-@property (strong, nonatomic) NSString *deposit;//
+@property (strong, nonatomic) NSNumber *deposit;//
 @property (assign, nonatomic) BOOL *isBusy;
 @property (strong, nonatomic) NSString *dateFrom;
 @property (strong, nonatomic) NSString *dateTo;

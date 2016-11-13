@@ -33,11 +33,10 @@
 
 @property (assign, nonatomic) int chackCount;
 
-
 @property (strong, nonatomic) StepOneCollectionViewCell *cell;
 
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
-
+@property (strong, nonatomic) NSNumberFormatter* numberFormatter;
 
 @end
 
@@ -46,6 +45,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.numberFormatter = [[NSNumberFormatter alloc] init];
+    [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [self.numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.activityIndicatorView.color = [UIColor blackColor];
     self.activityIndicatorView.center = self.view.center;
@@ -123,11 +126,12 @@
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseAddress, self.car.imageURL]];
     [self.cell.carImage setImageWithURL:url];
+    
+    self.cell.deposit.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:self.car.deposit]];
     self.cell.fullName.text = [NSString stringWithFormat:@"%@ %@ %@", self.car.itemFullName, self.car.itemEngine, self.car.itemTransmissionName]; //self.car.itemFullName;
-    self.cell.priceRange1.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.priceRange1];
-    self.cell.priceRange2.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.priceRange2];
-    self.cell.priceRange3.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.priceRange3];
-    self.cell.deposit.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), self.car.deposit];
+    self.cell.priceRange1.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:self.car.priceRange1]];
+    self.cell.priceRange2.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:self.car.priceRange2]];
+    self.cell.priceRange3.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:self.car.priceRange3]];
   
     self.cell.timeStartTextField = [self setShadowToTextField:self.cell.timeStartTextField];
     self.cell.dateStartTextField = [self setShadowToTextField:self.cell.dateStartTextField];
@@ -152,7 +156,7 @@
 
 
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd-MM-yyyy"];
+    [df setDateFormat:@"dd.MM.yyyy"];
     
     NSDateFormatter *tf = [[NSDateFormatter alloc] init];
     [tf setDateFormat:@"HH:mm"];
@@ -176,16 +180,16 @@
     NSDate *return12am = [calendarReturn dateFromComponents:components];
     self.order.timeOfRentalEnd = return12am;
     self.cell.timeReturnTextField.text = [NSString stringWithFormat:@"%@", [tf stringFromDate:self.order.timeOfRentalEnd]];
-    self.cell.deposit.text = [NSString stringWithFormat:@"%@", self.car.deposit];
+    //self.cell.deposit.text = [NSString stringWithFormat:@"%@", self.car.deposit];
     
-    self.cell.startPlase.text = self.order.startPlace.name;
-    self.cell.returnPlase.text = self.order.endPlace.name;
+    self.cell.startPlase.text = self.order.startPlace.locationName;
+    self.cell.returnPlase.text = self.order.endPlace.locationName;
     
     [self.cell.rentalButton addTarget:self action:@selector(checkCarAndGo) forControlEvents:UIControlEventTouchUpInside];
    
     self.cell.rentalButton.layer.cornerRadius = 3.f;
     self.cell.rentalButton.layer.borderWidth = 1.0f;
-    self.cell.rentalButton.layer.borderColor = [UIColor blackColor].CGColor;
+    self.cell.rentalButton.layer.borderColor = [UIColor clearColor].CGColor;
     self.cell.rentalButton.layer.masksToBounds = YES;
 
     
@@ -221,7 +225,7 @@
     textField.textColor = [UIColor redColor];
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd-MM-yyyy"];
+    [df setDateFormat:@"dd.MM.yyyy"];
     
     NSDateFormatter *tf = [[NSDateFormatter alloc] init];
     [tf setDateFormat:@"HH:mm"];
@@ -300,7 +304,7 @@
 -(void)textFieldDidChange:(UIDatePicker*) datePicker {
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd-MM-yyyy"];
+    [df setDateFormat:@"dd.MM.yyyy"];
     
     NSDateFormatter *tf = [[NSDateFormatter alloc] init];
     [tf setDateFormat:@"HH:mm"];
@@ -376,11 +380,11 @@
     
     if ([self.cell.startPlase isFirstResponder]) {
         Place *place = [self.startPlace objectAtIndex:row];
-        self.cell.startPlase.text = place.name;
+        self.cell.startPlase.text = place.locationName;
         self.order.startPlace = place;
     } else {
         Place *place = [self.endPlace objectAtIndex:row];
-        self.cell.returnPlase.text =place.name;
+        self.cell.returnPlase.text =place.locationName;
         self.order.endPlace = place;
 
     }
@@ -393,8 +397,8 @@
     [self.cell.returnPlase resignFirstResponder];
     self.cell.startPlase.layer.shadowColor = [UIColor grayColor].CGColor;
     self.cell.returnPlase.layer.shadowColor = [UIColor grayColor].CGColor;
-    self.cell.startPlase.textColor = [UIColor blackColor];
-    self.cell.returnPlase.textColor = [UIColor blackColor];
+    self.cell.startPlase.textColor = [UIColor darkGrayColor];
+    self.cell.returnPlase.textColor = [UIColor darkGrayColor];
 
 }
 
@@ -473,10 +477,10 @@
     }
     if ([self.cell.startPlase isFirstResponder]) {
         Place *place = [self.startPlace objectAtIndex:row];
-        newView.text = place.name;
+        newView.text = place.locationName;
     } else {
         Place *place = [self.endPlace objectAtIndex:row];
-        newView.text = place.name;
+        newView.text = place.locationName;
 
        
     }
