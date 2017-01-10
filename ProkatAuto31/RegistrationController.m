@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 18.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 
@@ -45,6 +45,7 @@
 #import "Person.h"
 #import "User.h"
 #import "SMSController.h"
+#import "SidePageIdController.h"
 
 @interface RegistrationController ()
 @property (strong, nonatomic) UIAlertController *alert;
@@ -99,6 +100,9 @@ extern NSString *baseAddress;
 
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
+@property (weak, nonatomic) IBOutlet UIButton *ageeInfo;
+
+@property (strong, nonatomic) UILabel *requiredFields;
 
 
 @end
@@ -107,6 +111,23 @@ extern NSString *baseAddress;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Update 20.11.2016
+    [self addRequiredStarToTextField: self.surnameTextField];
+    [self addRequiredStarToTextField: self.nameTextField];
+    [self addRequiredStarToTextField: self.middleNameTextField];
+    [self addRequiredStarToTextField: self.phoneNumberTextField];
+    [self addRequiredStarToTextField: self.emailTextField];
+    [self addRequiredStarToTextField: self.firstPassword];
+    [self addRequiredStarToTextField: self.secondPassword];
+    [self addRequiredStarToTextField: self.passwordFromImage];
+    [self addRequiredStarToTextField: self.dateOfBirthTextField];
+
+
+
+    
+    
+    self.requiredFields = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.activityIndicatorView.color = [UIColor blackColor];
@@ -159,9 +180,20 @@ extern NSString *baseAddress;
     
     [self styleRCButton:self.RegistrButton];
 
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToInfo)];
+    [tapGestureRecognizer setNumberOfTapsRequired:1];
+    [self.ageeInfo addGestureRecognizer:tapGestureRecognizer];
     
+}
 
-    
+- (void) addRequiredStarToTextField: (RCTextField*) textField {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    label.text = @"*";
+    label.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
+    label.textColor = [UIColor redColor];
+    textField.rightViewMode = UITextFieldViewModeAlways;
+    textField.rightView = label;
+    //[textField addSubview:textField];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -205,7 +237,6 @@ extern NSString *baseAddress;
     self.countryCodeTextField.text = str;
     self.CountryNameLabel.text = str2;
     //save date
-    NSLog(@"Select picker");
     
     
 }
@@ -297,22 +328,19 @@ extern NSString *baseAddress;
 -(void)textFieldDidChange:(UIDatePicker*) datePicker {
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd-MM-yyyy"];
+    [df setDateFormat:@"dd.MM.yyyy"];
     if (self.datePickerFlag == 7) {
         self.person.dateOfBirth = datePicker.date;
         self.dateOfBirthTextField.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.dateOfBirth]];
-        NSLog(@"dateOfBirth%@", self.person.dateOfBirth);
 
     } else if (self.datePickerFlag == 10) {
         self.person.dateOfPassport = datePicker.date;
         self.dateOfPassport.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.dateOfPassport]];
-        NSLog(@"dateOfPassport%@", self.person.dateOfPassport);
 
 
     } else if (self.datePickerFlag == 13) {
         self.person.drivelLicenseDate = datePicker.date;
         self.drivelLicenseDate.text = [NSString stringWithFormat:@"%@",[df stringFromDate:self.person.drivelLicenseDate]];
-        NSLog(@"drivelLicenseDate%@", self.person.drivelLicenseDate);
 
     }
     
@@ -329,6 +357,14 @@ extern NSString *baseAddress;
     return YES;
 }
 
+- (void) goToInfo {
+    
+    SidePageIdController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SidePageIdController"];
+    vc.pageId = [NSNumber numberWithInt:2];
+    vc.goBack = true;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 #pragma mark - API
 
@@ -338,20 +374,19 @@ extern NSString *baseAddress;
 
     
     [self chackTextfield];
-    
+    //BOOL chack = true; //
     if ([self chackTextfield]) {
-        
+        [[NSUserDefaults standardUserDefaults] setPersistentDomain:[NSDictionary dictionary] forName:[[NSBundle mainBundle] bundleIdentifier]];
         [[ServerManager sharedManager] registrationWithPersonData:self.person
                                                            andKey:self.CapchaKey
                                                   PasswordFromImg:self.passwordFromImage.text
                                                         OnSuccess:^(NSString* token, id user) {
                                                             [self.activityIndicatorView stopAnimating];
-                                                            
-                                                            
-                                                           
+                                                            // Delete any cached URLrequests!
+                                                            NSURLCache *sharedCache = [NSURLCache sharedURLCache];
+                                                            [sharedCache removeAllCachedResponses];
+                                                            [[NSUserDefaults standardUserDefaults] setPersistentDomain:[NSDictionary dictionary] forName:[[NSBundle mainBundle] bundleIdentifier]];
 
-                                                            // save data
-                                                            
                                                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                             NSString *tokenString = token;
                                                             
@@ -389,11 +424,18 @@ extern NSString *baseAddress;
                                                                [self.activityIndicatorView stopAnimating];
 
                                                                //[self getCapchaImg];
-                                                               if (dictsArray) {
-                                                                  NSString* newString = [[dictsArray objectAtIndex:0]stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-                                                                   [self ErrorTextFieldInput:[NSString stringWithFormat:@"%@",newString]];
+                                                               if ([dictsArray objectAtIndex:0]) {
+                                                                   NSLog(@"mesage type %@" ,[[dictsArray objectAtIndex:0] class] );
+                                                                   if ([[[dictsArray objectAtIndex:0] class] isSubclassOfClass:[NSString class]]) {
+                                                                       [self ErrorTextFieldInput:[dictsArray objectAtIndex:0]];
+                                                                   } else {
+                                                                        [self ErrorTextFieldInput:[[dictsArray objectAtIndex:0] objectAtIndex:0]];
+
+                                                                   }
                                                                    self.passwordFromImage.text = @"";
                                                                    [self getCapchaImg];
+                                                               } else {
+                                                                   [self ErrorTextFieldInput:[dictsArray objectAtIndex:0]];
                                                                }
                                                                
                                                                
@@ -410,7 +452,6 @@ extern NSString *baseAddress;
     [[ServerManager sharedManager] registrationGetCaptchaOnSuccess:^(NSString *thisData) {
         
         self.CapchaKey = [NSString stringWithString:thisData];
-        NSLog(@"self.CapchaKey %@", self.CapchaKey);
 
         
         [[ServerManager sharedManager] registrationGetCaptchaImgWithKey:self.CapchaKey
@@ -484,29 +525,37 @@ extern NSString *baseAddress;
     } else if (self.person.dateOfBirth == NULL) {
         empty = NSLocalizedString(@"Fill in all fields!!!", nil);
         [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.passportSeries length] < 1) {
-        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.passportNumber length] <1) {
-        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
-        [self.isTextFieldEnterText addObject:empty];
-    } else if (self.person.dateOfPassport == NULL) {
-        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.driverLicense length] <1) {
-        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.driverLicenseNumber length] <1) {
-        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
-        [self.isTextFieldEnterText addObject:empty];
-    } else if (self.person.drivelLicenseDate == NULL) {
-        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
-        [self.isTextFieldEnterText addObject:empty];
-    } else if ([self.person.Password length] <8) {
-        empty = @"Password";
-        [self.isTextFieldEnterText addObject:empty];
     }
-    NSLog(@"errors count in array is %d", (int)[self.isTextFieldEnterText count]);
+    /*
+    else if ([self.person.passportSeries length] < 1) {//
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.passportNumber length] <1) {//
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+    } else if (self.person.dateOfPassport == NULL) {//
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.driverLicense length] <1) {//
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+    } else if ([self.person.driverLicenseNumber length] <1) {//
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+    } else if (self.person.drivelLicenseDate == NULL) {//
+        empty = NSLocalizedString(@"Fill in all fields!!!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+    } 
+     */
+     else if (![self.firstPassword.text isEqualToString:self.secondPassword.text]) {
+        empty = NSLocalizedString(@"Passwords don't match!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+    } else if (!self.switcherLicenseArg.isOn) {
+        empty = NSLocalizedString(@"Confirm your agreement to the processing of personal data!", nil);
+        [self.isTextFieldEnterText addObject:empty];
+
+    }
+    
     if ([self.isTextFieldEnterText count] >0) {
         [self ErrorTextFieldInput:empty];
         return NO;

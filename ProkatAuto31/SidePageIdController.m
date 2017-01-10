@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 30.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "SidePageIdController.h"
@@ -80,9 +80,13 @@
     
     [[ServerManager sharedManager] sideMenuWithPageId:pageId
                                             OnSuccess:^(NSString* title, NSString* content) {
-                                                NSString *aux = [NSString stringWithFormat:@"<span style=\"font-family: systemFont; font-size: 16\">%@</span>", title];
+                                                //NSString *aux = [NSString stringWithFormat:@"<span style=\"font-family: System; font-size: 16\">%@</span>", title];
                                                 
-                                                NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[aux dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+                                               title = [title stringByAppendingString:[NSString stringWithFormat:@"<style>body{font-family: '%@'; font-size:%fpx;}</style>",
+                                                                                                          @"PingFangHK-Regular",
+                                                                                                          self.mainLabel.font.pointSize]];
+                                                
+                                                NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[title dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
                                                 //UIFont *font=[UIFont systemFontOfSize:14];
                                                // [description addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, description.length)];
                                                 [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
@@ -107,8 +111,14 @@
 
 -(void) myCustomBack {
     // Some anything you need to do before leaving
-    SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
-    [self presentViewController:vc animated:YES completion:nil];
+    
+    if (self.goBack) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+    
     
     
 

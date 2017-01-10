@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 09.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -29,7 +29,7 @@
                                                      documentAttributes:nil error:nil];
     NSLog(@"%@",[attrStringFromHtml string]);
     
-    [Fabric with:@[[Crashlytics class]]];
+    //[Fabric with:@[[Crashlytics class]]];
     
     return YES;
 }

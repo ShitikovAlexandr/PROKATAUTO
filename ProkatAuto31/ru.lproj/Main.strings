@@ -2,11 +2,11 @@
 /* Class = "UILabel"; text = "KIA Rio 1.4 АКПП"; ObjectID = "085-n6-Wkg"; */
 "085-n6-Wkg.text" = "KIA Rio 1.4 АКПП";
 
-/* Class = "UILabel"; text = "Driver license"; ObjectID = "0P6-a0-abO"; */
-"0P6-a0-abO.text" = "Водителькое удостовирение";
+/* Class = "UILabel"; text = " Driver license"; ObjectID = "0P6-a0-abO"; */
+"0P6-a0-abO.text" = " Водителькое удостоверение";
 
 /* Class = "UINavigationItem"; title = "Password recovery"; ObjectID = "1Kk-bT-TxK"; */
-"1Kk-bT-TxK.title" = "Востановление пароля";
+"1Kk-bT-TxK.title" = "Восстановление пароля";
 
 /* Class = "UILabel"; text = "penalty"; ObjectID = "1RT-Zt-WC5"; */
 "1RT-Zt-WC5.text" = "штраф";
@@ -63,7 +63,7 @@
 "52M-In-Dsh.text" = "Подача авто, наш офис";
 
 /* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "5BM-4M-E68"; */
-"5BM-4M-E68.placeholder" = "Телефон";
+"5BM-4M-E68.placeholder" = "Номер телефона";
 
 /* Class = "UILabel"; text = "11 400"; ObjectID = "5Wa-Ga-BZc"; */
 "5Wa-Ga-BZc.text" = "11 400";
@@ -81,7 +81,7 @@
 "5tz-bL-SBr.normalTitle" = "Забронировать авто";
 
 /* Class = "UIButton"; normalTitle = "Book a car"; ObjectID = "617-l2-zSE"; */
-"617-l2-zSE.normalTitle" = "Арендовать";
+"617-l2-zSE.normalTitle" = "Арендовать авто";
 
 /* Class = "UILabel"; text = "20.10.2016"; ObjectID = "6CT-CS-nEF"; */
 "6CT-CS-nEF.text" = "20.10.2016";
@@ -126,7 +126,7 @@
 "99Y-qC-MjR.title" = "Шаг 4: Подтверждение заказа";
 
 /* Class = "UILabel"; text = "Hello,"; ObjectID = "9HE-Dn-9wM"; */
-"9HE-Dn-9wM.text" = "Здавствуйте,";
+"9HE-Dn-9wM.text" = "Здравствуйте,";
 
 /* Class = "UILabel"; text = "Transmission:"; ObjectID = "9xl-cE-Eg5"; */
 "9xl-cE-Eg5.text" = "КПП:";
@@ -195,7 +195,7 @@
 "EJN-7c-Rvq.text" = "от 1 до 3 суток:";
 
 /* Class = "UILabel"; text = "Password"; ObjectID = "FP0-a8-3j8"; */
-"FP0-a8-3j8.text" = "Пароль";
+"FP0-a8-3j8.text" = " Пароль";
 
 /* Class = "UILabel"; text = "Car model"; ObjectID = "G5x-FB-Jbx"; */
 "G5x-FB-Jbx.text" = "Модель";
@@ -216,7 +216,10 @@
 "I5J-3I-Omg.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "Registration"; ObjectID = "IVH-3X-zF8"; */
-"IVH-3X-zF8.normalTitle" = "Регистрация";
+"IVH-3X-zF8.normalTitle" = "Зарегистрироваться";
+
+/* Class = "UIButton"; normalTitle = "Registration"; ObjectID = "cZK-pR-TYm"; */
+"cZK-pR-TYm.normalTitle" = "Зарегистрироваться";
 
 /* Class = "UILabel"; text = "Description:"; ObjectID = "Ifp-CE-zwb"; */
 "Ifp-CE-zwb.text" = "Описание:";
@@ -278,8 +281,8 @@
 /* Class = "UILabel"; text = "The number of orders"; ObjectID = "NNf-pL-iPh"; */
 "NNf-pL-iPh.text" = "Количество заказов";
 
-/* Class = "UILabel"; text = "Passport data"; ObjectID = "O6y-yB-kQH"; */
-"O6y-yB-kQH.text" = "Паспорт";
+/* Class = "UILabel"; text = " Passport data"; ObjectID = "O6y-yB-kQH"; */
+"O6y-yB-kQH.text" = " Паспорт";
 
 /* Class = "UILabel"; text = "Car color:"; ObjectID = "OyV-SX-n8P"; */
 "OyV-SX-n8P.text" = "Цвет авто:";
@@ -431,8 +434,8 @@
 /* Class = "UILabel"; text = "х суток"; ObjectID = "ag4-uG-Vsd"; */
 "ag4-uG-Vsd.text" = "х суток";
 
-/* Class = "UILabel"; text = "Personal information"; ObjectID = "aix-OA-OQM"; */
-"aix-OA-OQM.text" = "Основная информация";
+/* Class = "UILabel"; text = " Personal information"; ObjectID = "aix-OA-OQM"; */
+"aix-OA-OQM.text" = " Персональные данные";
 
 /* Class = "UILabel"; text = "xx.xx.xxxx"; ObjectID = "azb-rA-IWN"; */
 "azb-rA-IWN.text" = "xx.xx.xxxx";
@@ -730,3 +733,29 @@
 
 /* Class = "UINavigationItem"; title = "Registration"; ObjectID = "15y-Nj-ONl"; */
 "15y-Nj-ONl.title" = "Регистрация";
+
+/* Class = "UILabel"; title = "(Enter the code of the SMS message)"; ObjectID = "I5i-lV-tAK"; */
+"I5i-lV-tAK.text" = "(Введите код из SMS сообщения)";
+
+/* Class = "UIButton"; normalTitle = "Book a car"; ObjectID = "10p-LX-A8G"; */
+"10p-LX-A8G.normalTitle" = "Арендовать";
+
+/* Class = "UIButton"; normalTitle = "If you have found a mistake in the proposal for the improvement - write to us!"; ObjectID = "gdY-6L-FfM"; */
+"gdY-6L-FfM.text" = "Если Вы обнаружили ошибку в работе приложения или у вас есть предложения по улучшению - напишите нам!";
+
+/* Class = "UITextField"; placeholder = "Feedback"; ObjectID = "UKt-ce-aYe; */
+"UKt-ce-aYe.normalTitle" = "Обратная связь";
+
+/* Class = "UILabel"; text = "Rental rent per day, rubles:"; ObjectID = "wzL-la-dap"; */
+"wzL-la-dap.text" = "Версия приложения:";
+
+//6iZ-Dz-oCM
+/* Class = "UILabel"; text = "Rental rent per day, rubles:"; ObjectID = "6iZ-Dz-oCM"; */
+"6iZ-Dz-oCM.text" = "Приложение ПРОКАТАВТО31 всегда за несколько кликов позволит Вам быстро забронировать и арендовать автомобиль любой категории в г. Белгород. Так же с помощью приложения пользователи могут заказать трансфер из любой точки города.";
+
+/* Class = "UILabel"; text = "* - fields are required"; ObjectID = "hKk-mO-cLE"; */
+"hKk-mO-cLE" = "* - поля обязательные для заполнения";
+
+
+
+

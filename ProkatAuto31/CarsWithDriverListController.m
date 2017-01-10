@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by Ivan Bielko on 08.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "CarsWithDriverListController.h"
@@ -77,8 +77,11 @@
     
     CarWithDriver *car = [self.dataArray objectAtIndex:indexPath.row];
     
+    
     NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
     [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
+    UIFont *font=[UIFont systemFontOfSize:12];
+    [description addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, description.length)];
     
     [self.descriptionsArray addObject:description];
     
@@ -116,7 +119,6 @@
         [self.dataArray addObjectsFromArray:thisData];
         [self.collectionView reloadData];
     } onFail:^(NSError *error, NSInteger statusCode) {
-        NSLog(@"Error = %@", error);
     } withCategoryID:self.categoryID];
     
 }

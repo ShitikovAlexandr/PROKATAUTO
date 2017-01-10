@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 12.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "CarWithoutDriverController.h"
@@ -57,7 +57,7 @@
     
     [self.CallButton addTarget:self action:@selector(CallAction) forControlEvents:(UIControlEventTouchDown)];
        
-    self.baseAddress = @"http://83.220.170.187";
+    self.baseAddress = @"http://prokatauto31.ru";
 
     self.carCategories = [NSMutableArray array];
     [self getCarCategorieFromAPI];
@@ -88,7 +88,7 @@
         
         HeaderInSectionView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
         
-            headerView.headerText.text = NSLocalizedString(@"Transmision", nil);
+            headerView.headerText.text = NSLocalizedString(@"Transmission", nil);
         
         reusableview = headerView;
         
@@ -101,7 +101,7 @@
     if (section == 0) {
         return CGSizeZero;
     }else {
-        return CGSizeMake(self.collectionView.bounds.size.width, 40);
+        return CGSizeMake(self.collectionView.bounds.size.width, 50);
     }
 }
 

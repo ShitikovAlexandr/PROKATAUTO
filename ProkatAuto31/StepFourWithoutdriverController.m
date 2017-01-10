@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 26.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "StepFourWithoutdriverController.h"
@@ -12,6 +12,8 @@
 #import "Option.h"
 #import "PaymentController.h"
 #import "OrdersListController.h"
+#import "OrderDetailController.h"
+#import "SWRevealViewController.h"
 
 @interface StepFourWithoutdriverController ()
 @property (weak, nonatomic) IBOutlet UIImageView *carImageView;
@@ -43,7 +45,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.baseAddress = @"http://83.220.170.187";
+    [self styleRCButton:self.doneButton];
+    
+    self.baseAddress = @"http://prokatauto31.ru";
     
     self.numberFormatter = [[NSNumberFormatter alloc] init];
     [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
@@ -69,13 +73,13 @@
     [screenDate setDateFormat:@"dd.MM.yyyy"];
     NSDateFormatter *screenTime = [[NSDateFormatter alloc] init];
     [screenTime setDateFormat:@"HH:mm"];
-    
+    //self.order.rentalPeriodDays+=1;//
+
     self.startRental.text = [NSString stringWithFormat:@"%@ %@", [screenDate stringFromDate:self.order.dateOfRentalStart], [screenTime stringFromDate:self.order.timeOfRentalStart]];
     self.endRental.text = [NSString stringWithFormat:@"%@ %@", [screenDate stringFromDate:self.order.dateOfRentalEnd], [screenTime stringFromDate:self.order.timeOfRentalEnd]];
     self.startPlace.text = [NSString stringWithFormat:@"%@", self.order.startPlace.locationName];
     self.endPlace.text = [NSString stringWithFormat:@"%@", self.order.endPlace.locationName];
     self.priceForDaysOnly.text =  [NSString stringWithFormat:@"%@",[self.numberFormatter stringFromNumber:self.order.totalPrice]];   //[self.order.totalPrice stringValue];
-    
     NSNumber *range;
     if (self.order.rentalPeriodDays  < 4) {
         range =  self.order.car.priceRange1;
@@ -93,7 +97,6 @@
     NSInteger optionTotalPrice = 0;
     for (Option *opt in self.order.selectOptionArray) {
         optionTotalPrice = optionTotalPrice + [opt.optionPrice integerValue] * [opt.selectedAmount integerValue];
-        NSLog(@"optionPrice - %ld, %ld", (long)[opt.optionPrice integerValue], (long)[opt.selectedAmount integerValue]);
         
     }
     self.optionPriceInt = optionTotalPrice;
@@ -109,11 +112,6 @@
         [self.optionPriceText removeFromSuperview];
         
     }
-    
-    
-    NSLog(@"start %@",self.order.startDateOfRentalString);
-    NSLog(@"end %@",self.order.endDateOfRentalString);
-
 }
 
 - (void) CallAction {
@@ -153,15 +151,7 @@
     NSError *error=nil;
     NSData *jsonData2 = [NSJSONSerialization dataWithJSONObject:paramsArray options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
-    NSLog(@"jsonData as string:\n%@", jsonString);
-    
-
-    NSLog(@"options %@", paramsArray);
-    NSLog(@"paramsSet %@", paramsSet);
-
-    
-    //[{"option": 3, "amount": 1}]
-    
+      
     [[ServerManager sharedManager] publicOrderWithCarId:[NSString stringWithFormat:@"%@", [self.order.car.carID objectAtIndex:0]]
                                                dateFrom:datefrom
                                                  dateTo:dateTo
@@ -169,14 +159,14 @@
                                           returnService:[self.order.endPlace.placeID stringValue]
                                                 options:jsonString
                                               withToken:token
-                                              OnSuccess:^(NSString *resualtString) {
+                                              OnSuccess:^(NSString *resualtString,NSString *resultId) {
                                                   
                                                   [self payOrder:resualtString];
                                                   
                                               }
                                                  onFail:^(NSString *errorArray, NSString *openedOrders, NSString *detail) {
                                                      if (openedOrders) {
-                                                         [self alerExistOrder:openedOrders];
+                                                         [self alerExistOrderOrderID:openedOrders];
                                                      } else {
                                                          [self errorActionWithMasegr:errorArray];
                                                      }
@@ -201,7 +191,7 @@
     alertMessage.textAlignment = NSTextAlignmentLeft;
     
     
-    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat: NSLocalizedString(@"Make a prepay %d rubles", nil), (long)[avans integerValue] ] style:UIAlertActionStyleDestructive
+    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat: NSLocalizedString(@"Make a prepay %@ rubles", nil), [self.numberFormatter stringFromNumber:avans]] style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
@@ -212,9 +202,9 @@
                                                         [self presentViewController:navVC animated:YES completion:nil];
                                                         
                                                     }];
-    int totlPrice =[self.priceForDaysOnly.text integerValue] + self.optionPriceInt;
+    long totlPrice =[self.order.totalPrice intValue] + self.optionPriceInt;
     
-    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat: NSLocalizedString(@"Pay order %d rubles", nil),totlPrice ] style:UIAlertActionStyleDestructive
+    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat: NSLocalizedString(@"Pay order %@ rubles", nil),[self.numberFormatter stringFromNumber:[NSNumber numberWithUnsignedInteger:totlPrice]] ] style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
@@ -232,29 +222,39 @@
     
     [alert addAction:partPay];
     [alert addAction:fullPay];
-    
     [alert addAction:cancel];
-    
     [self presentViewController:alert animated:YES completion:nil];
-    
-    
-    
 }
 
-- (void) alerExistOrder: (NSString*) masege {
+- (void) styleRCButton: (UIButton*) button {
+    button.layer.cornerRadius = 3.f;
+    button.layer.borderWidth = 1.0f;
+    button.layer.borderColor = [UIColor clearColor].CGColor;
+    button.layer.masksToBounds = YES;
+}
+
+- (void) alerExistOrderOrderID:(NSString*) orderId {
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:
-                                @"" message:masege preferredStyle:UIAlertControllerStyleAlert];
+                                @"" message:NSLocalizedString(@"The order is already issued to pay you need to go to the order screen", nil) preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Pay later", nil) style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction * _Nonnull action) {}];
     UIAlertAction *goToOrders = [UIAlertAction actionWithTitle:NSLocalizedString(@"Go", nil) style:UIAlertActionStyleDefault
-                                                                                                                                                 handler:^(UIAlertAction * _Nonnull action) {
-                                                                                                                                                     OrdersListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
-                                                                                                                                                     UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
-                                                                                                                                                     navVC.navigationBar.barStyle = UIBarStyleBlack;
-                                                                                                                                                     [navVC setViewControllers:@[vc] animated:NO];
-                                                                                                                                                     [self presentViewController:navVC animated:YES completion:nil];
+                                                                                                                                                handler:^(UIAlertAction * _Nonnull action) {
+                                                                                                                                                     
+                                                                                                                                                    UINavigationController *ordersVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
+                                                                                                                                                    UINavigationController *navVCB = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+                                                                                                                                                    navVCB.navigationBar.barStyle = UIBarStyleBlack;
+                                                                                                                                                    [navVCB setViewControllers:@[ordersVC] animated:NO];
+                                                                                                                                                    OrderDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderDetailController"];
+                                                                                                                                                    vc.orderId = orderId;
+                                                                                                                                                    vc.backController = navVCB;
+                                                                                                                                                    UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+                                                                                                                                                    navVC.navigationBar.barStyle = UIBarStyleBlack;
+                                                                                                                                                    [navVC setViewControllers:@[vc] animated:NO];
+                                                                                                                                                    [self presentViewController:navVC animated:NO completion:nil];
+
                                                                                                                                                  }];
     
     [alert addAction:cancel];

@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by Ivan Bielko on 22.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "OrderCarWithDriverController.h"
@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+  
+    
     self.sentMessage = NSLocalizedString(@"Thank you for your order! Our staff will contact you shortly.", nil);
     
     self.navigationItem.hidesBackButton = YES;
@@ -35,7 +37,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.tokenString = [defaults valueForKey:@"tokenString"];
-    if([self.tokenString isEqualToString:@""] || self.tokenString == nil)
+    if([self.tokenString length] < 6)
     {
         [self getCapchaImg];
     }else
@@ -44,6 +46,10 @@
     }
     
     self.titleLabel.text = self.car.name;
+    self.car.carDescription = [self.car.carDescription stringByAppendingString:[NSString stringWithFormat:@"<style>body{font-family: '%@'; font-size:%fpx;}</style>",
+                                            @"PingFangHK-Regular",
+                                            self.descriptionLabel.font.pointSize]];
+    
     NSMutableAttributedString *description = [[NSMutableAttributedString alloc] initWithData:[self.car.carDescription dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
     [description removeAttribute:NSParagraphStyleAttributeName range:NSMakeRange(0, description.length)];
     self.descriptionLabel.attributedText = description;
@@ -112,8 +118,7 @@
 }
 
 - (IBAction)SendOrder:(id) sender event: (id) event {
-    
-    if([self.tokenString isEqualToString:@""] || self.tokenString == nil)
+    if([self.tokenString length] < 6)
     {
         [self sendOrderWithCaptcha];
     }else
@@ -136,6 +141,10 @@
         [[ServerManager sharedManager] orderCarWithDriver:self.car.carId userName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderDescription:self.descriptionField.text andKey:self.capchaKey passwordFromImg:self.captchaField.text OnSuccess:^ {
             [self showAlert:self.sentMessage];
         } onFail:^(NSError *error, NSString *errorMessage) {
+            if (error.code == -1009 || error.code == 3840) {
+                errorMessage = NSLocalizedString(@"Check your internet connection!", nil);
+            }
+            
             [self showAlert:errorMessage];
             [self getCapchaImg];
             self.captchaField.text = @"";
@@ -145,13 +154,26 @@
 
 -(void) sendOrderWithToken
 {
-    if([self.descriptionField.text isEqualToString:@""])
+    [self.nameField resignFirstResponder];
+    [self.phoneField resignFirstResponder];
+    [self.emailField resignFirstResponder];
+    
+    [self.descriptionField resignFirstResponder];
+    [self.captchaField resignFirstResponder];
+    [self.codeField resignFirstResponder];
+
+    
+    if([self.descriptionField.text isEqualToString:@""]) {
         [self showAlert:NSLocalizedString(@"Fill in all fields!!!", nil)];
+    }
     else
     {
         [[ServerManager sharedManager] orderCarWithDriverWithToken:self.tokenString carId:self.car.carId orderDescription:self.descriptionField.text OnSuccess:^ {
             [self showAlert:self.sentMessage];
         } onFail:^(NSError *error, NSString *errorMessage) {
+            if (error.code == -1009 || error.code == 3840) {
+                errorMessage = NSLocalizedString(@"Check your internet connection!", nil);
+            }
             [self showAlert:errorMessage];
         }];
     }
@@ -174,25 +196,35 @@
 - (BOOL)textFieldShouldReturn:(RCTextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     if (!view)
-        [textField endEditing:TRUE];
+        [textField resignFirstResponder];
     else
         [view becomeFirstResponder];
     return YES;
 }
 
+
+
 - (void)alertView:(UIAlertView *)theAlert clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if([theAlert.message isEqualToString:self.sentMessage])
-        [self.navigationController popToRootViewControllerAnimated:TRUE];
+   // if([theAlert.message isEqualToString:self.sentMessage])
+      //  [self.navigationController popToRootViewControllerAnimated:TRUE];
 }
 - (void)showAlert:(NSString *) message
 {
-    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:nil
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:@"OK"
-                                             otherButtonTitles:nil];
-    [theAlert show];
+    
+    
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                    @"" message:message preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           if([message isEqualToString:self.sentMessage])
+                                                        [self.navigationController popToRootViewControllerAnimated:YES];
+                                                       }];
+        [alert addAction:cancel];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 -(BOOL) validateFieldsEmpty

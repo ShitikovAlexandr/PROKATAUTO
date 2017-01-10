@@ -3,8 +3,7 @@
   ProkatAuto31
 
   Created by Ivan Bielko on 08.11.16.
-  Copyright © 2016 Asta.Mobi. All rights reserved.
-*/
+  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.*/
 
 "Thank you for your order! Our staff will contact you shortly." = "Спасибо за Ваш заказ! Наши сотрудники свяжутся с Вами в ближайшее время.";
 "Fill in all fields!!!" = "Заполните все поля!";
@@ -25,7 +24,7 @@
 "day" = "сутки";
 "days" = "суток";
 "%@ rubles" = "%@ рублей";
-"%d rubles" = "%d рублей";
+"%@ rubles" = "%@ рублей";
 "from %@ to %@" = "с %@ по %@";
 "penalty %@ rubles" = "штраф %@ рублей";
 "New" = "Новый";
@@ -51,7 +50,7 @@
 "from %@ rubles" = "от %@ руб.";
 "Show specifications" = "Показать характеристики";
 "Hide specifications" = "Скрыть характеристики";
-"Transmision" = "Коробка передач";
+"Transmission" = "Коробка передач";
 "Car with AT" = "Авто с АКПП";
 "Car with MT" = "Авто с МКПП";
 "Cars with automatic transmission" = "Автомобили с автоматической коробкой передач";
@@ -59,10 +58,22 @@
 "Wrong phone number or password!!!" = "Неверный телефон или пароль";
 "New password has been sent to the SMS" = "Новый пароль отправлен в СМС";
 "The password has been changed succesfully" = "Пароль изменен успешно!";
-"%ld rubles/day х %@" = "%ld рублей/сутки х %@";
+"%@ rubles/day х %@" = "%@ рублей/сутки х %@";
 "free" = "бесплатно";
 "For your convenience You can make an advance payment or pay the full order.\nDeposit isn\'t included to the order price, it has to be included before you sign a rental contract.\nIn case of fully advance payment we will give You any unit of additional equipment for free." = "Для Вашего удобства Вы можете сделать предоплату или оплатить заказ полностью.\nВ сумме заказа не включен залог, его необходимо оплатить перед подписанием договора аренды.  В случае полной предоплаты мы предоставим Вам любую еденицу дополнительного оборудования бесплатно.";
 "Make a prepay %d rubles" = "Сделать предоплату %d руб.";
+"Make a prepay %@ rubles" = "Сделать предоплату %@ руб.";
 "Pay order %d rubles" = "Оплатить заказ %d руб.";
+"Pay order %@ rubles" = "Оплатить заказ %@ руб.";
+
 "Pay later" = "Оплатить позже";
 "Do you want to cancel the order?" = "Вы действительно хотите отменить заказ?";
+"The order is already issued to pay you need to go to the order screen" = "Вами уже забронирован автомобиль. Чтобы оплатить или отменить заказ, нужно перейти в раздел Мои заказы.";
+ "Passwords don't match!" = "Пароли не совпадают!";
+"Order № %@" = "Заказ № %@";
+"Confirm your agreement to the processing of personal data!" = "Подтвердите согласие на обработку персональных данных!";
+"not specified" = "не указан";
+"About" = "О приложении";
+
+
+

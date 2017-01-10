@@ -3,12 +3,11 @@
 //  ProkatAuto31
 //
 //  Created by Ivan Bielko on 04.11.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "TransferOrderController.h"
 #import "ServerManager.h"
-#import "RCTextField.h"
 #import "RCDatePicker.h"
 
 @interface TransferOrderController ()
@@ -122,7 +121,6 @@
 }
 
 - (void) doneButtonPressed:(id)sender  {
-    [self switchNextView];
 }
 
 -(void) hideElements
@@ -136,9 +134,9 @@
     self.captchaImageView.hidden = TRUE;
     self.captchaLabel.hidden = TRUE;
     self.captchaField.hidden = TRUE;
-    self.captchaField.tag = 0;
-    self.commentField.returnKeyType = UIReturnKeyDone;
-    self.commentField.enablesReturnKeyAutomatically = FALSE;
+    //self.captchaField.tag = 0;
+    //self.commentField.returnKeyType = UIReturnKeyDone;
+    //self.commentField.enablesReturnKeyAutomatically = FALSE;
     
     float delta = self.contactDataLabel.frame.origin.y - self.carField.frame.origin.y;
     [self moveViews:delta];
@@ -147,7 +145,7 @@
 
 - (IBAction)sendOrder:(id) sender event: (id) event {
     
-    if([self.tokenString isEqualToString:@""] || self.tokenString == NULL)
+    if([self.tokenString length] <6)
     {
         [self sendOrderWithCaptcha];
     }else
@@ -168,6 +166,9 @@
         [[ServerManager sharedManager] sendTransferOrderWithCaptchaKey:self.capchaKey andCaptchaValue:self.captchaField.text andUserName:self.nameField.text userPhoneNumber:[NSString stringWithFormat:@"%@%@", self.codeField.text, self.phoneField.text] userEmail:self.emailField.text orderComment:self.commentField.text pickupLocation:self.placeField.text pickUpDateTime:[self makeDateTime] passengersCount:self.passagersField.text destinationPlace:self.destinationField.text carName:self.carField.text OnSuccess:^ {
             [self showAlert:self.sentMessage];
         } onFail:^(NSError *error, NSString *errorMessage) {
+            if (error.code == -1009 || error.code == 3840) {
+                errorMessage = NSLocalizedString(@"Check your internet connection!", nil);
+            }
             [self showAlert:errorMessage];
             [self getCapchaImg];
             self.captchaField.text = @"";
@@ -184,6 +185,9 @@
         [[ServerManager sharedManager] sendTransferOrderWithToken:self.tokenString orderComment:self.commentField.text pickupLocation:self.placeField.text pickUpDateTime:[self makeDateTime] passengersCount:self.passagersField.text destinationPlace:self.destinationField.text carName:self.carField.text OnSuccess:^ {
             [self showAlert:self.sentMessage];
         } onFail:^(NSError *error, NSString *errorMessage) {
+            if (error.code == -1009 || error.code == 3840) {
+                errorMessage = NSLocalizedString(@"Check your internet connection!", nil);
+            }
             [self showAlert:errorMessage];
         }];
     }
@@ -201,8 +205,12 @@
     return self.sendOrderButton.frame.origin.y + 40;
 }
 
+
+
 - (BOOL)textFieldShouldBeginEditing:(RCTextField *)textField {
     [textField starEditeffect:textField];
+    
+   
     
     self.currentTag = textField.tag;
     if(self.currentTag == 5 || self.currentTag == 6)
@@ -235,42 +243,43 @@
 - (BOOL)textFieldShouldEndEditing:(RCTextField *)textField {
     [textField EndEditeffect:textField];
     if (textField.tag == 5 || textField.tag == 6) {
-        [self switchNextView];
+        
     }
     return YES;
 }
-
+/*
 - (BOOL)textFieldShouldReturn:(RCTextField *)textField {
-    [self switchNextView];
-    return YES;
-}
-
-- (void)switchNextView
-{
-    UIView *view = [self.view viewWithTag:self.currentTag + 1];
-    if (!view){
-        UIView *textField = [self.view viewWithTag:self.currentTag];
-        if(textField)
-            [textField endEditing:TRUE];
-    }
+    UIView *view = [self.view viewWithTag:textField.tag + 1];
+    if (!view)
+        [textField resignFirstResponder];
     else
         [view becomeFirstResponder];
+    return YES;
 }
+ */
 
 - (void)alertView:(UIAlertView *)theAlert clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if([theAlert.message isEqualToString:self.sentMessage])
-        [self.navigationController popToRootViewControllerAnimated:TRUE];
+    //if([theAlert.message isEqualToString:self.sentMessage])
+        //[self.navigationController popToRootViewControllerAnimated:TRUE];
 }
 
 - (void)showAlert:(NSString *) message
 {
-    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:nil
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:@"OK"
-                                             otherButtonTitles:nil];
-    [theAlert show];
+    
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                    @"" message:message preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           if([message isEqualToString:self.sentMessage])
+                                                               [self.navigationController popToRootViewControllerAnimated:YES];
+                                                       }];
+        [alert addAction:cancel];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    
 }
 
 -(BOOL) validateFieldsEmpty
@@ -342,7 +351,7 @@
         
     }
                                                             onFail:^(NSError *error, NSInteger statusCode) {
-                                                                
+                                                               
                                                             }];
     
 }

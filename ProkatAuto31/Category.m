@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 15.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "Category.h"
@@ -29,7 +29,6 @@
     }
     
     
-    NSLog(@"%@", self.image);
     
     return self;
 }

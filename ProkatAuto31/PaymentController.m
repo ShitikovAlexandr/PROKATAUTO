@@ -3,12 +3,14 @@
 //  ProkatAuto31
 //
 //  Created by alex on 02.11.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "PaymentController.h"
 #import "SWRevealViewController.h"
 #import "ServerManager.h"
+#import "OrdersListController.h"
+#import "OrderDetailController.h"
 
 
 
@@ -26,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.baseAddress = @"http://83.220.170.187";
+    self.baseAddress = @"http://prokatauto31.ru";
 
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
@@ -73,15 +75,21 @@
 #pragma mark - WKNavigationDelegate
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
-    NSLog(@"didFinishNavigation %@", webView.URL);
     NSString *urlString = [NSString stringWithFormat:@"%@",webView.URL];
-    /*
+    NSString *newStringURL;
     if ([urlString rangeOfString:self.baseAddress].location !=NSNotFound) {
-        NSURLRequest *nsrequest=[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-        [self.wkWebV loadRequest:nsrequest];
-
+         [self.wkWebV removeFromSuperview];
+               if ([urlString  rangeOfString:@"error"].location !=NSNotFound) {
+            newStringURL = [urlString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/api/v1/public/", self.baseAddress] withString:@""];
+            
+        } else if ([urlString  rangeOfString:@"success"].location !=NSNotFound) {
+            newStringURL = [urlString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/api/v1/public/", self.baseAddress] withString:@""];
+        }
+        [self paymentSuccessWithAccesTocenWithURLString:newStringURL];
+       
     }
-    */
+    
+    
     
 }
 
@@ -112,6 +120,48 @@
                                                           }
                                                       }];
 }
+
+
+- (void) paymentSuccessWithAccesTocenWithURLString: (NSString*) urlString {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token =  [defaults valueForKey:@"tokenString"];
+
+    
+    [[ServerManager sharedManager] paymentSuccessWithAccesTocen:token andURL:urlString OnSuccess:^(NSString *urlString) {
+        
+        UINavigationController *ordersVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
+        UINavigationController *navVCB = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+        navVCB.navigationBar.barStyle = UIBarStyleBlack;
+        [navVCB setViewControllers:@[ordersVC] animated:NO];
+        OrderDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderDetailController"];
+        vc.orderId = self.orderId;
+        vc.backController = navVCB;
+        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
+        [navVC setViewControllers:@[vc] animated:NO];
+        [self presentViewController:navVC animated:NO completion:nil];
+
+        
+    } onFail:^(NSArray *errorArray) {
+        
+        UINavigationController *ordersVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
+        UINavigationController *navVCB = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+        navVCB.navigationBar.barStyle = UIBarStyleBlack;
+        [navVCB setViewControllers:@[ordersVC] animated:YES];
+        OrderDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderDetailController"];
+        vc.orderId = self.orderId;
+        vc.backController = navVCB;
+        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
+        [navVC setViewControllers:@[vc] animated:NO];
+        [self presentViewController:navVC animated:YES completion:nil];
+
+        
+    }];
+    
+}
+
+
 
 - (void) errorAlertInput: (NSString*) errorText {
     

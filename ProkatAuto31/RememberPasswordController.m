@@ -3,11 +3,12 @@
 //  ProkatAuto31
 //
 //  Created by alex on 26.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "RememberPasswordController.h"
 #import "ServerManager.h"
+#import "SWRevealViewController.h"
 
 @interface RememberPasswordController ()
 
@@ -69,6 +70,7 @@
     [self.countriCodePicker selectRow:(int)[self.pickerDateArray objectForKey:@"Russia"] inComponent:0 animated:YES];
     self.CountryNameLabel.text = @"Russia";
     self.countryCode.placeholder =  [NSString stringWithFormat:@"%@", [self.pickerDateArray objectForKey:@"Russia"]];
+    self.countryCode.text = @"+7";
     
     [self.getNewPasswordButton addTarget:self action:@selector(PressButtonPassword) forControlEvents:UIControlEventTouchDown];
 
@@ -126,8 +128,7 @@
 #pragma mark - CountryCodePicker
 
 - (void) doneButtonPressed:(id)sender  {
-    
-    [self.countryCode resignFirstResponder];
+       [self.countryCode resignFirstResponder];
     self.countryCode.layer.shadowColor = [UIColor grayColor].CGColor;
 }
 
@@ -174,7 +175,6 @@
     [[ServerManager sharedManager] registrationGetCaptchaOnSuccess:^(NSString *thisData) {
         
         self.CapchaKey = [NSString stringWithString:thisData];
-        NSLog(@"self.CapchaKey %@", self.CapchaKey);
         
         [[ServerManager sharedManager] registrationGetCaptchaImgWithKey:self.CapchaKey
                                                               OnSuccess:^(id thisData) {
@@ -193,26 +193,29 @@
 }
 
 - (void) PressButtonPassword {
+    [self.phoneNumber resignFirstResponder];
+    [self.captchaValue resignFirstResponder];
     
-    [self getNewPasswordWithKey:self.CapchaKey andCapchaValue:self.captchaText andPhone:self.phoneText];
+    [self getNewPasswordWithKey:self.CapchaKey andCapchaValue:self.captchaText andPhone:[NSString stringWithFormat:@"%@%@", self.countryCode.text, self.phoneText]];
 }
 
 - (void) getNewPasswordWithKey: (NSString*) key andCapchaValue: (NSString*) value andPhone: (NSString*) phone  {
-    NSLog(@"self.CapchaKey****** %@", self.CapchaKey);
     [[ServerManager sharedManager]  rememberPasswordWithCapchaKey:key
                                                    andCapchaValue:value
                                                          andPhone:phone
                                                         OnSuccess:^(NSString *data) {
                                                             
-                                                            [self ErrorTextFieldInput:NSLocalizedString(@"New password has been sent to the SMS", nil)];
+                                                            [self exitAlertMessage:NSLocalizedString(@"New password has been sent to the SMS", nil)];
                                                         }
                                                            onFail:^(NSError *error, NSInteger statusCode, NSArray* dataArray) {
+                                                               if (error.code == -1009) {
+                                                                   [self errorActionWithMasegr];
+                                                               }
                                                                
-                                                               if (dataArray) {
+                                                               else if (dataArray) {
                                                                    NSString* newString = [[[dataArray objectAtIndex:0]objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
                                                                    [self ErrorTextFieldInput:[NSString stringWithFormat:@"%@",newString]];
                                                                }
-
                                                                
                                                            }];
     
@@ -229,8 +232,7 @@
     
     UIAlertAction *okButtlon = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive
                                                       handler:^(UIAlertAction * _Nonnull action) {
-                                                          
-                                                      }];
+                                                          }];
     
     
     [self.alert addAction:okButtlon];
@@ -239,6 +241,46 @@
     [self presentViewController:self.alert animated:YES completion:nil];
     
     
+    
+}
+
+- (void) exitAlertMessage: (NSString*) text  {
+    
+    self.alert = nil;
+    self.alert = [UIAlertController alertControllerWithTitle:
+                  text message:nil preferredStyle:UIAlertControllerStyleAlert];
+    //self.alert.view.transform = CGAffineTransformIdentity;
+    //self.alert.view.transform = CGAffineTransformScale( self.alert.view.transform, 0.5, 0.5);
+    
+    
+    UIAlertAction *okButtlon = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive
+                                                      handler:^(UIAlertAction * _Nonnull action) {
+                                                          
+                                                          SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+                                                          [self presentViewController:vc animated:YES completion:nil];
+                                                      }];
+    
+    
+    [self.alert addAction:okButtlon];
+    
+    
+    [self presentViewController:self.alert animated:YES completion:nil];
+
+    
+    
+}
+
+- (void) errorActionWithMasegr {
+    NSString* masege = NSLocalizedString(@"Check your internet connection!", nil);
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                @"" message:masege preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];
     
 }
 

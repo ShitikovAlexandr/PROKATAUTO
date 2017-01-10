@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 12.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "MainTabBaController.h"
@@ -30,7 +30,7 @@
                                              forState:UIControlStateSelected];
     
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"ArialMT" size:8.f]} forState:(UIControlStateNormal)];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:9.f]} forState:(UIControlStateNormal)];
 }
 
 - (void)didReceiveMemoryWarning {

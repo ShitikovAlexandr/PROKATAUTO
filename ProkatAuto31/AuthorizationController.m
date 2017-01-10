@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 26.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "AuthorizationController.h"
@@ -168,10 +168,11 @@ return YES;
     [[ServerManager sharedManager] logInWithLogin:phone
                                       andPassword:password
                                         OnSuccess:^(NSString *token, id user) {
-                                            
+                                            [[NSUserDefaults standardUserDefaults] setPersistentDomain:[NSDictionary dictionary] forName:[[NSBundle mainBundle] bundleIdentifier]];
                                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                             NSString *tokenString = token;
                                             [defaults setValue:tokenString forKey:@"tokenString"];
+
                                             User *newUser = [[User alloc] init];
                                             newUser = user;
                                             [defaults setValue:newUser.firstName forKey:@"firstName"];
@@ -198,7 +199,7 @@ return YES;
 
                                             
                                             
-                                            if (tokenString != NULL) {
+                                            if (token != NULL) {
                                                 if (self.nextController ) {
                                                     [self.navigationController pushViewController:self.nextController animated:YES];
                                                 } else {
@@ -207,12 +208,17 @@ return YES;
                                                 }
                                                 
                                             } else {
-                                                NSLog(@"input date is (()()() %@", tokenString);
                                             }
 
                                         }
                                            onFail:^(NSError *error, NSInteger statusCode) {
-                                               [self RCAlertController];
+                                               
+                                               if (error.code == -1009) {
+                                                   [self errorActionWithMasegr];
+                                               }
+                                               else {
+                                                   [self RCAlertController];
+                                               }
                                                                                          }];
 }
 
@@ -283,6 +289,23 @@ return YES;
         [view becomeFirstResponder];
     return YES;
 }
+
+- (void) errorActionWithMasegr {
+    NSString* masege = NSLocalizedString(@"Check your internet connection!", nil);
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                @"" message:masege preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+    
+}
+
+
 
 - (NSDictionary*) dataForPickerCountry {
     NSDictionary *codes = @{

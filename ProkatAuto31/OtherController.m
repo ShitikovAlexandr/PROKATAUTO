@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 12.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "OtherController.h"
@@ -14,6 +14,7 @@
 #import "CarMainCollectionViewCell.h"
 #import "CarsWithDriverListController.h"
 #import "TransferCategoryController.h"
+#import "RentalPayController.h"
 
 
 @interface OtherController ()
@@ -44,7 +45,7 @@
     [self.view addSubview:self.activityIndicatorView];
     [self.activityIndicatorView startAnimating];
 
-    self.baseAddress = @"http://83.220.170.187";
+    self.baseAddress = @"http://prokatauto31.ru";
     
     [self.CallButton addTarget:self action:@selector(CallAction) forControlEvents:(UIControlEventTouchDown)];
 
@@ -96,6 +97,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    
     Category *category =[self.categoryArray objectAtIndex:indexPath.row];
     if([category.categoryID isEqual:self.transferId])
     {
@@ -104,7 +106,14 @@
         
         vc.title = category.name;
         [self.navigationController pushViewController:vc animated:YES];
-    }else
+    } else if ([category.categoryID intValue] == 15) {
+        
+        RentalPayController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RentalPayController"];
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    
+    else
     {
         CarsWithDriverListController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CarsWithDriverListController"];
         vc.categoryID = category.categoryID;
@@ -119,7 +128,7 @@
 #pragma mark - API
 
 - (void) getCarCategorieFromAPI {
-    [[ServerManager sharedManager] getTransferCategoryInfo:^(Category *category)
+    [[ServerManager sharedManager] getTransferCategoryInfo:^(Category *category, NSString* content)
      {
          [self.categoryArray addObject:category];
          self.transferId = category.categoryID;
@@ -130,15 +139,12 @@
                  [self.activityIndicatorView stopAnimating];
                  [self.collectionView reloadData];
              } onFail:^(NSError *error, NSInteger statusCode) {
-                 NSLog(@"error = %@, ", error);
              }];
          } onFail:^(NSError *error, NSInteger statusCode) {
              [self.activityIndicatorView stopAnimating];
-             NSLog(@"error = %@, ", error);
          }];
      } onFail:^(NSError *error) {
          [self.activityIndicatorView stopAnimating];
-         NSLog(@"error = %@, ", error);
      }];
 }
 

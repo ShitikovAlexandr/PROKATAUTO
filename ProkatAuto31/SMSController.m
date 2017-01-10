@@ -3,11 +3,12 @@
 //  ProkatAuto31
 //
 //  Created by alex on 09.11.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "SMSController.h"
 #import "ServerManager.h"
+#import "SWRevealViewController.h"
 
 @interface SMSController ()
 
@@ -36,6 +37,8 @@
     self.alertView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.alertView.bounds cornerRadius:self.alertView.layer.cornerRadius].CGPath;
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"] style:UIBarButtonItemStylePlain target:self action:@selector(myCustomBack)];
+    
+    [self.registerButton addTarget:self action:@selector(sendRegisterCode) forControlEvents:UIControlEventTouchDown];
 
     
     
@@ -47,7 +50,11 @@
 }
 
 -(void) myCustomBack {
+    if (self.nextController) {
+        [self.navigationController pushViewController:self.nextController animated:YES];
+    } else {
         [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void) styleRCButton: (UIButton*) button {
@@ -74,8 +81,15 @@
     
 }
 
+-(BOOL)textFieldShouldReturn:(RCTextField *)textField {
+        [textField resignFirstResponder];
+    return YES;
+}
+
+
 
 - (void) sendRegisterCode {
+    
     [self.codeTextField resignFirstResponder];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -84,6 +98,8 @@
     [[ServerManager sharedManager] validatePhoneWithCode:self.codeText
                                                withToken:token
                                                OnSuccess:^(NSString *resualtString) {
+                                                   NSString *masege = NSLocalizedString (@"Thank You for registration", nil);
+                                                   [self doneActionWithMasegr:masege];
                                                    
                                                }
                                                   onFail:^(NSString *detail) {
@@ -105,6 +121,21 @@
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+}
+- (void) doneActionWithMasegr: (NSString*) masege {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
+                                @"" message:masege preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+                                                       [self presentViewController:vc animated:YES completion:nil];
+                                                   }];
     [alert addAction:cancel];
     [self presentViewController:alert animated:YES completion:nil];
     

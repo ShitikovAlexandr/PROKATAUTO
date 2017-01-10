@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 08.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "RCDatePicker.h"
@@ -55,7 +55,7 @@
 - (void) doneButtonPressed:(id)sender  {
     
     self.textField.layer.shadowColor =[UIColor grayColor].CGColor;
-    self.textField.textColor = [UIColor grayColor];
+    self.textField.textColor = [UIColor blackColor];
 
     [self.textField resignFirstResponder];
 

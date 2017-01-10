@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 13.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "SliderBarViewController.h"
@@ -17,6 +17,7 @@
 #import "ProfileController.h"
 #import "ChangePasswordController.h"
 #import "PaymentController.h"
+#import "AboutController.h"
 
 @interface SliderBarViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *clienHellow;
@@ -26,6 +27,7 @@
 @property (strong, nonatomic) NSArray *icons;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) SideMenuItem *exit;
+@property (strong, nonatomic) SideMenuItem *about;
 
 
 @end
@@ -39,6 +41,11 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token =  [defaults valueForKey:@"tokenString"];
     
+    self.about = [[SideMenuItem alloc] init];
+    self.about.itemId = @70;
+    self.about.image = @"ic_help_outline.png";
+    self.about.title = NSLocalizedString(@"About", nil);
+
     self.exit = [[SideMenuItem alloc] init];
     self.exit.itemId = @66;
     self.exit.image = @"ic_exit_to_app.png";
@@ -62,10 +69,16 @@
         orders.title = NSLocalizedString(@"My orders", nil);
         self.exit.title = NSLocalizedString(@"Logout", nil);
         [self.objectsInSlideBar addObject:orders];
+        
+        
         [self.tableView reloadData];
     } else {
         self.exit.title = NSLocalizedString(@"Login", nil);
         self.clienHellow.text = NSLocalizedString(@"dear customer.", nil);
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *zeroToken = @"";
+        [defaults setValue:zeroToken forKey:@"tokenString"];
+
     }
     
     
@@ -119,7 +132,6 @@
         navVC.navigationBar.barStyle = UIBarStyleBlack;
         [navVC setViewControllers:@[vc] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
-        NSLog(@"go to controller with id page = %@", item.itemId);
         
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:99]]) {
         ProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileController"];
@@ -127,7 +139,6 @@
         navVC.navigationBar.barStyle = UIBarStyleBlack;
         [navVC setViewControllers:@[vc] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
-        NSLog(@"go to profile");
         
     } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:88]]) {
         ChangePasswordController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordController"];
@@ -135,8 +146,15 @@
         navVC.navigationBar.barStyle = UIBarStyleBlack;
         [navVC setViewControllers:@[vc] animated:NO];
         [self presentViewController:navVC animated:YES completion:nil];
-        NSLog(@"go to change password ----->>>>");
-    } else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:77]]) {
+    }
+    else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:70]]) { //
+        AboutController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutController"];
+        UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutControllerNav"];
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
+        [navVC setViewControllers:@[vc] animated:NO];
+        [self presentViewController:navVC animated:YES completion:nil];
+    }
+    else if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:77]]) {
         UINavigationController *ordersVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
         UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersNavigationController"];
         navVC.navigationBar.barStyle = UIBarStyleBlack;
@@ -149,12 +167,18 @@
                if ([token length] > 6) {
                    [self alertExit];
         } else {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *tokenString =@"";
+            [defaults setValue:tokenString forKey:@"tokenString"];
+            [[NSUserDefaults standardUserDefaults] setPersistentDomain:[NSDictionary dictionary] forName:[[NSBundle mainBundle] bundleIdentifier]];
+            // Delete any cached URLrequests!
+            NSURLCache *sharedCache = [NSURLCache sharedURLCache];
+            [sharedCache removeAllCachedResponses];
             [self.tableView reloadData];
             UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"NavReg"];
             vc.navigationBar.barStyle = UIBarStyleBlack;
             [self presentViewController:vc animated:YES completion:nil];
         }
-        NSLog(@"you press Exit/Enter");
     }
 }
 
@@ -167,6 +191,12 @@
                                                      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                      NSString *tokenString =@"";
                                                      [defaults setValue:tokenString forKey:@"tokenString"];
+                                                     [[NSUserDefaults standardUserDefaults] setPersistentDomain:[NSDictionary dictionary] forName:[[NSBundle mainBundle] bundleIdentifier]];
+                                                     
+                                                     // Delete any cached URLrequests!
+                                                     NSURLCache *sharedCache = [NSURLCache sharedURLCache];
+                                                     [sharedCache removeAllCachedResponses];
+                                                     
                                                      self.exit.title = NSLocalizedString(@"Login", nil);
                                                      SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
                                                      [self presentViewController:vc animated:YES completion:nil];
@@ -186,10 +216,10 @@
     
     [[ServerManager sharedManager] sideMenuOnSuccess:^(NSArray *data) {
         [self.objectsInSlideBar addObjectsFromArray:data];
+        [self.objectsInSlideBar addObject:self.about];
         [self.objectsInSlideBar addObject:self.exit];
         [self.tableView reloadData];
     } onFail:^(NSError *error) {
-        NSLog(@"Что то пошло не так");
         
     }];
 }

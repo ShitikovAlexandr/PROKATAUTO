@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProkatAuto31/PaymentController.m"
-            timestampString = "500457204.204769"
+            filePath = "ProkatAuto31/ServerManager.m"
+            timestampString = "503941704.811293"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "-webView:didFinishNavigation:"
+            startingLineNumber = "831"
+            endingLineNumber = "831"
+            landmarkName = "-ordersHistory:onFail:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProkatAuto31/ServerManager.m"
-            timestampString = "500464971.352952"
+            filePath = "ProkatAuto31/OrdersListController.m"
+            timestampString = "502972071.932489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1182"
-            endingLineNumber = "1182"
-            landmarkName = "-publicOrderWithCarId:dateFrom:dateTo:giveCarService:returnService:options:withToken:OnSuccess:onFail:"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "-StepOne:event:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProkatAuto31/ServerManager.m"
-            timestampString = "500464971.352952"
+            filePath = "ProkatAuto31/OrdersListController.m"
+            timestampString = "502972071.932489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1186"
-            endingLineNumber = "1186"
-            landmarkName = "-publicOrderWithCarId:dateFrom:dateTo:giveCarService:returnService:options:withToken:OnSuccess:onFail:"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "-StepOne:event:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +57,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProkatAuto31/ServerManager.m"
-            timestampString = "500464971.352952"
+            filePath = "ProkatAuto31/OrdersListController.m"
+            timestampString = "502972071.932489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1188"
-            endingLineNumber = "1188"
-            landmarkName = "-publicOrderWithCarId:dateFrom:dateTo:giveCarService:returnService:options:withToken:OnSuccess:onFail:"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "-StepOne:event:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,29 +73,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProkatAuto31/ServerManager.m"
-            timestampString = "500464653.081851"
+            filePath = "ProkatAuto31/OrdersListController.m"
+            timestampString = "502972071.932489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1161"
-            endingLineNumber = "1161"
-            landmarkName = "-publicOrderWithCarId:dateFrom:dateTo:giveCarService:returnService:options:withToken:OnSuccess:onFail:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProkatAuto31/ServerManager.m"
-            timestampString = "500464971.352952"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1162"
-            endingLineNumber = "1162"
-            landmarkName = "-publicOrderWithCarId:dateFrom:dateTo:giveCarService:returnService:options:withToken:OnSuccess:onFail:"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

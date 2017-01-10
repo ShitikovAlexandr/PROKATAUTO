@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 08.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,7 +12,7 @@
 
 @interface Order : NSObject
 
-@property (strong, nonatomic) NSNumber *orderId;
+@property (strong, nonatomic) NSString *orderId;
 @property (strong, nonatomic) Car *car;
 
 @property (strong, nonatomic) NSDate *dateOfRentalStart;

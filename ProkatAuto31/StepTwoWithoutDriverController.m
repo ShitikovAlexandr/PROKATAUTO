@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 12.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "StepTwoWithoutDriverController.h"
@@ -39,7 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.baseAddress = @"http://83.220.170.187";
+    self.baseAddress = @"http://prokatauto31.ru";
     
     self.numberFormatter = [[NSNumberFormatter alloc] init];
     [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
@@ -111,13 +111,13 @@
         cell.rentalEndDate.text = [NSString stringWithFormat:@"%@ %@", [screenDate stringFromDate:self.order.dateOfRentalEnd], [screenTime stringFromDate:self.order.timeOfRentalEnd]];
         
         
-        NSLog(@"rentalPeriod %f", [endRental timeIntervalSinceDate:startRental]);
         NSInteger rentalPeriod = (NSInteger)([endRental timeIntervalSinceDate:startRental]/60/60);
         NSInteger rentalPeriodDay = (NSInteger)rentalPeriod/24;
-        self.order.rentalPeriodDays = rentalPeriodDay;
         if (rentalPeriod % 24 > 0) {
             rentalPeriodDay = rentalPeriodDay+1;
         }
+        self.order.rentalPeriodDays = rentalPeriodDay;
+
         NSNumber *range;
         NSInteger dayPrice;
         if (rentalPeriodDay < 4) {
@@ -173,9 +173,7 @@
             } else {
                 cell.priceOption.text = [NSString stringWithFormat:NSLocalizedString(@"%d rubles per day", nil), [option.optionPrice integerValue]];
             }
-            NSLog(@"optionsMultiple %@", option.optionsMultiple);
             if ([option.optionsMultiple intValue] >0) {
-                NSLog(@"option name %@", option.optionAvaliableAmount);
                 [cell.optionCount setUserInteractionEnabled:YES];
                 cell.dropDownImg.image = [UIImage imageNamed:@"ic_arrow_drop_down_2x.png"];
                 
@@ -239,8 +237,7 @@
 }
 
 - (void) switchChanged:(id)sender {
-    UISwitch* switchControl = sender;
-    NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
+    //UISwitch* switchControl = sender;
 }
 
 
@@ -248,7 +245,6 @@
 - (void) registerOrLoginAlert {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults valueForKey:@"tokenString"];
-    NSLog(@"token strin is %@", token);
 
     
     if ([token length] > 6) {
@@ -258,7 +254,6 @@
             if (cell.switchOption.isOn) {
                 Option *option = [self.optionsArray objectAtIndex:i];
                 option.selectedAmount = cell.optionCount.text;
-                NSLog(@"selectedAmount %@", cell.optionCount.text);
                 [self.order.selectOptionArray addObject:option];
             }
         }

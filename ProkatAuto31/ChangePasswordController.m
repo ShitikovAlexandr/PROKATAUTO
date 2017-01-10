@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 02.11.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "ChangePasswordController.h"
@@ -95,7 +95,10 @@
 #pragma mark - API
 
 - (void) changePassword {
-    
+
+   [self.oldPasswordInput resignFirstResponder];
+   [self.passwordNew resignFirstResponder];
+   [self.retryNewPassword resignFirstResponder];
     
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -108,14 +111,15 @@
                                                  OnSuccess:^(NSString *massage) {
                                                         [self passwordChangeTextFieldInput:NSLocalizedString(@"The password has been changed succesfully", nil)];
                                                  }
-                                                    onFail:^(NSArray* errorArray) {
+                                                    onFail:^(NSArray* errorArray, NSError *error) {
                                                         
                                                         if ([errorArray count] > 0) {
                                                             NSString* newString = [[[errorArray objectAtIndex:0]objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
                                                             [self ErrorTextFieldInput:[NSString stringWithFormat:@"%@",newString]];
+                                                        } else if (error.code == -1009) {
+                                                            [self passwordChangeTextFieldInput:NSLocalizedString(@"Check your internet connection!", nil)];
                                                         } else {
                                                             [self passwordChangeTextFieldInput:NSLocalizedString(@"The password has been changed succesfully", nil)];
-
                                                         }
 
                                                         

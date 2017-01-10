@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 22.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "User.h"

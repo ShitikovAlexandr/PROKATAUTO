@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 03.11.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "OrderDetailController.h"
@@ -28,6 +28,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 
+@property (strong, nonatomic) NSNumberFormatter* numberFormatter;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+
+
+
+
+
 
 @end
 
@@ -35,13 +42,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   // self.order = [[Order alloc] init];
+    if ([self.order.status isEqualToString:@"cancel"] ) {
+        [self.buttonsView removeFromSuperview];
+    } else if ([self.order.paymentStatus isEqualToString:@"full"]) {
+        [self.payButton removeFromSuperview];
+        self.cancelButton.titleLabel.textAlignment = NSTextAlignmentRight;
+        self.cancelButton.center = CGPointMake(self.buttonsView.center.x+13.f, self.cancelButton.frame.origin.y+15);
+        }
+
+    [self getDetail];
+
+    //self.title = [NSString stringWithFormat:@"Заказ № %@",self.order.number];
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    self.activityIndicatorView.center = self.view.center;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
+
+
+
+    self.numberFormatter = [[NSNumberFormatter alloc] init];
+    [self.numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [self.numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
     
     self.optionsArray = [NSMutableArray array];
     self.placeArray = [NSMutableArray array];
     
-    [self getDetail];
-    
     self.title = [NSString stringWithFormat:@"Заказ № %@",self.order.number];
+
 
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back-25.png"]
@@ -53,9 +83,6 @@
     [self.payButton addTarget:self action:@selector(payOrder) forControlEvents:UIControlEventTouchDown];
     [self.cancelButton addTarget:self action:@selector(deleteOrder) forControlEvents:UIControlEventTouchDown];
     
-    if (![self.order.status isEqualToString:@"created"]) {
-        [self.buttonsView removeFromSuperview];
-    }
 
     
 }
@@ -81,15 +108,16 @@
         
         [self manageLabelWithStatus:self.order.status statusLabel:cell.orderStatus];
         [self manageLabelWithPaymentStatus:self.order.paymentStatus statusLabel:cell.statusPay paid:self.order.paid];
+        NSNumber *daily = [NSNumber numberWithInt:[self.dailyAmount intValue]];
         
-        cell.mathCountRental.text = [NSString stringWithFormat:NSLocalizedString(@"%ld rubles/day х %@", nil), (long)[self.dailyAmount integerValue], self.order.days];
-        cell.mathCountTotal.text = [NSString stringWithFormat:@"%ld", (long)[self.amount integerValue]];
+        cell.mathCountRental.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles/day х %@", nil), [self.numberFormatter stringFromNumber:daily], self.order.days];
+        cell.mathCountTotal.text = [NSString stringWithFormat:@"%@", [self.numberFormatter stringFromNumber:[NSNumber numberWithInt:[self.amount intValue]]]];
         
         
         NSDateFormatter *dF = [[NSDateFormatter alloc] init];
         [dF setDateFormat:@"dd.MM.yyyy"];
         cell.rentalDatePeriod.text = [NSString stringWithFormat:NSLocalizedString(@"from %@ to %@", nil), [dF stringFromDate:self.order.dateOfRentalStart], [dF stringFromDate:self.order.dateOfRentalEnd]];
-        cell.totalPrice.text = [NSString stringWithFormat:NSLocalizedString(@"%d rubles", nil), [self.order.totalPrice integerValue]];
+        cell.totalPrice.text = [NSString stringWithFormat:NSLocalizedString(@"%@ rubles", nil), [self.numberFormatter stringFromNumber:[NSNumber numberWithInt:[self.order.totalPrice intValue]]]]; //[self.order.totalPrice integerValue]
         
         for (Place* place in self.placeArray) {
             if ([place.serviceType isEqualToString:@"1"]) {
@@ -116,15 +144,13 @@
     } else {
         
         OrderDitailOptionsCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"OrderDitailOptionsCell" forIndexPath:indexPath];
-        NSLog(@"create OrderDetailMainCell");
 
         for (int i =0; i< [self.optionsArray count]; i++) {
             
             OrderDetail* opt = [self.optionsArray objectAtIndex:i];
-            NSLog(@"opt price %@", opt.price);
             CGRect textNameframe = cell.optionName.frame;
             textNameframe.origin.x = 8.f;
-            textNameframe.origin.y = 30+1*25*i;
+            textNameframe.origin.y = 30+1*30*i;
             UILabel* optionName = [[UILabel alloc] initWithFrame: textNameframe];
             optionName.font = cell.optionName.font;
             optionName.textColor = cell.optionName.textColor;
@@ -138,8 +164,8 @@
             [cell.optionView addSubview:optionName];
             
             CGRect textPriceframe = cell.optionTotalPrice.frame;
-            textPriceframe.origin.x = (self.view.frame.size.width - 95.f);
-            textPriceframe.origin.y = 30+1*25*i;
+            textPriceframe.origin.x = (self.view.frame.size.width - 128.f);
+            textPriceframe.origin.y = 30+1*30*i;
             UILabel* optionPrice = [[UILabel alloc] initWithFrame: textPriceframe];
             optionPrice.font = cell.optionTotalPrice.font;
             optionPrice.textColor = cell.optionTotalPrice.textColor;
@@ -172,11 +198,10 @@
 
 - (CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return CGSizeMake(self.collectionView.frame.size.width - 4, 305.f);
+        return CGSizeMake(self.collectionView.frame.size.width - 4, 320.f);
 
     } else {
-        NSLog(@"size second section");
-        return CGSizeMake(self.collectionView.frame.size.width - 4, 38 +[self.optionsArray count]*25);
+        return CGSizeMake(self.collectionView.frame.size.width - 4, 40 +[self.optionsArray count]*30);
 
     }
 }
@@ -196,32 +221,31 @@
     {
         label.text = NSLocalizedString(@"New", nil);
         
-        label.textColor = [UIColor grayColor];
-        label.layer.borderColor = [UIColor grayColor].CGColor;
+        label.textColor = [UIColor darkGrayColor];
+        label.layer.borderColor = [UIColor darkGrayColor].CGColor;
     }else if([status isEqualToString:@"rejected"])
     {
         label.text = NSLocalizedString(@"Rejected", nil);
-        label.textColor = [UIColor redColor];
-        label.layer.borderColor = [UIColor redColor].CGColor;
+        label.textColor = [UIColor colorWithRed:139/255.f green:0 blue:0 alpha:1];
+        label.layer.borderColor = [UIColor colorWithRed:139/255 green:0 blue:0 alpha:1].CGColor;
     }else if([status isEqualToString:@"cancel"])
     {
         label.text = NSLocalizedString(@"Cancel", nil);
-        label.textColor = [UIColor redColor];
-        label.layer.borderColor = [UIColor redColor].CGColor;
+        label.textColor = [UIColor colorWithRed:139.f/255 green:0 blue:0 alpha:1];
+        label.layer.borderColor = [UIColor colorWithRed:139.f/255 green:0 blue:0 alpha:1].CGColor;
     }else if([status isEqualToString:@"reserve"])
     {
         label.text = NSLocalizedString(@"Reservation", nil);
         
-        label.textColor = [UIColor orangeColor];
-        label.layer.borderColor = [UIColor orangeColor].CGColor;
+        label.textColor = [UIColor colorWithRed:212.f/255 green:85.f/255 blue:0 alpha:1];
+        label.layer.borderColor = [UIColor colorWithRed:212.f/255 green:85.f/255 blue:0 alpha:1].CGColor;
         
     }else if([status isEqualToString:@"onwork"])
     {
         label.text = NSLocalizedString(@"Book a car", nil);
-        label.backgroundColor = [UIColor greenColor];
         
-        label.textColor = [UIColor greenColor];
-        label.layer.borderColor = [UIColor greenColor].CGColor;
+        label.textColor = [UIColor colorWithRed:0 green:128.f/255 blue:0 alpha:1];
+        label.layer.borderColor = [UIColor colorWithRed:0 green:128.f/255 blue:0 alpha:1].CGColor;
     }else if([status isEqualToString:@"finished"])
     {
         label.text = NSLocalizedString(@"Archive", nil);
@@ -234,8 +258,8 @@
     {
         label.text = NSLocalizedString(@"Error", nil);
         
-        label.textColor = [UIColor redColor];
-        label.layer.borderColor = [UIColor redColor].CGColor;
+        label.textColor = [UIColor colorWithRed:139/255 green:0 blue:0 alpha:1];
+        label.layer.borderColor = [UIColor colorWithRed:139/255 green:0 blue:0 alpha:1].CGColor;
 
         
     }
@@ -248,15 +272,15 @@
     if([status isEqualToString:@"empty"])
     {
         label.text = NSLocalizedString(@"not paid", nil);
-        label.textColor = [UIColor redColor];
+        label.textColor = [UIColor colorWithRed:139.f/255 green:0 blue:0 alpha:1];
     }else if([status isEqualToString:@"partial"])
     {
-        label.text = [NSString stringWithFormat: NSLocalizedString(@"paid %@", nil), paid];
-        label.textColor = [UIColor orangeColor];
+        label.text = [NSString stringWithFormat: NSLocalizedString(@"paid %@", nil), [self.numberFormatter stringFromNumber:[NSNumber numberWithInt:[paid intValue]] ]];
+        label.textColor = [UIColor colorWithRed:212.f/255 green:85.f/255 blue:0 alpha:1];
     }else if([status isEqualToString:@"full"])
     {
         label.text = NSLocalizedString(@"paid", nil);
-        label.textColor = [UIColor greenColor];
+        label.textColor = [UIColor colorWithRed:0 green:128.f/255 blue:0 alpha:1];
     }else if([status isEqualToString:@"none"])
     {
         label.hidden = TRUE;
@@ -264,14 +288,20 @@
     else
     {
         label.text = NSLocalizedString(@"Error", nil);
-        label.backgroundColor = [UIColor redColor];
+        label.textColor = [UIColor colorWithRed:139.f/255 green:0 blue:0 alpha:1];
     }
 }
 
 
 - (void) myCustomBack {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.backController) {
+        //SWRevealViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+        [self presentViewController:self.backController animated:YES completion:nil];
+
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
 }
 
@@ -286,23 +316,23 @@
     alertMessage.textAlignment = NSTextAlignmentLeft;
     
     
-    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Make a prepay %d rubles", nil), [avans integerValue] ] style:UIAlertActionStyleDestructive
+    UIAlertAction *partPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Make a prepay %@ rubles", nil), [self.numberFormatter stringFromNumber:[NSNumber numberWithInt:[avans intValue]]] ] style:UIAlertActionStyleDefault
                                                  handler:^(UIAlertAction * _Nonnull action) {
                                                      
                                                      PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
-                                                     vc.orderId = [self.order.orderId stringValue];
+                                                     vc.orderId = self.order.orderId;
                                                      vc.fullPrice = @"partial";
                                                      UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
                                                      [navVC setViewControllers:@[vc] animated:NO];
                                                      [self presentViewController:navVC animated:YES completion:nil];
                                                      
                                                  }];
-    
-    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Pay order %d rubles", nil), [self.totalAmount integerValue] ] style:UIAlertActionStyleDestructive
+    //self.totalAmount
+    UIAlertAction *fullPay = [UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Pay order %@ rubles", nil), [self.numberFormatter stringFromNumber:[NSNumber numberWithInt:[self.totalAmount intValue]]]  ] style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
                                                         PaymentController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PaymentController"];
-                                                        vc.orderId = [self.order.orderId stringValue];
+                                                        vc.orderId = self.order.orderId;
                                                         vc.fullPrice = @"full";
                                                         UINavigationController *navVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileControllerNav"];
                                                         [navVC setViewControllers:@[vc] animated:NO];
@@ -334,7 +364,7 @@
                                                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                        NSString *token =  [defaults valueForKey:@"tokenString"];
 
-                                                       [[ServerManager sharedManager] deleteOrdrWithPK:[self.order.orderId stringValue]
+                                                       [[ServerManager sharedManager] deleteOrdrWithPK:self.order.orderId
                                                                                          andAccesToken:token
                                                                                              OnSuccess:^(NSString *responce) {
                                                                                                  OrdersListController *ordersVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OrdersListController"];
@@ -366,23 +396,33 @@
     
 }
 
-#pragma mark - API
 
 - (void) getDetail {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token =  [defaults valueForKey:@"tokenString"];
     
     [[ServerManager sharedManager] orderDitailOptionsWithToken:token
-                                                    andOrderId:self.order.orderId
-                                                     OnSuccess:^(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount) {
-                                                         
+                                                    andOrderId:self.orderId
+                                                     OnSuccess:^(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount, id order) {
+                                                         [self.activityIndicatorView stopAnimating];
+
                                                          self.dailyAmount = dailyAmount;
                                                          self.totalAmount = totalAmount;
                                                          self.amount = amount;
+                                                         self.order = order;
+                                                         self.title = [NSString stringWithFormat:NSLocalizedString(@"Order № %@", nil),self.order.number];
+                                                         
+                                                         if ([self.order.status isEqualToString:@"cancel"] ) {
+                                                             [self.buttonsView removeFromSuperview];
+                                                         } else if ([self.order.paymentStatus isEqualToString:@"full"]) {
+                                                             [self.payButton removeFromSuperview];
+                                                             self.cancelButton.titleLabel.textAlignment = NSTextAlignmentRight;
+                                                             self.cancelButton.center = CGPointMake(self.buttonsView.center.x+13.f, self.cancelButton.frame.origin.y+15);
+                                                         }
+
                                                          
                                                          if ([optionArray count]> 0) {
                                                              [self.optionsArray addObjectsFromArray:optionArray];
-                                                             NSLog(@"option array count %d", [self.optionsArray count]);
                                                          }
                                                          
                                                          [self.placeArray addObjectsFromArray:placeArray];
@@ -390,7 +430,8 @@
                                                          
                                                      }
                                                         onFail:^(NSArray *errorArray) {
-                                                            
+                                                            [self.activityIndicatorView stopAnimating];
+
                                                         }];
     
 }

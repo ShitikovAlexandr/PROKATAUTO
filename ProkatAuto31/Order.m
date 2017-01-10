@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 08.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "Order.h"
@@ -37,7 +37,6 @@
         self.penaltyStatus = [responseObject objectForKey:@"penalty_status"];
         self.penalty = [responseObject objectForKey:@"penalty"];
         self.penaltyPaid = [responseObject objectForKey:@"penalty_paid"];
-        NSLog(@"equipment ++++++ > %@", [[responseObject objectForKey:@"equipment"] allObjects]);
         self.selectOptionArray = [NSMutableArray array];
 
         

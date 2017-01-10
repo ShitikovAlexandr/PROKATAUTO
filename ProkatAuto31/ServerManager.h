@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 19.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,6 +17,8 @@
 
 
 //___________
+- (void) getCarWithoutDriverDetailOnSuccess:(void(^)(NSArray* thisData)) success
+                                     onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 - (void) getCarWithoutDriverCategoryOnSuccess:(void(^)(NSArray* thisData)) success
                                        onFail:(void(^)(NSError* error, NSInteger statusCode)) failure;
@@ -97,7 +99,7 @@
                      newPassword: (NSString*) password
                    RetryPassword: (NSString*) retryPassword
                        OnSuccess:(void(^)(NSString* massage)) success
-                          onFail:(void(^)(NSArray* errorArray)) failure;
+                          onFail:(void(^)(NSArray* errorArray, NSError *error)) failure;
 
 - (void) preparePaymentWithOrderId: (NSString*) orderId
                          AndMethod: (NSString*) payMethod
@@ -111,10 +113,10 @@
                            OnSuccess: (void(^)()) success
                               onFail: (void(^)(NSError* error, NSString* errorMessage)) failure;
 
-- (void) orderDitailOptionsWithToken: (NSString*) tokenString andOrderId: (NSNumber*) orderId OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount)) success
+- (void) orderDitailOptionsWithToken: (NSString*) tokenString andOrderId: (NSString*) orderId OnSuccess:(void(^)(NSArray *optionArray, NSArray *placeArray, NSString *dailyAmount, NSString *totalAmount, NSString *amount, id order)) success
                        onFail:(void(^)(NSArray* errorArray)) failure;
 
-- (void) getTransferCategoryInfo:(void (^)(Category *))success
+- (void) getTransferCategoryInfo:(void (^)(Category *, NSString*))success
                           onFail:(void (^)(NSError *))failure;
 
 - (void) sendTransferOrderWithCaptchaKey: (NSString*) key
@@ -152,13 +154,21 @@
                 returnService: (NSString*) returnService
                       options:(NSString*) options
                     withToken:(NSString*) tokenString
-                    OnSuccess:(void(^)(NSString* resualtString)) success
+                    OnSuccess:(void(^)(NSString* resualtString, NSString *resultId)) success
                        onFail:(void(^)(NSString* errorArray, NSString *openedOrders, NSString *detail)) failure;
 
 - (void) validatePhoneWithCode: (NSString*) code
                      withToken: (NSString*) tokrnString
                      OnSuccess:(void(^)(NSString* resualtString)) success
                         onFail:(void(^)( NSString  *detail)) failure;
+
+- (void) paymentSuccessWithAccesTocen: (NSString*) token
+                               andURL: (NSString*) urlString
+                            OnSuccess:(void(^)(NSString* urlString)) success
+                               onFail:(void(^)(NSArray* errorArray)) failure;
+
+- (void) rentPayOnSuccess:(void(^)(NSString* urlString, NSString *title)) success
+                   onFail:(void(^)(NSArray* errorArray)) failure;
 
 @end
 

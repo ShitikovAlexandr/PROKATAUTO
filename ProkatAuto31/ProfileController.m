@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 31.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 /*
@@ -65,48 +65,66 @@
     [self setRCStyleOfView:self.registerView];
     [self setRCStyleOfView:self.driverLicenceView];
     
+    NSString *addres = NSLocalizedString (@"not specified", nil);
+
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.fullName.text = [NSString stringWithFormat:@"%@ %@ %@", [defaults valueForKey:@"lastName"],
                                                                  [defaults valueForKey:@"firstName"],
                                                                  [defaults valueForKey:@"fatherName"]];
     self.phoneNumber.text = [NSString stringWithFormat:@"+ %@", [defaults valueForKey:@"phone"]];
     self.dateOfBirth.text = [self dataFormaterMethod:[defaults valueForKey:@"dateOfBirth"]];
-    self.siriesAndNumberPassport.text = [NSString stringWithFormat:@"%@ %@",[defaults valueForKey:@"passportSeries"],
-                                                                            [defaults valueForKey:@"passportNumber"]];
-    self.dateOfPassport.text = [NSString stringWithFormat:@"%@  %@", [self dataFormaterMethod:[defaults valueForKey:@"passportIssueDate"]],
-                                                                     [defaults valueForKey:@"passport_issue"]];
-    self.mainAdress.text = [defaults valueForKey:@"address"];
-    self.realAdress.text = [defaults valueForKey:@"fakt_address"];
     
-    self.siriesAndNumberLicense.text = [NSString stringWithFormat:@"%@ %@", [defaults valueForKey:@"license_series"],
-                                                                 [defaults valueForKey:@"license_number"]];
+    if ([[defaults valueForKey:@"passportNumber"] isEqualToString:@"noData"]) {
+        self.siriesAndNumberPassport.text = addres;
+    } else {
+        self.siriesAndNumberPassport.text = [NSString stringWithFormat:@"%@ %@",[defaults valueForKey:@"passportSeries"], [defaults valueForKey:@"passportNumber"]];
+    }
+    if ([[defaults valueForKey:@"passportIssueDate"] isEqualToString:@"1900-01-01"]) {
+        self.dateOfPassport.text = addres;
+    } else {
+        self.dateOfPassport.text = [NSString stringWithFormat:@"%@  %@", [self dataFormaterMethod:[defaults valueForKey:@"passportIssueDate"]], [defaults valueForKey:@"passport_issue"]];
+    }
     
-    self.dateLicense.text = [self dataFormaterMethod:[defaults valueForKey:@"license_issue_date"]];
+    if ([[defaults valueForKey:@"license_number"] isEqualToString:@"noData"]) {
+        self.siriesAndNumberLicense.text = addres;
+    } else {
+        self.siriesAndNumberLicense.text = [NSString stringWithFormat:@"%@ %@", [defaults valueForKey:@"license_series"], [defaults valueForKey:@"license_number"]];
+    }
+    
+    
+    if ([[defaults valueForKey:@"license_issue_date"] isEqualToString:@"1900-01-01"]) {
+         self.dateLicense.text = addres;
+    } else {
+        self.dateLicense.text = [self dataFormaterMethod:[defaults valueForKey:@"license_issue_date"]];
+    }
+    
+    ///
 
-  
+    ///
+    NSLog(@"passportIssueDate %@", [defaults valueForKey:@"passportIssueDate"]);
+    NSLog(@"license_issue_date %@", [defaults valueForKey:@"license_issue_date"]);
 
     
     
+    if ([[defaults valueForKey:@"address"] length] < 3) {
+        self.mainAdress.text = addres;
+    } else {
+        self.mainAdress.text = [defaults valueForKey:@"address"];
+    }
+    if ([[defaults valueForKey:@"fakt_address"] length] < 3) {
+        self.self.realAdress.text = addres;
+    } else {
+        self.realAdress.text = [defaults valueForKey:@"fakt_address"];
+    }
     
     
-    /*
-     @"address"
-     @"fakt_address"
-     [defaults setValue:newUser.passportIssue forKey:@"passport_issue"];
-     [defaults setValue:newUser.licenseNumber forKey:@"license_number"];
-     [defaults setValue:newUser.licenseSeries forKey:@"license_series"];
-     [defaults setValue:newUser.licenseIssueDate forKey:@"license_issue_date"];
-     [defaults setValue:newUser.licenseIssue forKey:@"license_issue"];
-
-     */
-
-
-
     
     
+    //self.dateLicense.text = [self dataFormaterMethod:[defaults valueForKey:@"license_issue_date"]];
+
+
     [self getOrderInfo];
-
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,7 +171,6 @@
 - (void) getOrderInfo {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token =  [defaults valueForKey:@"tokenString"];
-    NSLog(@"token %@", token);
     [[ServerManager sharedManager]  getProfileInfoWithToken:token
                                                   OnSuccess:^(NSNumber* days, NSNumber* orderCount, NSNumber* penalties, NSNumber* status) {
                                                       

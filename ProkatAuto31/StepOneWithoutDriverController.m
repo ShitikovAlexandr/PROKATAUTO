@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 04.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "StepOneWithoutDriverController.h"
@@ -83,7 +83,7 @@
     
     
     self.order = [[Order alloc] init];
-    self.baseAddress = @"http://83.220.170.187";
+    self.baseAddress = @"http://prokatauto31.ru";
 }
 
 - (void) CallAction {
@@ -430,6 +430,9 @@
 }
 
 - (void) chckCarForFreeAPI {
+    
+
+    
     [self.activityIndicatorView startAnimating];
 
     //for(NSNumber* numId in self.car.carID) {
@@ -440,7 +443,6 @@
                                                [self.activityIndicatorView stopAnimating];
 
                                                if (thisData == NULL) {
-                                                  // NSLog(@"авто СВОБОДНО %hhd", stopChack);
                                                    
                                                    StepTwoWithoutDriverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StepTwoWithoutDriverController"];
                                                    self.order.car = self.car;
@@ -455,7 +457,6 @@
                                                   [self.activityIndicatorView stopAnimating];
 
                                                   if (statusCode == 7) {
-                                                      NSLog(@"Это авто занято!!!!!");
                                                       [self carsBusyAlert];
                                                   }
                                     
@@ -488,7 +489,6 @@
 }
 
 - (IBAction)checkCarAndGo {
-    NSLog(@"klick___klick___klick");
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yyyy-MM-dd"];
@@ -497,10 +497,8 @@
     [tf setDateFormat:@"HH:mm"];
     
     self.order.startDateOfRentalString = [NSString stringWithFormat:@"%@T%@",[df stringFromDate:self.order.dateOfRentalStart],[tf stringFromDate:self.order.timeOfRentalStart]];
-    NSLog(@"Date of start rental is ->%@", self.order.startDateOfRentalString);
     
     self.order.endDateOfRentalString = [NSString stringWithFormat:@"%@T%@",[df stringFromDate:self.order.dateOfRentalEnd],[tf stringFromDate:self.order.timeOfRentalEnd]];
-    NSLog(@"Date of end rental is ->%@", self.order.endDateOfRentalString);
     
     
     

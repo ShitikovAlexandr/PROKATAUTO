@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 12.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "CarWithDriverController.h"
@@ -40,7 +40,7 @@
     [self.view addSubview:self.activityIndicatorView];
     [self.activityIndicatorView startAnimating];
     
-    self.baseAddress = @"http://83.220.170.187";
+    self.baseAddress = @"http://prokatauto31.ru";
     
     [self.CallButton addTarget:self action:@selector(CallAction) forControlEvents:(UIControlEventTouchDown)];
     

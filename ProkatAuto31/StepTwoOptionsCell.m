@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by alex on 13.10.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "StepTwoOptionsCell.h"
@@ -34,7 +34,7 @@
     self.countView.layer.masksToBounds = NO;
     
     self.switchOption.transform = CGAffineTransformMakeScale(0.7, 0.7);
-    self.switchOption.onTintColor = [UIColor redColor];
+    self.switchOption.onTintColor = [UIColor colorWithRed:52.f/255 green:73.f/255 blue:94.f/255 alpha:1];
     
     
 

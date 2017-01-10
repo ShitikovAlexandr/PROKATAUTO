@@ -3,7 +3,7 @@
 //  ProkatAuto31
 //
 //  Created by MacUser on 13.09.16.
-//  Copyright © 2016 Asta.Mobi. All rights reserved.
+//  Copyright © 2016 ALEXEY SHATSKY. All rights reserved.
 //
 
 #import "WithoutDriverDetailController.h"
@@ -63,7 +63,7 @@
 
     
     
-    self.baseAddress = @"http://83.220.170.187";
+    self.baseAddress = @"http://prokatauto31.ru";
     self.expandedCellIndex = -1;
     self.dataArray = [NSMutableArray array];
     
@@ -152,7 +152,7 @@
         return CGSizeMake(self.collectionView.frame.size.width - 16, 520);
       
     }
-    return CGSizeMake(self.collectionView.frame.size.width - 16, 380);
+    return CGSizeMake(self.collectionView.frame.size.width - 16, 397);
 }
 
 - (IBAction)infoClickEvent:(id) sender event: (id) event {
@@ -212,7 +212,6 @@
    } onFail:^(NSError *error, NSInteger statusCode) {
        [self.activityIndicatorView stopAnimating];
 
-       NSLog(@"Error = %@", error);
    } withCategoryID:self.categoryID];
     
 }
@@ -227,7 +226,6 @@
     } onFail:^(NSError *error, NSInteger statusCode) {
         [self.activityIndicatorView stopAnimating];
 
-         NSLog(@"Error = %@", error);
     } withCategoryID:self.transmissionID];
 }
 
